@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ActTambahCalon.ListCalonActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical"
+            android:id="@+id/ll_header"
+            android:paddingTop="@dimen/padding_small"
+            android:paddingLeft="@dimen/padding_small"
+            android:paddingRight="@dimen/padding_small"
+            android:paddingBottom="@dimen/padding_small"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_menu"
+                android:padding="@dimen/padding_small">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ic_search"
+                    android:id="@+id/iv_icon"
+                    android:layout_marginRight="@dimen/padding_small"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iv_icon"
+                    android:text=""
+                    android:hint="keyword"
+                    android:id="@+id/edt_keyword"
+                    android:paddingTop="@dimen/padding_small"
+                    android:paddingBottom="@dimen/padding_small"
+                    android:inputType="textPersonName"
+                    android:imeOptions="actionSearch"
+                    android:background="@android:color/transparent"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_default"
+                android:paddingBottom="@dimen/padding_default"
+                android:weightSum="2">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="0.86"
+                    android:layout_height="wrap_content"
+                    android:hint="Tanggal Mulai"
+                    android:editable="false"
+                    android:inputType="none"
+                    android:drawableRight="@drawable/ic_date"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/edt_tanggal_awal"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="0.04"
+                    android:layout_height="@dimen/line_default"
+                    android:background="@color/colorWhite"
+                    android:paddingRight="@dimen/padding_small"
+                    android:paddingLeft="@dimen/padding_small"/>
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="0.86"
+                    android:layout_height="wrap_content"
+                    android:hint="Tanggal Akhir"
+                    android:editable="false"
+                    android:inputType="none"
+                    android:drawableRight="@drawable/ic_date"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/edt_tanggal_akhir"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.24"
+                    android:scaleType="centerInside"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_next"
+                    android:id="@+id/iv_next"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lv_data"
+            android:divider="@null"
+            android:layout_below="@id/ll_header"></ListView>
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_add"
+        android:textColor="@color/colorWhite"
+        android:text="Tambah Calon Donotur"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_button_red"/>
+
+</RelativeLayout>

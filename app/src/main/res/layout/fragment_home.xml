@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/colorWhite">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_menu_sales_promo">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sales Promo"
+                    android:layout_marginTop="@dimen/padding_default"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_marginRight="@dimen/padding_default"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_default"
+                    android:background="@color/colorBlack"
+                    android:layout_marginBottom="@dimen/padding_default"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_marginRight="@dimen/padding_default"/>
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_height="@dimen/menu_height"
+                        android:visibility="visible"
+                        android:gravity="center_horizontal"
+                        android:paddingRight="@dimen/padding_small"
+                        android:paddingLeft="@dimen/padding_small"
+                        android:paddingBottom="@dimen/padding_tiny"
+                        android:layout_margin="@dimen/padding_tiny"
+                        android:background="@drawable/bg_menu"
+                        android:id="@+id/ll_tambah_calon"
+                        android:weightSum="2">
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="@dimen/padding_small"
+                            android:layout_marginTop="@dimen/padding_small"
+                            android:layout_weight="1.1"
+                            android:padding="@dimen/padding_small"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_tambah_calon" />
+
+                        <TextView
+                            android:text="Tambah Calon Donatur"
+                            android:layout_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.9"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_menu"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="@dimen/padding_tiny"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="@dimen/padding_tiny"></LinearLayout>
+
+                </GridLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_menu_sales_sosial">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sales Sosial"
+                    android:layout_marginTop="@dimen/padding_default"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_marginRight="@dimen/padding_default"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_default"
+                    android:background="@color/colorBlack"
+                    android:layout_marginBottom="@dimen/padding_default"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_marginRight="@dimen/padding_default"/>
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_height="@dimen/menu_height"
+                        android:visibility="visible"
+                        android:gravity="center_horizontal"
+                        android:paddingRight="@dimen/padding_small"
+                        android:paddingLeft="@dimen/padding_small"
+                        android:paddingBottom="@dimen/padding_tiny"
+                        android:layout_margin="@dimen/padding_tiny"
+                        android:background="@drawable/bg_menu"
+                        android:id="@+id/ll_tambah_donatur"
+                        android:weightSum="2">
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="@dimen/padding_small"
+                            android:layout_marginTop="@dimen/padding_small"
+                            android:layout_weight="1.1"
+                            android:padding="@dimen/padding_small"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_tambah_calon" />
+
+                        <TextView
+                            android:text="Tambah Donatur"
+                            android:layout_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.9"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_menu"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="@dimen/padding_tiny"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="@dimen/padding_tiny"></LinearLayout>
+
+                </GridLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_menu_checking">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Checking"
+                    android:layout_marginTop="@dimen/padding_default"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_marginRight="@dimen/padding_default"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_default"
+                    android:background="@color/colorBlack"
+                    android:layout_marginBottom="@dimen/padding_default"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_marginRight="@dimen/padding_default"/>
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_height="@dimen/menu_height"
+                        android:visibility="visible"
+                        android:gravity="center_horizontal"
+                        android:paddingRight="@dimen/padding_small"
+                        android:paddingLeft="@dimen/padding_small"
+                        android:paddingBottom="@dimen/padding_tiny"
+                        android:layout_margin="@dimen/padding_tiny"
+                        android:background="@drawable/bg_menu"
+                        android:id="@+id/ll_verifikasi_donatur"
+                        android:weightSum="2">
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="@dimen/padding_small"
+                            android:layout_marginTop="@dimen/padding_small"
+                            android:layout_weight="1.1"
+                            android:padding="@dimen/padding_tiny"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_tambah_calon" />
+
+                        <TextView
+                            android:text="Verifikasi Donatur"
+                            android:layout_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.9"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_menu"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="@dimen/padding_tiny"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="@dimen/padding_tiny"></LinearLayout>
+
+                </GridLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_menu_collector">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Collector"
+                    android:layout_marginTop="@dimen/padding_default"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_marginRight="@dimen/padding_default"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_default"
+                    android:background="@color/colorBlack"
+                    android:layout_marginBottom="@dimen/padding_default"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_marginRight="@dimen/padding_default"/>
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_height="@dimen/menu_height"
+                        android:visibility="visible"
+                        android:gravity="center_horizontal"
+                        android:paddingRight="@dimen/padding_small"
+                        android:paddingLeft="@dimen/padding_small"
+                        android:paddingBottom="@dimen/padding_tiny"
+                        android:layout_margin="@dimen/padding_tiny"
+                        android:background="@drawable/bg_menu"
+                        android:id="@+id/ll_penerimaan_infaq"
+                        android:weightSum="2">
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="@dimen/padding_small"
+                            android:layout_marginTop="@dimen/padding_small"
+                            android:layout_weight="1.1"
+                            android:padding="@dimen/padding_tiny"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_tambah_calon" />
+
+                        <TextView
+                            android:text="Penerimaan Infaq"
+                            android:layout_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.9"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_menu"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_height="@dimen/menu_height"
+                        android:visibility="visible"
+                        android:gravity="center_horizontal"
+                        android:paddingRight="@dimen/padding_small"
+                        android:paddingLeft="@dimen/padding_small"
+                        android:paddingBottom="@dimen/padding_tiny"
+                        android:layout_margin="@dimen/padding_tiny"
+                        android:background="@drawable/bg_menu"
+                        android:id="@+id/ll_setoran_infaq"
+                        android:weightSum="2">
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="@dimen/padding_small"
+                            android:layout_marginTop="@dimen/padding_small"
+                            android:layout_weight="1.1"
+                            android:padding="@dimen/padding_tiny"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_tambah_calon" />
+
+                        <TextView
+                            android:text="Setoran Infaq"
+                            android:layout_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.9"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_menu"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="@dimen/padding_tiny"></LinearLayout>
+
+                </GridLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

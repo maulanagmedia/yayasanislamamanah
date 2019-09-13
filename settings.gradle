@@ -1,0 +1,2 @@
+include ':app', ':coremodul'
+rootProject.name='islamiamanah'
