@@ -9,9 +9,11 @@
     <dimen name="padding_small">4dp</dimen>
     <dimen name="padding_mid">6dp</dimen>
     <dimen name="padding_default">8dp</dimen>
+    <dimen name="padding_dex">10dp</dimen>
     <dimen name="padding_medium">12dp</dimen>
     <dimen name="padding_big">16dp</dimen>
     <dimen name="line_default">1dp</dimen>
+    <dimen name="line_custom">4dp</dimen>
     <dimen name="menu_height">110dp</dimen>
     <dimen name="text_menu">16sp</dimen>
     <dimen name="text_medium">16sp</dimen>
@@ -19,8 +21,11 @@
     <dimen name="text_small">13sp</dimen>
     <dimen name="text_title">24sp</dimen>
     <dimen name="text_big">16sp</dimen>
+    <dimen name="text_20">20sp</dimen>
     <dimen name="icon_size">24dp</dimen>
+    <dimen name="icon_size1">20dp</dimen>
     <dimen name="icon_size2">14dp</dimen>
     <dimen name="menu_size">4dp</dimen>
     <dimen name="default_corner">4dp</dimen>
+    <dimen name="default_login_corner">8dp</dimen>
 </resources>

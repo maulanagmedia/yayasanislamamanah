@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -25,7 +26,8 @@
                     android:layout_height="90dp"
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_profile"
-                    android:scaleType="fitCenter"/>
+                    android:scaleType="fitCenter"
+                    android:id="@+id/iv_profile_main"/>
 
                 <RelativeLayout
                     android:layout_width="95dp"
@@ -36,6 +38,7 @@
                         android:layout_width="26dp"
                         android:layout_height="26dp"
                         android:padding="@dimen/padding_mid"
+                        android:id="@+id/iv_profile"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/ic_camera"
@@ -44,6 +47,225 @@
                 </RelativeLayout>
 
             </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_big"
+                android:paddingRight="@dimen/padding_big">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size2"
+                        android:layout_height="@dimen/icon_size2"
+                        android:src="@drawable/ic_name"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/padding_mid"
+                        android:id="@+id/ic_nama"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size1"
+                        android:layout_height="@dimen/icon_size1"
+                        android:src="@drawable/ic_edit"
+                        android:scaleType="fitCenter"
+                        android:id="@+id/iv_nama"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_marginLeft="@dimen/padding_default"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toLeftOf="@id/iv_nama"
+                        android:layout_toRightOf="@id/ic_nama"
+                        android:layout_marginLeft="@dimen/padding_default">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack"
+                            android:text="Nama"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_big" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack"
+                            android:text="Nama"
+                            android:id="@+id/tv_nama"/>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size2"
+                        android:layout_height="@dimen/icon_size2"
+                        android:src="@drawable/ic_kontak"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/padding_mid"
+                        android:id="@+id/ic_kontak"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size1"
+                        android:layout_height="@dimen/icon_size1"
+                        android:src="@drawable/ic_edit"
+                        android:scaleType="fitCenter"
+                        android:id="@+id/iv_kontak"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_marginLeft="@dimen/padding_default"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toLeftOf="@id/iv_kontak"
+                        android:layout_toRightOf="@id/ic_kontak"
+                        android:layout_marginLeft="@dimen/padding_default">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack"
+                            android:text="Kontak"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_big" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack"
+                            android:text="Kontak"
+                            android:id="@+id/tv_kontak"/>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size2"
+                        android:layout_height="@dimen/icon_size2"
+                        android:src="@mipmap/ic_key"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/padding_mid"
+                        android:id="@+id/ic_pass"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size1"
+                        android:layout_height="@dimen/icon_size1"
+                        android:src="@drawable/ic_edit"
+                        android:scaleType="fitCenter"
+                        android:id="@+id/iv_pass"
+                        android:layout_marginLeft="@dimen/padding_default"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toLeftOf="@id/iv_pass"
+                        android:layout_toRightOf="@id/ic_pass"
+                        android:layout_marginLeft="@dimen/padding_default">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack"
+                            android:text="Password"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_big" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack"
+                            android:text="********"
+                            android:id="@+id/tv_password"/>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_custom"
+                android:layout_marginTop="@dimen/padding_default"
+                android:layout_marginBottom="@dimen/padding_default"
+                android:background="@color/colorGrey1"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_big"
+                android:paddingRight="@dimen/padding_big">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rl_logout"
+                    android:layout_marginTop="@dimen/padding_default">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size2"
+                        android:layout_height="@dimen/icon_size2"
+                        android:src="@mipmap/ic_exit"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/padding_mid"
+                        android:id="@+id/ic_logout"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toRightOf="@id/ic_logout"
+                        android:layout_marginLeft="@dimen/padding_default">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack"
+                            android:text="Logout"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_big" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_custom"
+                android:layout_marginTop="@dimen/padding_big"
+                android:layout_marginBottom="@dimen/padding_default"
+                android:background="@color/colorGrey1"
+                />
+
         </LinearLayout>
 
     </ScrollView>

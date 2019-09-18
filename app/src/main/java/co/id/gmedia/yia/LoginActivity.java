@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -61,8 +62,22 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, HomeActivity.class);
+                Intent intent;
+                switch (edtUsername.getText().toString()){
+
+                    case "promo" :
+                        intent = new Intent(context, HomeActivity.class);
+                        break;
+                    case "sosial" :
+                        intent = new Intent(context, HomeSocialSalesActivity.class);
+                        break;
+                    default:
+                        intent = new Intent(context, HomeActivity.class);
+                        break;
+                }
+
                 startActivity(intent);
+                finish();
             }
         });
     }

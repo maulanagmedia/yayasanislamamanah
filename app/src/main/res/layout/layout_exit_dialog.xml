@@ -36,7 +36,7 @@
                 android:id="@+id/btn_ya"
                 android:layout_marginLeft="@dimen/padding_default"
                 android:layout_marginRight="@dimen/padding_default"
-                android:background="@drawable/bg_button_blue"/>
+                android:background="@drawable/bg_button_green_rec"/>
 
             <Button
                 android:layout_width="0dp"
