@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActSalesBrosur.SalesBrosurDetailFragment;
 import co.id.gmedia.yia.ActSalesBrosur.SalesBrosurRiwayatFragment;
@@ -39,6 +40,8 @@ public class HomeActivity extends AppCompatActivity {
     private View vInfo, vRiwayat;
     private ImageView ivAkun;
     private LinearLayout llAkun;
+    private TextView tvAdmin;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,10 @@ public class HomeActivity extends AppCompatActivity {
         tvTitle2 = (TextView) findViewById(R.id.tv_title2);
         vInfo = (View) findViewById(R.id.v_info);
         vRiwayat = (View) findViewById(R.id.v_riwayat);
+        tvAdmin = (TextView) findViewById(R.id.tv_admin);
+
+        session = new SessionManager(context);
+        tvAdmin.setText(session.getNama());
 
         changeState(2);
     }

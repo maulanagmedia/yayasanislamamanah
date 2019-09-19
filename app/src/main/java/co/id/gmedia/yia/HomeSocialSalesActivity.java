@@ -25,6 +25,8 @@ import android.widget.TextView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import co.id.gmedia.coremodul.SessionManager;
+import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialJadwalFragment;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialRiwayatFragment;
 
@@ -37,6 +39,8 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
     private View vInfo, vRiwayat;
     private ImageView ivAkun;
     private LinearLayout llAkun;
+    private TextView tvAdmin;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +107,10 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
         tvTitle2 = (TextView) findViewById(R.id.tv_title2);
         vInfo = (View) findViewById(R.id.v_info);
         vRiwayat = (View) findViewById(R.id.v_riwayat);
+        tvAdmin = (TextView) findViewById(R.id.tv_admin);
+
+        session = new SessionManager(context);
+        tvAdmin.setText(session.getNama());
 
         changeState(1);
     }
@@ -191,7 +199,7 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.nav_akun) {
-            Intent intent = new Intent(context, HomeSocialSalesActivity.class);
+            Intent intent = new Intent(context, DetailAkunActivity.class);
             startActivity(intent);
             return true;
         }

@@ -36,7 +36,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/ic_clear"
+                android:src="@drawable/ic_close"
                 android:id="@+id/iv_cancel"
                 android:background="?attr/selectableItemBackground"
                 android:layout_alignParentRight="true"/>

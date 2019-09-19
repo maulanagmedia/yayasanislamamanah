@@ -8,23 +8,57 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/padding_default"
-        android:paddingRight="@dimen/padding_default"
-        android:layout_marginTop="@dimen/padding_default"
-        android:layout_marginBottom="@dimen/padding_default"
         android:orientation="horizontal"
         android:weightSum="1">
 
         <RelativeLayout
             android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/padding_default"
-            android:layout_marginBottom="@dimen/padding_default"
-            android:layout_marginLeft="@dimen/padding_default"
-            android:layout_marginRight="@dimen/padding_default"
-            android:id="@+id/rl_left"
-            android:background="@drawable/bg_button_green">
+            android:id="@+id/rl_left">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/padding_default"
+                android:layout_marginBottom="@dimen/padding_default"
+                android:layout_marginLeft="@dimen/padding_default"
+                android:layout_marginRight="@dimen/padding_default"
+                android:id="@+id/rl_check"
+                android:visibility="visible"
+                android:background="@drawable/bg_button_green">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_check"
+                    android:id="@+id/iv_check"
+                    android:scaleType="centerInside"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/padding_default"
+                android:layout_marginBottom="@dimen/padding_default"
+                android:layout_marginLeft="@dimen/padding_default"
+                android:layout_marginRight="@dimen/padding_default"
+                android:id="@+id/rl_input"
+                android:visibility="gone"
+                android:background="@drawable/bg_button_grey">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/colorGreen1"
+                    android:gravity="center"
+                    android:text="Input Data"
+                    android:textSize="@dimen/text_small"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView

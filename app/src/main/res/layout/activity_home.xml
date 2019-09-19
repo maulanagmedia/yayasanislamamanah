@@ -131,6 +131,7 @@
                         android:layout_gravity="center"
                         android:textColor="@color/colorWhite"
                         android:text="Admin"
+                        android:id="@+id/tv_admin"
                         android:textSize="@dimen/text_medium"
                         android:layout_marginTop="@dimen/padding_small"/>
                 </LinearLayout>

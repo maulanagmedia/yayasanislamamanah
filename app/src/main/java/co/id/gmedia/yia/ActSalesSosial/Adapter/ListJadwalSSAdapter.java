@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class ListJadwalSSAdapter extends ArrayAdapter {
 
     private static class ViewHolder {
         private TextView tvItem1, tvItem2, tvItem3;
+        private RelativeLayout rlCheck, rlInput;
     }
 
     @Override
@@ -46,6 +48,8 @@ public class ListJadwalSSAdapter extends ArrayAdapter {
             holder.tvItem1 = convertView.findViewById(R.id.tv_item1);
             holder.tvItem2 = convertView.findViewById(R.id.tv_item2);
             holder.tvItem3 = convertView.findViewById(R.id.tv_item3);
+            holder.rlCheck = convertView.findViewById(R.id.rl_check);
+            holder.rlInput = convertView.findViewById(R.id.rl_input);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -55,6 +59,16 @@ public class ListJadwalSSAdapter extends ArrayAdapter {
         holder.tvItem1.setText(item.getItem2());
         holder.tvItem2.setText(item.getItem3());
         holder.tvItem3.setText(item.getItem4());
+
+        if(item.getItem6().equals("0")){
+
+            holder.rlCheck.setVisibility(View.GONE);
+            holder.rlInput.setVisibility(View.VISIBLE);
+        }else{
+
+            holder.rlCheck.setVisibility(View.VISIBLE);
+            holder.rlInput.setVisibility(View.GONE);
+        }
 
         return convertView;
 

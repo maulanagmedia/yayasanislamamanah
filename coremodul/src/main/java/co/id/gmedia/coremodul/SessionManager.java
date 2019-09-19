@@ -23,15 +23,11 @@ public class SessionManager {
 
     // All Shared Preferences Keys
     public static final String TAG_USERNAME = "username";
-    public static final String TAG_NIK_GA = "nik_ga";
-    public static final String TAG_NIK_MKIOS = "nik_mkios";
-    public static final String TAG_NAMA = "nama";
-    public static final String TAG_PASSWORD = "password";
-    public static final String TAG_SESSION = "session";
-    public static final String TAG_EXPIRATION = "expiration";
-    public static final String TAG_SUPERUSER = "superuser";
-    public static final String TAG_NIK_HR = "nik_hr";
-    public static final String TAG_JABATAN = "jabatan";
+    public static final String TAG_PASSWORD= "password";
+    public static final String TAG_NIK = "nik";
+    public static final String TAG_NAMA= "nama";
+    public static final String TAG_LEVEL= "level";
+    public static final String TAG_LEVELNAMA= "level_nama";
 
     // Constructor
     public SessionManager(Context context){
@@ -43,27 +39,18 @@ public class SessionManager {
     /**
      * Create login session
      * */
-    public void createLoginSession(String username, String nikGa, String nikMkios, String nama, String password, String session, String expiration, String superuser, String nikHR, String jabatan){
+    public void createLoginSession(String username, String nik, String nama, String level, String levelNama){
 
         editor.putString(TAG_USERNAME, username);
 
-        editor.putString(TAG_NIK_GA, nikGa);
-
-        editor.putString(TAG_NIK_MKIOS, nikMkios);
+        editor.putString(TAG_NIK, nik);
 
         editor.putString(TAG_NAMA, nama);
 
-        editor.putString(TAG_PASSWORD, password);
+        editor.putString(TAG_LEVEL, level);
 
-        editor.putString(TAG_SESSION, session);
+        editor.putString(TAG_LEVELNAMA, levelNama);
 
-        editor.putString(TAG_EXPIRATION, expiration);
-
-        editor.putString(TAG_SUPERUSER, superuser);
-
-        editor.putString(TAG_NIK_HR, nikHR);
-
-        editor.putString(TAG_JABATAN, jabatan);
         // commit changes
         editor.commit();
     }
@@ -87,50 +74,20 @@ public class SessionManager {
         return pref.getString(TAG_USERNAME, "");
     }
 
-    public String getNikMkios(){
-        return pref.getString(TAG_NIK_MKIOS, "");
-    }
-
-    public String getNikGa(){
-        return pref.getString(TAG_NIK_GA, "");
+    public String getNik(){
+        return pref.getString(TAG_NIK, "");
     }
 
     public String getNama(){
         return pref.getString(TAG_NAMA, "");
     }
 
-    public String getPassword(){
-        return pref.getString(TAG_PASSWORD, "");
+    public String getLevel(){
+        return pref.getString(TAG_LEVEL, "");
     }
 
-    public String getSession(){
-        return pref.getString(TAG_SESSION, "");
-    }
-
-    public String getExpiration(){
-        return pref.getString(TAG_EXPIRATION, "");
-    }
-
-    public String getSuperuser(){
-        return pref.getString(TAG_SUPERUSER, "");
-    }
-
-    public String getNikHR(){
-        return pref.getString(TAG_NIK_HR, "");
-    }
-
-    public String getJabatan(){
-        return pref.getString(TAG_JABATAN, "");
-    }
-
-    public boolean isSuperuser(){
-
-        return pref.getString(TAG_SUPERUSER, "").equals("1");
-    }
-
-    public boolean isBM(){
-
-        return (this.getJabatan().toUpperCase().contains("BM") || this.getJabatan().toUpperCase().contains("SUPERVISOR BDO"));
+    public String getLevelNama(){
+        return pref.getString(TAG_LEVELNAMA, "");
     }
 
     /**

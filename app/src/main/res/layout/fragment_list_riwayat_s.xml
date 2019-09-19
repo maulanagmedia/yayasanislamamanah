@@ -5,10 +5,123 @@
     android:layout_height="match_parent"
     tools:context=".ActSalesSosial.SalesSosialRiwayatFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/padding_default">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@mipmap/ic_search1"
+                android:id="@+id/iv_search"
+                android:layout_margin="@dimen/padding_default"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_search"
+                android:background="@android:color/transparent"
+                android:padding="@dimen/padding_default"
+                android:text=""
+                android:id="@+id/edt_search"
+                android:textSize="@dimen/text_small"
+                android:hint="Keyword"
+                android:inputType="textPersonName"
+                android:imeOptions="actionDone"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/padding_default"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/rl_date1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:layout_marginRight="@dimen/padding_small"
+                >
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@mipmap/ic_date"
+                    android:id="@+id/iv_date1"
+                    android:layout_margin="@dimen/padding_default"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iv_date1"
+                    android:padding="@dimen/padding_default"
+                    android:text="17/09/2019"
+                    android:id="@+id/tv_date1"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/rl_date2"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:layout_marginLeft="@dimen/padding_small"
+                >
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@mipmap/ic_date"
+                    android:id="@+id/iv_date2"
+                    android:layout_margin="@dimen/padding_default"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iv_date2"
+                    android:padding="@dimen/padding_default"
+                    android:text="17/09/2019"
+                    android:id="@+id/tv_date2"
+                    />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_default"
+            android:background="@drawable/bg_button_green"
+            android:textColor="@color/colorWhite"
+            android:text="Proses"/>
+
+    </LinearLayout>
+
+    <co.id.gmedia.coremodul.CustomView.CustomListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_calon"
+        android:padding="@dimen/padding_default"/>
 
 </FrameLayout>

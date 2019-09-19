@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.id.gmedia.coremodul.ImageUtils;
+import co.id.gmedia.yia.LoginActivity;
 import co.id.gmedia.yia.R;
 
 public class DetailAkunActivity extends AppCompatActivity {
@@ -175,6 +176,35 @@ public class DetailAkunActivity extends AppCompatActivity {
                         .setPath("/yia/images");                                             //Custom Path For Image Storage
 
                 Pix.start(DetailAkunActivity.this, options);
+            }
+        });
+
+        rlLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog dialog = new AlertDialog.Builder(context)
+                        .setTitle("Konfirmasi")
+                        .setMessage("Anda yakin ingin logout?")
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent(context, LoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .show();
+
+
             }
         });
     }

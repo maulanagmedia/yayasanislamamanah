@@ -56,11 +56,11 @@ public class ApiVolley {
 
         session = new SessionManager(context);
         token0  = iv.encodeMD5(iv.encodeBase64(iv.getCurrentDate("SSSHHMMddmmyyyyss")));
-        token1  = session.getNikGa();
+        token1  = session.getUsername();
         token2  = iv.getCurrentDate("SSSHHyyyyssMMddmm");
         token3  = iv.sha256(token1+"&"+token2,token1+"die");
-        token4  = session.getNikMkios();
-        token5  = session.getNikGa();
+        token4  = session.getNik();
+        token5  = session.getNik();
         //token3  = iv.encodeMD5(token3);
         //token3  = iv.encodeBase64(token3);
 
@@ -143,15 +143,12 @@ public class ApiVolley {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json");
-                params.put("Client-Service", "perkasa-sales");
+                params.put("Client-Service", "yia");
                 params.put("Auth-Key", "gmedia");
                 params.put("User-Id", token1);
                 params.put("Timestamp", token2);
                 params.put("Signature", token3);
-                params.put("Nik-Mkios", token4);
-                params.put("Nik-Ga", token5);
-                params.put("flag", session.getSuperuser());
-                params.put("Nik-Hr", session.getNikHR());
+                params.put("Nik", token4);
                 return params;
             }
 
