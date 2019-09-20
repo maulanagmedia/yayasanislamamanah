@@ -38,12 +38,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.id.gmedia.coremodul.ImageUtils;
+import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.LoginActivity;
 import co.id.gmedia.yia.R;
 
 public class DetailAkunActivity extends AppCompatActivity {
 
     private Context context;
+    private SessionManager session;
     private ImageView ivProfileMain, ivProfile, ivNama, ivKontak, ivPassword;
     private TextView tvNama, tvKontak, tvPassword;
     private RelativeLayout rlLogout;
@@ -70,6 +72,7 @@ public class DetailAkunActivity extends AppCompatActivity {
 
         setTitle("Setelan Akun");
         context = this;
+        session = new SessionManager(context);
 
         if (checkPermission()){
 
@@ -197,9 +200,7 @@ public class DetailAkunActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 Intent intent = new Intent(context, LoginActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                finish();
+                                session.logoutUser(intent);
                             }
                         })
                         .show();

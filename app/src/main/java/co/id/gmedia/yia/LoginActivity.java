@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         context = this;
         initUI();
         initEvent();
+        initData();
     }
 
     private void initUI() {
@@ -192,5 +193,13 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    private void initData() {
+
+        if(session.isLoggedIn()){
+
+            redirectToLogin();
+        }
     }
 }

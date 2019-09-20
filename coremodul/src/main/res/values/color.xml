@@ -6,5 +6,6 @@
     <color name="color_blue_dialog">#0297d5</color>
     <color name="color_orange_dialog">#feb103</color>
     <color name="color_red_dialog">#e50216</color>
+    <color name="color_green_dialog">#58A85A</color>
     <color name="color_yellow_dialog">#efdc05</color>
 </resources>

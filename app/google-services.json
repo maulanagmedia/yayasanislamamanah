@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "944992814124",
+    "firebase_url": "https://yayasan-islam-amanah.firebaseio.com",
+    "project_id": "yayasan-islam-amanah",
+    "storage_bucket": "yayasan-islam-amanah.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944992814124:android:5bb01c25ae20f7199e7d89",
+        "android_client_info": {
+          "package_name": "co.id.gmedia.yia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944992814124-6evuo1h84rk2iesmg1rsgao9b1db9va3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.id.gmedia.yia",
+            "certificate_hash": "2896223dc7d59ff185b6abaf9e67b966111a3dbc"
+          }
+        },
+        {
+          "client_id": "944992814124-it0cm5llbrnpej47kbm6onqpkq82v4t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlSAMi1WO9l8eVh45fGeNaz3WodmOBo9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944992814124-it0cm5llbrnpej47kbm6onqpkq82v4t9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
