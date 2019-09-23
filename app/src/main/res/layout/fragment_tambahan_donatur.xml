@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActCollector.TambahanDonaturFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp20"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Informasi Donatur"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/color_black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_profile"
+                    android:layout_margin="@dimen/dp10"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/color_black"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Leonardus Irfan"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/style_textview_gray"
+                android:padding="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="#4F4F4F"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_profile"
+                    android:layout_margin="@dimen/dp10"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kota"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/color_black"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Semarang"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/style_textview_gray"
+                android:padding="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="#4F4F4F"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kecamatan"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="@color/color_black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tembalang"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/style_textview_gray"
+                android:padding="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="#4F4F4F"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kelurahan"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="@color/color_black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sendang Mulyo"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/style_textview_gray"
+                android:padding="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="#4F4F4F"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alamat"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="@color/color_black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jl. Bukit Menur Raya 165A"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/style_textview_gray"
+                android:padding="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="#4F4F4F"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_profile"
+                    android:layout_margin="@dimen/dp10"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kontak"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/color_black"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="085712026606"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/style_textview_gray"
+                android:padding="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="#4F4F4F"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#F1F1F1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp20"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donasi"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="@color/color_black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jumlah Donasi"
+                android:textSize="14sp"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="@color/color_black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rp 300.000"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/style_textview_gray"
+                android:padding="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp40"
+                android:textColor="#4F4F4F"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#F1F1F1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp20"
+            android:layout_marginStart="@dimen/dp40"
+            android:layout_marginEnd="@dimen/dp40">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Tambahkan foto lokasi atau donatur"
+                android:textSize="12sp"
+                android:layout_marginEnd="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:background="@drawable/style_button_green"
+                android:src="@drawable/ic_photo_camera"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_foto"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_size"/>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Simpan Data"
+            android:layout_marginTop="@dimen/dp40"
+            android:layout_marginBottom="@dimen/dp20"
+            android:background="@drawable/style_button_green"
+            android:textColor="@color/color_white"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+
+</ScrollView>

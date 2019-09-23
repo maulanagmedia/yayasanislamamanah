@@ -46,6 +46,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".ActAkun.DetailAkunActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ActCollector.CollectorActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait"

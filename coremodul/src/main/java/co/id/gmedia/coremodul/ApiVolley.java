@@ -189,7 +189,6 @@ public class ApiVolley {
         stringRequest.setShouldCache(false);
         requestQueue.add(stringRequest);
         requestQueue.getCache().clear();
-
     }
 
     // interface for call callback from response API

@@ -6,11 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -20,6 +20,7 @@ import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
+import co.id.gmedia.yia.ActCollector.CollectorActivity;
 import co.id.gmedia.yia.Utils.ServerURL;
 
 public class LoginActivity extends AppCompatActivity {
@@ -78,9 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         btnMasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(edtUsername.getText().toString().length() == 0){
-
                     edtUsername.setError("Username harap diisi");
                     edtUsername.requestFocus();
                     return;
@@ -115,10 +114,9 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ApiVolley request = new ApiVolley(context, jBody, "POST", ServerURL.login, new ApiVolley.VolleyCallback() {
+        new ApiVolley(context, jBody, "POST", ServerURL.login, new ApiVolley.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
-
                 dialogBox.dismissDialog();
                 try {
 
@@ -157,7 +155,6 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(String result) {
-
                 dialogBox.dismissDialog();
                 View.OnClickListener clickListener = new View.OnClickListener() {
                     @Override
@@ -184,6 +181,9 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case "2" :
                 intent = new Intent(context, HomeSocialSalesActivity.class);
+                break;
+            case "4":
+                intent = new Intent(context, CollectorActivity.class);
                 break;
             default:
                 intent = new Intent(context, HomeActivity.class);
