@@ -70,6 +70,13 @@ public class ListJadwalSSAdapter extends ArrayAdapter {
             holder.rlInput.setVisibility(View.GONE);
         }
 
+        holder.rlInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return convertView;
 
     }
