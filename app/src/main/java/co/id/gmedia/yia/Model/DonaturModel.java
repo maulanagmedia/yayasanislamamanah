@@ -5,10 +5,20 @@ public class DonaturModel {
     private String alamat;
     private String kontak;
 
+    private boolean dikunjungi = false;
+
     public DonaturModel(String nama, String alamat, String kontak){
         this.nama = nama;
         this.alamat = alamat;
         this.kontak = kontak;
+    }
+
+    public void setDikunjungi(boolean dikunjungi) {
+        this.dikunjungi = dikunjungi;
+    }
+
+    public boolean isDikunjungi() {
+        return dikunjungi;
     }
 
     public String getNama() {

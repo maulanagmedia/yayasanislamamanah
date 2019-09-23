@@ -1,51 +1,43 @@
-package co.id.gmedia.yia.ActCollector;
+package co.id.gmedia.yia.ActSalesSurvey;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.fxn.pix.Pix;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.R;
-import co.id.gmedia.yia.Utils.ServerURL;
 
-public class CollectorActivity extends AppCompatActivity {
+public class SalesSurveyActivity extends AppCompatActivity {
 
-    private TextView txt_nama, txt_jumlah;
+    private TextView txt_nama, txt_jumlah_jadwal, txt_jumlah_riwayat;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private Fragment active_fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collector);
+        setContentView(R.layout.activity_sales_survey);
 
         txt_nama = findViewById(R.id.txt_nama);
-        txt_jumlah = findViewById(R.id.txt_jumlah);
+        txt_jumlah_jadwal = findViewById(R.id.txt_jumlah_jadwal);
+        txt_jumlah_riwayat = findViewById(R.id.txt_jumlah_riwayat);
 
         initToolbar();
         TabLayout tab_collector = findViewById(R.id.tab_collector);
         tab_collector.addTab(tab_collector.newTab().setText("Jadwal Kunjungan"));
-        tab_collector.addTab(tab_collector.newTab().setText("History Collector"));
-        tab_collector.addTab(tab_collector.newTab().setText("Tambahan Donatur"));
+        tab_collector.addTab(tab_collector.newTab().setText("Riwayat Kunjungan"));
         tab_collector.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -63,20 +55,20 @@ public class CollectorActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(new CollectorJadwalFragment());
+        loadFragment(new SurveyJadwalFragment());
         loadData();
     }
 
     private void loadData(){
         txt_nama.setText("John Doe");
-        txt_jumlah.setText("7");
+        txt_jumlah_jadwal.setText("8");
+        txt_jumlah_riwayat.setText("2");
     }
 
     private void switchTab(int position){
         switch (position){
-            case 0 : active_fragment = new CollectorJadwalFragment();break;
-            case 1 : active_fragment = new CollectorHistoryFragment();break;
-            case 2 : active_fragment = new CollectorTambahDonaturFragment();break;
+            case 0 : active_fragment = new SurveyJadwalFragment();break;
+            case 1 : active_fragment = new SurveyRiwayatFragment();break;
         }
         loadFragment(active_fragment);
     }
@@ -137,23 +129,6 @@ public class CollectorActivity extends AppCompatActivity {
         }
         else{
             return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == ServerURL.PIX_REQUEST_CODE) {
-            if(data != null){
-                if(active_fragment instanceof CollectorTambahDonaturFragment){
-                    ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
-                    ArrayList<String> listGambar = new ArrayList<>();
-                    for(String s : returnValue){
-                        listGambar.add(Uri.fromFile(new File(s)).getPath());
-                    }
-                    ((CollectorTambahDonaturFragment)active_fragment).updateGambar(listGambar);
-                }
-            }
         }
     }
 }

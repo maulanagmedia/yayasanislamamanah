@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActCollector.TambahanDonaturFragment">
+    android:fitsSystemWindows="true"
+    tools:context=".ActCollector.CollectorTambahDonaturFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,14 +48,15 @@
 
             </LinearLayout>
 
-            <TextView
+            <EditText
+                android:id="@+id/txt_nama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Leonardus Irfan"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:background="@drawable/style_textview_gray"
                 android:padding="@dimen/dp10"
+                android:inputType="textPersonName"
                 android:layout_marginStart="@dimen/dp40"
                 android:textColor="#4F4F4F"/>
 
@@ -80,14 +82,15 @@
 
             </LinearLayout>
 
-            <TextView
+            <EditText
+                android:id="@+id/txt_kota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Semarang"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:background="@drawable/style_textview_gray"
                 android:padding="@dimen/dp10"
+                android:inputType="text"
                 android:layout_marginStart="@dimen/dp40"
                 android:textColor="#4F4F4F"/>
 
@@ -101,10 +104,11 @@
                 android:layout_marginStart="@dimen/dp40"
                 android:textColor="@color/color_black"/>
 
-            <TextView
+            <EditText
+                android:id="@+id/txt_kecamatan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tembalang"
+                android:inputType="text"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:background="@drawable/style_textview_gray"
@@ -123,10 +127,11 @@
                 android:layout_marginStart="@dimen/dp40"
                 android:textColor="@color/color_black"/>
 
-            <TextView
+            <EditText
+                android:id="@+id/txt_kelurahan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sendang Mulyo"
+                android:inputType="text"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:background="@drawable/style_textview_gray"
@@ -145,10 +150,11 @@
                 android:layout_marginStart="@dimen/dp40"
                 android:textColor="@color/color_black"/>
 
-            <TextView
+            <EditText
+                android:id="@+id/txt_alamat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Jl. Bukit Menur Raya 165A"
+                android:inputType="text"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:background="@drawable/style_textview_gray"
@@ -179,10 +185,11 @@
 
             </LinearLayout>
 
-            <TextView
+            <EditText
+                android:id="@+id/txt_kontak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="085712026606"
+                android:inputType="text"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:background="@drawable/style_textview_gray"
@@ -222,10 +229,11 @@
                 android:layout_marginStart="@dimen/dp40"
                 android:textColor="@color/color_black"/>
 
-            <TextView
+            <EditText
+                android:id="@+id/txt_jumlah_donasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rp 300.000"
+                android:inputType="number"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:background="@drawable/style_textview_gray"
@@ -258,6 +266,7 @@
                 android:layout_marginTop="@dimen/dp10" />
 
             <ImageView
+                android:id="@+id/img_gambar"
                 android:layout_width="40dp"
                 android:layout_height="30dp"
                 android:padding="5dp"

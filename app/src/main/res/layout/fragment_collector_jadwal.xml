@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/dp20"
-    tools:context=".ActCollector.JadwalKunjunganFragment">
+    tools:context=".ActCollector.CollectorJadwalFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -13,14 +13,13 @@
         android:textSize="@dimen/text_20"
         android:text="Ini Jadwal Untuk Hari Ini"
         android:gravity="center"
-
         android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/txt_tanggal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_small"
-        android:text="12 Oktober 2019"
         android:gravity="center"
         android:textStyle="bold"/>
 

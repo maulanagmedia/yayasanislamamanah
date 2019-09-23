@@ -12,24 +12,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import co.id.gmedia.yia.ActCollector.Adapter.JadwalKunjunganAdapter;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.Converter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class JadwalKunjunganFragment extends Fragment {
+public class CollectorJadwalFragment extends Fragment {
 
     private Activity activity;
     private JadwalKunjunganAdapter adapter;
     private List<DonaturModel> listDonatur = new ArrayList<>();
 
-    public JadwalKunjunganFragment() {
+    private TextView txt_tanggal;
+
+    public CollectorJadwalFragment() {
         // Required empty public constructor
     }
 
@@ -37,7 +42,9 @@ public class JadwalKunjunganFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         activity = getActivity();
-        View v = inflater.inflate(R.layout.fragment_jadwal_kunjungan, container, false);
+        View v = inflater.inflate(R.layout.fragment_collector_jadwal, container, false);
+
+        txt_tanggal = v.findViewById(R.id.txt_tanggal);
 
         RecyclerView rv_jadwal = v.findViewById(R.id.rv_jadwal);
         rv_jadwal.setItemAnimator(new DefaultItemAnimator());
@@ -45,9 +52,14 @@ public class JadwalKunjunganFragment extends Fragment {
         adapter = new JadwalKunjunganAdapter(activity, listDonatur);
         rv_jadwal.setAdapter(adapter);
 
+        loadData();
         loadJadwal();
 
         return v;
+    }
+
+    private void loadData(){
+        txt_tanggal.setText(Converter.getDateString(new Date()));
     }
 
     private void loadJadwal(){

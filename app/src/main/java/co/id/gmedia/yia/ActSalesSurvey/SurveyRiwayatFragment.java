@@ -1,5 +1,4 @@
-package co.id.gmedia.yia.ActCollector;
-
+package co.id.gmedia.yia.ActSalesSurvey;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -18,33 +17,34 @@ import java.util.Date;
 import java.util.List;
 
 import co.id.gmedia.yia.ActCollector.Adapter.HistoryCollectorAdapter;
+import co.id.gmedia.yia.ActCollector.Adapter.JadwalKunjunganAdapter;
+import co.id.gmedia.yia.ActSalesSurvey.Adapter.SurveyRiwayatAdapter;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.Model.HistoryDonaturModel;
+import co.id.gmedia.yia.Model.SurveyRiwayatModel;
 import co.id.gmedia.yia.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class HistoryCollectorFragment extends Fragment {
+public class SurveyRiwayatFragment extends Fragment {
 
     private Activity activity;
-    private HistoryCollectorAdapter adapter;
-    private List<HistoryDonaturModel> listDonatur = new ArrayList<>();
+    private SurveyRiwayatAdapter adapter;
+    private List<SurveyRiwayatModel> listDonatur = new ArrayList<>();
 
-    public HistoryCollectorFragment() {
+    public SurveyRiwayatFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         activity = getActivity();
-        View v = inflater.inflate(R.layout.fragment_history_collector, container, false);
+        View v = inflater.inflate(R.layout.fragment_survey_riwayat, container, false);
 
         RecyclerView rv_history = v.findViewById(R.id.rv_history);
         rv_history.setItemAnimator(new DefaultItemAnimator());
         rv_history.setLayoutManager(new LinearLayoutManager(activity));
-        adapter = new HistoryCollectorAdapter(activity, listDonatur);
+        adapter = new SurveyRiwayatAdapter(activity, listDonatur);
         rv_history.setAdapter(adapter);
 
         loadHistory();
@@ -53,8 +53,8 @@ public class HistoryCollectorFragment extends Fragment {
     }
 
     private void loadHistory(){
-        listDonatur.add(new HistoryDonaturModel(new DonaturModel("Leonardus Irfan", "Jl. Menur Raya 16", "085742089087"), "continuous", "biasa", 200000, new Date(), true));
-        listDonatur.add(new HistoryDonaturModel(new DonaturModel("Bayu Mahendra", "Jl. Kasipah 19", "085742089087"), "single", "luar biasa", 1300000, new Date(), false));
+        listDonatur.add(new SurveyRiwayatModel(new DonaturModel("Leonardus Irfan", "Jl. Menur Raya 16", "085742089087"), "continuous", "biasa", new Date(), "Ya"));
+        listDonatur.add(new SurveyRiwayatModel(new DonaturModel("Bayu Mahendra", "Jl. Kasipah 19", "085742089087"), "single", "luar biasa", new Date(), "Tidak"));
         adapter.notifyDataSetChanged();
     }
 }
