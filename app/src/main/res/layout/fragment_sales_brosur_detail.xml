@@ -46,6 +46,7 @@
                     android:background="@drawable/bg_input"
                     android:inputType="textPersonName"
                     android:imeOptions="actionNext"
+                    android:id="@+id/edt_nama"
                     android:textSize="@dimen/text_small"
                     android:layout_marginTop="@dimen/padding_default"
                     android:padding="@dimen/padding_default"/>
@@ -86,13 +87,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_input"
-                    android:layout_marginTop="@dimen/padding_default"
-                    android:padding="@dimen/padding_default">
+                    android:paddingLeft="@dimen/padding_default"
+                    android:paddingRight="@dimen/padding_default"
+                    >
 
                     <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"
                         android:id="@+id/sp_kota"/>
                 </RelativeLayout>
 
@@ -109,13 +110,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_input"
-                    android:layout_marginTop="@dimen/padding_default"
-                    android:padding="@dimen/padding_default">
+                    android:paddingLeft="@dimen/padding_default"
+                    android:paddingRight="@dimen/padding_default"
+                    >
 
                     <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"
                         android:id="@+id/sp_kecamatan"/>
                 </RelativeLayout>
 
@@ -132,13 +133,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_input"
-                    android:layout_marginTop="@dimen/padding_default"
-                    android:padding="@dimen/padding_default">
+                    android:paddingLeft="@dimen/padding_default"
+                    android:paddingRight="@dimen/padding_default"
+                    >
 
                     <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"
                         android:id="@+id/sp_kelurahan"/>
                 </RelativeLayout>
 
@@ -216,6 +217,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Latitude"
+                            android:id="@+id/tv_latitude"
                             android:gravity="center"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/text_small"/>
@@ -240,6 +242,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Longitude"
+                            android:id="@+id/tv_longitude"
                             android:gravity="center"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/text_small"/>
@@ -258,12 +261,13 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:id="@+id/ll_buka_map"
                         android:gravity="center">
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="35dp"
-                            android:src="@mipmap/ic_launcher"
+                            android:layout_height="54dp"
+                            android:src="@drawable/ic_map"
                             android:scaleType="centerInside"/>
 
                         <TextView
@@ -274,8 +278,6 @@
                             android:textSize="@dimen/text_small"/>
 
                     </LinearLayout>
-
-
 
                 </LinearLayout>
             </LinearLayout>
@@ -350,6 +352,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:id="@+id/rl_photo"
                     android:background="@drawable/bg_button_green">
 
                     <ImageView
@@ -390,8 +393,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_marginTop="@dimen/padding_default"/>
+            android:id="@+id/rv_photo"
+            android:layout_height="@dimen/image_height"
+            android:layout_marginTop="@dimen/padding_big"/>
 
         <Button
             android:layout_width="match_parent"
@@ -399,7 +403,9 @@
             android:background="@drawable/bg_button_green"
             android:textColor="@color/colorWhite"
             android:text="Simpan Data"
-            android:layout_marginTop="40dp"/>
+            android:id="@+id/btn_simpan"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"/>
     </LinearLayout>
 
 </FrameLayout>

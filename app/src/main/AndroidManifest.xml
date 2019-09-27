@@ -11,28 +11,42 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ActSalesSurvey.SalesSurveyActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <!-- Service -->
-        <!-- [START fcm_default_channel] -->
+        <activity android:name=".ActCollector.CollectorDonaturDetailActivity"></activity>
+        <activity android:name=".ActSalesSurvey.SalesSurveyDetailActivity" />
+        <activity
+            android:name=".ActSalesBrosur.DetailCurrentPosActivity"
+            android:label="@string/title_activity_detail_current_pos"
+            android:screenOrientation="portrait" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <activity
+            android:name=".ActSalesSosial.SalesSosialJadwalDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HomeSocialSalesActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- [END fcm_default_channel] -->
-        <!-- Service -->
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ActSalesSurvey.SalesSurveyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActAkun.DetailAkunActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ActCollector.CollectorActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.ActTambahCalon.ListCalonActivity"
             android:screenOrientation="portrait" />
@@ -40,7 +54,6 @@
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
-
         <activity
             android:name=".SlashScreenActivity"
             android:screenOrientation="portrait"
@@ -50,38 +63,24 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Service -->
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
-        <meta-data
-            android:name="firebase_messaging_auto_init_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="firebase_analytics_collection_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_logo" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorGreen1" />
-        <service android:name=".NotificationUtils.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <service android:name=".NotificationUtils.TokenGetter" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAPMiCnCbTXTDgASeh0XhJL5B1GBM1b_e0" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

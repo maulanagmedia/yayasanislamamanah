@@ -28,27 +28,38 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fxn.pix.Options;
 import com.fxn.pix.Pix;
 import com.fxn.utility.ImageQuality;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.ImageUtils;
+import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.LoginActivity;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.ServerURL;
 
 public class DetailAkunActivity extends AppCompatActivity {
 
     private Context context;
     private SessionManager session;
+    private ItemValidation iv = new ItemValidation();
     private ImageView ivProfileMain, ivProfile, ivNama, ivKontak, ivPassword;
     private TextView tvNama, tvKontak, tvPassword;
     private RelativeLayout rlLogout;
+    private ImageUtils imageUtils = new ImageUtils();
 
     private int imageRequestCode = 100;
 
@@ -59,6 +70,7 @@ public class DetailAkunActivity extends AppCompatActivity {
             Manifest.permission.CAMERA
     };
     private final int PERMIOSSION_REQUEST_CODE = 1240;
+    private DialogBox dialogBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +85,7 @@ public class DetailAkunActivity extends AppCompatActivity {
         setTitle("Setelan Akun");
         context = this;
         session = new SessionManager(context);
+        dialogBox = new DialogBox(context);
 
         if (checkPermission()){
 
@@ -80,6 +93,7 @@ public class DetailAkunActivity extends AppCompatActivity {
 
         initUI();
         initEvent();
+        initData();
     }
 
     private boolean checkPermission(){
@@ -146,7 +160,7 @@ public class DetailAkunActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                showLabel("Masukkan Nama Anda", "", "", false);
+                showLabel("Masukkan Nama Anda", "", "",1, session.getNama(), false);
             }
         });
 
@@ -154,7 +168,7 @@ public class DetailAkunActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                showLabel("Masukkan Kontak Anda", "", "", false);
+                showLabel("Masukkan Kontak Anda", "", "",2, session.getKontak(), false);
             }
         });
 
@@ -162,7 +176,7 @@ public class DetailAkunActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                showLabel("Masukkan Password Lama", "Masukkan Password Baru", "Ketik Ulang Password Baru", true);
+                showLabel("Masukkan Password Lama", "Masukkan Password Baru", "Ketik Ulang Password Baru", 3, "", true);
             }
         });
 
@@ -210,6 +224,13 @@ public class DetailAkunActivity extends AppCompatActivity {
         });
     }
 
+    private void initData() {
+
+        tvNama.setText(session.getNama());
+        tvKontak.setText(session.getKontak());
+        imageUtils.LoadCircleRealImage(session.getFoto(), ivProfileMain);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -218,15 +239,90 @@ public class DetailAkunActivity extends AppCompatActivity {
 
             if(returnValue.size() > 0) {
 
-                ImageUtils ui = new ImageUtils();
                 File f = new File(returnValue.get(0));
-                Bitmap d = new BitmapDrawable(context.getResources(), f.getAbsolutePath()).getBitmap();
-                ui.LoadCircleRealImage((ImageUtils.getImageUri(context, d)).toString(), ivProfileMain);
+                Bitmap b = new BitmapDrawable(context.getResources(), f.getAbsolutePath()).getBitmap();
+                imageUtils.LoadCircleRealImage((ImageUtils.getImageUri(context, b)).toString(), ivProfileMain);
+
+                saveDataAkun(session.getNama(), session.getKontak(), ImageUtils.convert(b));
             }
         }
     }
 
-    private void showLabel(String label, String label1, String label2, boolean isPassword){
+    private void saveDataAkun(final String nama,final String kontak,final String foto) {
+
+        dialogBox.showDialog(false);
+
+        JSONObject jBody = new JSONObject();
+        try {
+            jBody.put("id", session.getId());
+            jBody.put("nik", session.getNik());
+            jBody.put("nama", nama);
+            jBody.put("no_telp", kontak);
+            jBody.put("email", session.getEmail());
+            jBody.put("foto_profil", foto);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new ApiVolley(context, jBody, "POST", ServerURL.updateAkun, new ApiVolley.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+                dialogBox.dismissDialog();
+                try {
+
+                    JSONObject response = new JSONObject(result);
+                    String status = response.getJSONObject("metadata").getString("status");
+                    String message = response.getJSONObject("metadata").getString("message");
+
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    if(iv.parseNullInteger(status) == 200){
+
+                        JSONObject jo = response.getJSONObject("response");
+
+                        session.saveSession(
+                                jo.getString("nama")
+                                , jo.getString("no_telp")
+                                , jo.getString("foto_profil"));
+
+                        tvNama.setText(jo.getString("nama"));
+                        tvKontak.setText(jo.getString("no_telp"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    View.OnClickListener clickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            dialogBox.dismissDialog();
+                            saveDataAkun(nama, kontak, foto);
+
+                        }
+                    };
+
+                    dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                }
+            }
+
+            @Override
+            public void onError(String result) {
+                dialogBox.dismissDialog();
+                View.OnClickListener clickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialogBox.dismissDialog();
+                        saveDataAkun(nama, kontak, foto);
+
+                    }
+                };
+
+                dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+            }
+        });
+    }
+
+    private void showLabel(String label, String label1, String label2, final int jenis, String value, boolean isPassword){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = (LayoutInflater) ((Activity)context).getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -248,6 +344,8 @@ public class DetailAkunActivity extends AppCompatActivity {
         tvLabel.setText(label);
         tvLabel1.setText(label1);
         tvLabel2.setText(label2);
+
+        edtValue.setText(value);
 
         if(isPassword){
 
@@ -299,6 +397,16 @@ public class DetailAkunActivity extends AppCompatActivity {
                         alertDialogs.dismiss();
                     }catch (Exception e){
                         e.printStackTrace();
+                    }
+
+                    if(jenis == 1) {
+
+                        Bitmap b = ((BitmapDrawable)ivProfileMain.getDrawable()).getBitmap();
+                        saveDataAkun(edtValue.getText().toString(), session.getKontak(), ImageUtils.convert(b));
+                    }else if (jenis == 2){
+
+                        Bitmap b = ((BitmapDrawable)ivProfileMain.getDrawable()).getBitmap();
+                        saveDataAkun(session.getNama(), edtValue.getText().toString(), ImageUtils.convert(b));
                     }
                 }
             }

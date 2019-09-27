@@ -35,7 +35,7 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_profile"
+                    android:src="@drawable/ic_name"
                     android:layout_margin="@dimen/dp10"/>
 
                 <TextView
@@ -69,7 +69,7 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_profile"
+                    android:src="@drawable/ic_location"
                     android:layout_margin="@dimen/dp10"/>
 
                 <TextView
@@ -82,17 +82,20 @@
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/txt_kota"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:background="@drawable/style_textview_gray"
-                android:padding="@dimen/dp10"
-                android:inputType="text"
+                android:background="@drawable/bg_input"
+                android:layout_marginTop="@dimen/dp10"
                 android:layout_marginStart="@dimen/dp40"
-                android:textColor="#4F4F4F"/>
+                android:paddingRight="@dimen/padding_default"
+                >
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sp_kota"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -104,18 +107,20 @@
                 android:layout_marginStart="@dimen/dp40"
                 android:textColor="@color/color_black"/>
 
-            <EditText
-                android:id="@+id/txt_kecamatan"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:background="@drawable/style_textview_gray"
-                android:padding="@dimen/dp10"
+                android:background="@drawable/bg_input"
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginStart="@dimen/dp40"
-                android:textColor="#4F4F4F"/>
+                android:paddingRight="@dimen/padding_default"
+                >
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sp_kecamatan"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -127,18 +132,20 @@
                 android:layout_marginStart="@dimen/dp40"
                 android:textColor="@color/color_black"/>
 
-            <EditText
-                android:id="@+id/txt_kelurahan"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:background="@drawable/style_textview_gray"
-                android:padding="@dimen/dp10"
+                android:background="@drawable/bg_input"
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginStart="@dimen/dp40"
-                android:textColor="#4F4F4F"/>
+                android:paddingRight="@dimen/padding_default"
+                >
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sp_kelurahan"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -172,7 +179,7 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_profile"
+                    android:src="@drawable/ic_kontak"
                     android:layout_margin="@dimen/dp10"/>
 
                 <TextView

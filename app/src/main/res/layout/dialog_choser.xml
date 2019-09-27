@@ -25,43 +25,36 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_big"
+                    android:paddingTop="@dimen/padding_default"
+                    android:paddingLeft="@dimen/padding_big"
+                    android:paddingRight="@dimen/padding_big"
+                    android:paddingBottom="@dimen/padding_big"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Masukkan Nama Anda"
-                        android:textColor="@color/colorBlack"
-                        android:textStyle="bold"
-                        android:id="@+id/tv_label"/>
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:src="@drawable/ic_close_black"
+                        android:id="@+id/iv_close"
+                        android:layout_gravity="right"/>
 
-                    <EditText
+                    <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/edt_value"
-                        android:imeOptions="actionDone"
-                        android:layout_marginTop="@dimen/padding_default"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:background="@drawable/bg_button_green"
+                        android:text="Hubungi"
                         android:layout_marginTop="@dimen/padding_default"
-                        android:gravity="right">
+                        android:id="@+id/btn_1"
+                        android:textColor="@color/colorWhite"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:background="@color/colorWhite"
-                            android:text="Batal"
-                            android:paddingLeft="@dimen/padding_default"
-                            android:paddingRight="@dimen/padding_default"
-                            android:gravity="center"
-                            android:id="@+id/tv_batal"
-                            android:layout_marginRight="@dimen/padding_default"/>
-
-                    </LinearLayout>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_big"
+                        android:background="@drawable/bg_button_white"
+                        android:text="Lihat Map"
+                        android:id="@+id/btn_2"
+                        android:textColor="@color/colorGreen1"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

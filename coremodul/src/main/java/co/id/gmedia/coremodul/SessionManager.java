@@ -25,9 +25,13 @@ public class SessionManager {
     public static final String TAG_USERNAME = "username";
     public static final String TAG_PASSWORD= "password";
     public static final String TAG_NIK = "nik";
-    public static final String TAG_NAMA= "nama";
-    public static final String TAG_LEVEL= "level";
-    public static final String TAG_LEVELNAMA= "level_nama";
+    public static final String TAG_NAMA = "nama";
+    public static final String TAG_LEVEL = "level";
+    public static final String TAG_LEVELNAMA = "level_nama";
+    public static final String TAG_EMAIL = "email";
+    public static final String TAG_FOTO = "foto";
+    public static final String TAG_KONTAK = "kontak";
+    public static final String TAG_ID = "id_record";
 
     // Constructor
     public SessionManager(Context context){
@@ -39,7 +43,9 @@ public class SessionManager {
     /**
      * Create login session
      * */
-    public void createLoginSession(String username, String nik, String nama, String level, String levelNama){
+    public void createLoginSession(String id, String username, String nik, String nama, String level, String levelNama, String email, String foto, String kontak){
+
+        editor.putString(TAG_ID, id);
 
         editor.putString(TAG_USERNAME, username);
 
@@ -50,6 +56,24 @@ public class SessionManager {
         editor.putString(TAG_LEVEL, level);
 
         editor.putString(TAG_LEVELNAMA, levelNama);
+
+        editor.putString(TAG_EMAIL, email);
+
+        editor.putString(TAG_FOTO, foto);
+
+        editor.putString(TAG_KONTAK, kontak);
+
+        // commit changes
+        editor.commit();
+    }
+
+    public void saveSession(String nama, String kontak, String foto){
+
+        editor.putString(TAG_NAMA, nama);
+
+        editor.putString(TAG_FOTO, foto);
+
+        editor.putString(TAG_KONTAK, kontak);
 
         // commit changes
         editor.commit();
@@ -70,6 +94,10 @@ public class SessionManager {
         return pref.getString(key, "");
     }
 
+    public String getId(){
+        return pref.getString(TAG_ID, "");
+    }
+
     public String getUsername(){
         return pref.getString(TAG_USERNAME, "");
     }
@@ -88,6 +116,18 @@ public class SessionManager {
 
     public String getLevelNama(){
         return pref.getString(TAG_LEVELNAMA, "");
+    }
+
+    public String getEmail(){
+        return pref.getString(TAG_EMAIL, "");
+    }
+
+    public String getFoto(){
+        return pref.getString(TAG_FOTO, "");
+    }
+
+    public String getKontak(){
+        return pref.getString(TAG_KONTAK, "");
     }
 
     /**

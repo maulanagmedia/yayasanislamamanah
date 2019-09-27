@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActCollector.CollectorDonaturDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/padding_default"
+            android:paddingTop="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_big"
+            android:paddingRight="@dimen/padding_big">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size3"
+                    android:layout_height="@dimen/icon_size3"
+                    android:src="@drawable/ic_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:id="@+id/ic_nama"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@id/ic_nama"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_alignParentBottom="true"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Nama"
+                        android:id="@+id/tv_nama"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_small"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size3"
+                    android:layout_height="@dimen/icon_size3"
+                    android:src="@drawable/ic_location"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:id="@+id/ic_pass"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@id/ic_pass"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_alignParentBottom="true"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Alamat"
+                        android:id="@+id/tv_alamat"
+                        android:ellipsize="none"
+                        android:textSize="@dimen/text_small"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size3"
+                    android:layout_height="@dimen/icon_size3"
+                    android:src="@drawable/ic_kontak"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:id="@+id/ic_kontak"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@id/ic_kontak"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_alignParentBottom="true"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Kontak"
+                        android:id="@+id/tv_kontak"
+                        android:textSize="@dimen/text_small"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp5"
+            android:layout_marginTop="@dimen/padding_default"
+            android:background="@color/colorGAP"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_medium"
+            android:paddingRight="@dimen/padding_big">
+
+            <ImageView
+                android:layout_width="@dimen/icon_size4"
+                android:layout_height="@dimen/icon_size4"
+                android:src="@drawable/ic_wallet"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/padding_small"
+                android:layout_marginRight="@dimen/padding_small"
+                android:id="@+id/ic_wallet"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ic_wallet"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lobi Kaleng"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_big" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ya"
+                    android:id="@+id/tv_lobi_kaleng"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_small"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp5"
+            android:layout_marginTop="@dimen/padding_default"
+            android:background="@color/colorGAP"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/padding_default"
+            android:layout_marginLeft="@dimen/padding_big"
+            android:paddingLeft="@dimen/padding_big"
+            android:paddingRight="@dimen/padding_big"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jumlah Donasi"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_big" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Isi jumlah donasi oleh donatur?"
+                android:textSize="@dimen/text_small"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_default"
+                android:background="@drawable/bg_input"
+                android:id="@+id/edt_donasi"
+                android:textSize="@dimen/text_small"
+                android:padding="@dimen/padding_default"
+                android:inputType="numberSigned"
+                android:imeOptions="actionDone"
+                android:hint="Rp "
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button_green"
+            android:textColor="@color/colorWhite"
+            android:text="Simpan Data"
+            android:id="@+id/btn_simpan"
+            android:layout_marginLeft="@dimen/padding_big"
+            android:layout_marginRight="@dimen/padding_big"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
+
+</ScrollView>

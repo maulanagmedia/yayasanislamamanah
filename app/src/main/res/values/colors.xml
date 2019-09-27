@@ -24,4 +24,5 @@
     <color name="colorLogin">#21810D</color>
     <color name="colorGreyActive">#E0E0E0</color>
     <color name="colorGreyDeactive">#C0C0C0</color>
+    <color name="colorGAP">#ECECEC</color>
 </resources>

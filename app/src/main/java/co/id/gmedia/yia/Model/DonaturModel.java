@@ -13,6 +13,13 @@ public class DonaturModel {
         this.kontak = kontak;
     }
 
+    public DonaturModel(String nama, String alamat, String kontak, boolean dikunjungi){
+        this.nama = nama;
+        this.alamat = alamat;
+        this.kontak = kontak;
+        this.dikunjungi = dikunjungi;
+    }
+
     public void setDikunjungi(boolean dikunjungi) {
         this.dikunjungi = dikunjungi;
     }
@@ -32,4 +39,5 @@ public class DonaturModel {
     public String getKontak() {
         return kontak;
     }
+
 }

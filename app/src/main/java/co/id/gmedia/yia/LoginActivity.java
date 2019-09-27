@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -104,6 +105,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void doLogin(){
+
+        /*session.createLoginSession(edtUsername.getText().toString()
+                , "100"
+                , "Maul Kalem"
+                , "2"
+                , "Brosur"
+        );
+
+        redirectToLogin();*/
         dialogBox.showDialog(false);
         JSONObject jBody = new JSONObject();
         try {
@@ -127,11 +137,16 @@ public class LoginActivity extends AppCompatActivity {
                     if(iv.parseNullInteger(status) == 200){
 
                         JSONObject jo = response.getJSONObject("response");
-                        session.createLoginSession(jo.getString("username")
+                        session.createLoginSession(
+                                jo.getString("id")
+                                , jo.getString("username")
                                 , jo.getString("nik")
                                 , jo.getString("nama")
                                 , jo.getString("level")
                                 , jo.getString("ket_level")
+                                , jo.getString("email")
+                                , jo.getString("foto_profil")
+                                , jo.getString("no_telp")
                                 );
 
                         redirectToLogin();
@@ -180,6 +195,9 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case "2" :
                 intent = new Intent(context, HomeSocialSalesActivity.class);
+                break;
+            case "3" :
+                intent = new Intent(context, SalesSurveyActivity.class);
                 break;
             case "4":
                 intent = new Intent(context, CollectorActivity.class);

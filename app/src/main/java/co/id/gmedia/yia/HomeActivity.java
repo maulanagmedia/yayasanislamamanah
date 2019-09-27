@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActSalesBrosur.SalesBrosurDetailFragment;
@@ -42,6 +43,8 @@ public class HomeActivity extends AppCompatActivity {
     private LinearLayout llAkun;
     private TextView tvAdmin;
     private SessionManager session;
+    private ImageView ivProfile;
+    private ImageUtils imageUtils = new ImageUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,11 +112,19 @@ public class HomeActivity extends AppCompatActivity {
         vInfo = (View) findViewById(R.id.v_info);
         vRiwayat = (View) findViewById(R.id.v_riwayat);
         tvAdmin = (TextView) findViewById(R.id.tv_admin);
+        ivProfile = (ImageView) findViewById(R.id.iv_profile);
 
         session = new SessionManager(context);
-        tvAdmin.setText(session.getNama());
 
         changeState(2);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        tvAdmin.setText(session.getNama());
+        imageUtils.LoadCircleRealImage(session.getFoto(), ivProfile);
     }
 
     private void initEvent() {

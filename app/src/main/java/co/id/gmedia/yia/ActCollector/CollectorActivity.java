@@ -3,6 +3,7 @@ package co.id.gmedia.yia.ActCollector;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -97,6 +98,10 @@ public class CollectorActivity extends AppCompatActivity {
 
         collapsingToolbarLayout = findViewById(R.id.collapsing);
         collapsingToolbarLayout.setTitle("");
+        collapsingToolbarLayout.setCollapsedTitleTextColor(
+                ContextCompat.getColor(this, R.color.colorWhite));
+        collapsingToolbarLayout.setExpandedTitleColor(
+                ContextCompat.getColor(this, R.color.colorPrimary));
 
         AppBarLayout appBarLayout = findViewById(R.id.appbar);
         appBarLayout.setExpanded(true);

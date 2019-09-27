@@ -22,12 +22,16 @@
     <dimen name="text_title">24sp</dimen>
     <dimen name="text_big">16sp</dimen>
     <dimen name="text_20">20sp</dimen>
+    <dimen name="icon_size_big">30dp</dimen>
     <dimen name="icon_size">24dp</dimen>
     <dimen name="icon_size1">20dp</dimen>
+    <dimen name="icon_size4">18dp</dimen>
     <dimen name="icon_size2">14dp</dimen>
+    <dimen name="icon_size3">12dp</dimen>
     <dimen name="menu_size">4dp</dimen>
     <dimen name="default_corner">4dp</dimen>
     <dimen name="default_login_corner">8dp</dimen>
+    <dimen name="image_height">200dp</dimen>
 
     <dimen name="dp5">5dp</dimen>
     <dimen name="dp20">20dp</dimen>

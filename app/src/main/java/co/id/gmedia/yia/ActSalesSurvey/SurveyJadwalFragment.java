@@ -65,8 +65,9 @@ public class SurveyJadwalFragment extends Fragment {
     }
 
     private void loadJadwal(){
-        listDonatur.add(new DonaturModel("Bapak Jaya Selalu", "Jl. Mangga Dalam Selatan - Srondol Wetan", "081234938940"));
-        listDonatur.add(new DonaturModel("Leonardus Irfan", "Jl. Kasipah 19", "081234938940"));
+
+        listDonatur.add(new DonaturModel("Bapak Jaya Selalu", "Jl. Mangga Dalam Selatan - Srondol Wetan", "081234938940", true));
+        listDonatur.add(new DonaturModel("Leonardus Irfan", "Jl. Kasipah 19", "081234938940", false));
         adapter.notifyDataSetChanged();
     }
 }

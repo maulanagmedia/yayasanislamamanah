@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import co.id.gmedia.yia.ActCollector.Adapter.JadwalKunjunganAdapter;
+import co.id.gmedia.yia.ActCollector.Adapter.JadwalKunjunganCollectorAdapter;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.Converter;
@@ -29,7 +30,7 @@ import co.id.gmedia.yia.Utils.Converter;
 public class CollectorJadwalFragment extends Fragment {
 
     private Activity activity;
-    private JadwalKunjunganAdapter adapter;
+    private JadwalKunjunganCollectorAdapter adapter;
     private List<DonaturModel> listDonatur = new ArrayList<>();
 
     private TextView txt_tanggal;
@@ -49,7 +50,7 @@ public class CollectorJadwalFragment extends Fragment {
         RecyclerView rv_jadwal = v.findViewById(R.id.rv_jadwal);
         rv_jadwal.setItemAnimator(new DefaultItemAnimator());
         rv_jadwal.setLayoutManager(new LinearLayoutManager(activity));
-        adapter = new JadwalKunjunganAdapter(activity, listDonatur);
+        adapter = new JadwalKunjunganCollectorAdapter(activity, listDonatur);
         rv_jadwal.setAdapter(adapter);
 
         loadData();
@@ -63,8 +64,9 @@ public class CollectorJadwalFragment extends Fragment {
     }
 
     private void loadJadwal(){
-        listDonatur.add(new DonaturModel("Bapak Jaya Selalu", "Jl. Mangga Dalam Selatan - Srondol Wetan", "081234938940"));
-        listDonatur.add(new DonaturModel("Leonardus Irfan", "Jl. Kasipah 19", "081234938940"));
+
+        listDonatur.add(new DonaturModel("Bapak Jaya Selalu", "Jl. Mangga Dalam Selatan - Srondol Wetan", "081234938940", false));
+        listDonatur.add(new DonaturModel("Leonardus Irfan", "Jl. Kasipah 19", "081234938940", true));
         adapter.notifyDataSetChanged();
     }
 }

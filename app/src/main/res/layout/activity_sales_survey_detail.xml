@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActSalesSurvey.SalesSurveyDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/padding_default"
+            android:paddingTop="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_big"
+            android:paddingRight="@dimen/padding_big">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size3"
+                    android:layout_height="@dimen/icon_size3"
+                    android:src="@drawable/ic_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:id="@+id/ic_nama"/>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size1"
+                    android:layout_height="@dimen/icon_size1"
+                    android:src="@drawable/ic_edit"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/iv_edit"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_input"
+                    android:layout_toLeftOf="@id/iv_edit"
+                    android:layout_toRightOf="@id/ic_nama"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_alignParentBottom="true"
+                    android:padding="@dimen/padding_small"
+                    >
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/colorBlack"
+                        android:text="Nama"
+                        android:id="@+id/edt_nama"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_small"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_default">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size3"
+                    android:layout_height="@dimen/icon_size3"
+                    android:src="@drawable/ic_location"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:id="@+id/ic_pass"/>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size1"
+                    android:layout_height="@dimen/icon_size1"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/iv_pass"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_input"
+                    android:layout_toLeftOf="@id/iv_pass"
+                    android:layout_toRightOf="@id/ic_pass"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_alignParentBottom="true"
+                    android:padding="@dimen/padding_small"
+                    >
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:minHeight="24dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/colorBlack"
+                        android:text="Alamat"
+                        android:id="@+id/edt_alamat"
+                        android:textSize="@dimen/text_small"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_default">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size3"
+                    android:layout_height="@dimen/icon_size3"
+                    android:src="@drawable/ic_kontak"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:id="@+id/ic_kontak"/>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size1"
+                    android:layout_height="@dimen/icon_size1"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/iv_kontak"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_input"
+                    android:layout_toLeftOf="@id/iv_kontak"
+                    android:layout_toRightOf="@id/ic_kontak"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_alignParentBottom="true"
+                    android:padding="@dimen/padding_small"
+                    >
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/colorBlack"
+                        android:text="Kontak"
+                        android:id="@+id/edt_kontak"
+                        android:textSize="@dimen/text_small"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp5"
+            android:layout_marginTop="@dimen/padding_default"
+            android:background="@color/colorGAP"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_big"
+            android:paddingRight="@dimen/padding_big"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donasi"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_big" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Apakah beliau minat untuk berdonasi ?"
+                android:textSize="@dimen/text_small"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/padding_small"
+                android:id="@+id/rg_donasi"
+                android:weightSum="2">
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Ya"
+                    android:id="@+id/rb_donasi_ya"
+                    android:checked="true"
+                    android:textColor="@color/colorBlack"/>
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rb_donasi_tidak"
+                    android:text="Tidak"
+                    android:textColor="@color/colorBlack"/>
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp5"
+            android:layout_marginTop="@dimen/padding_default"
+            android:background="@color/colorGAP"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_big"
+            android:paddingRight="@dimen/padding_big"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lobi Kaleng"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_big" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Apakah beliau bersedia menggunakan kaleng untuk donasi?"
+                android:textSize="@dimen/text_small"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/padding_small"
+                android:id="@+id/rg_kaleng"
+                android:weightSum="2">
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Ya"
+                    android:id="@+id/rb_kaleng_ya"
+                    android:checked="true"
+                    android:textColor="@color/colorBlack"/>
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Tidak"
+                    android:id="@+id/rb_kaleng_tidak"
+                    android:textColor="@color/colorBlack"/>
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp5"
+            android:layout_marginTop="@dimen/padding_default"
+            android:background="@color/colorGAP"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_big"
+            android:paddingRight="@dimen/padding_big">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lokasi"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_big" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:minHeight="100dp"
+                android:gravity="center"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Latitude"
+                        android:id="@+id/tv_latitude"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Latitude"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_small"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Longitude"
+                        android:id="@+id/tv_longitude"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Longitude"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_small"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/ll_buka_map"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:src="@drawable/ic_map"
+                        android:scaleType="centerInside"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Buka Map"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_small"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp5"
+            android:layout_marginTop="@dimen/padding_default"
+            android:background="@color/colorGAP"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_big"
+            android:paddingRight="@dimen/padding_big">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/cv_photo"
+                android:layout_centerVertical="true"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="3dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_button_green"
+                    android:id="@+id/rl_photo">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:padding="@dimen/padding_default"
+                        android:src="@drawable/ic_camera"/>
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toLeftOf="@id/cv_photo">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:text="Tambah Foto"
+                    android:textSize="@dimen/text_big" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tambahkan foto pendukung informasi"
+                    android:textSize="@dimen/text_small" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_height"
+            android:layout_marginTop="@dimen/padding_big"
+            android:id="@+id/rv_photo"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button_green"
+            android:textColor="@color/colorWhite"
+            android:text="Simpan Data"
+            android:id="@+id/btn_simpan"
+            android:layout_marginLeft="@dimen/padding_big"
+            android:layout_marginRight="@dimen/padding_big"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
+
+</ScrollView>
