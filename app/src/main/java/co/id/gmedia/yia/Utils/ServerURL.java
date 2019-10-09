@@ -13,4 +13,5 @@ public class ServerURL {
     public static final String getKecamatan = baseURL + "Master/kecamatan/";
     public static final String getKelurahan = baseURL + "Master/kelurahan/";
     public static final String saveCalonDonatur = baseURL + "Donatur/add_calon_donatur/";
+    public static final String getCalonDonatur = baseURL + "Donatur/calon_donatur/";
 }
