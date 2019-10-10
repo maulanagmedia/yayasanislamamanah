@@ -73,14 +73,19 @@ public class CollectorActivity extends AppCompatActivity {
         });
 
         loadFragment(new CollectorJadwalFragment());
+    }
+
+    @Override
+    protected void onResume() {
         loadProfil();
+        super.onResume();
     }
 
     private void loadProfil(){
         SessionManager session = new SessionManager(this);
         txt_nama.setText(session.getNama());
         ImageUtils imageUtils = new ImageUtils();
-        imageUtils.LoadRealImage(session.getFoto(), img_foto, 100, 100);
+        imageUtils.LoadRealImage(session.getFoto(), img_foto);
     }
 
     public void updateJumlah(int jumlah){

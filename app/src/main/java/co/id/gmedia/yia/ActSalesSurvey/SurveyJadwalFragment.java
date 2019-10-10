@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -69,22 +70,27 @@ public class SurveyJadwalFragment extends Fragment {
         session = new SessionManager(activity);
         dialogBox = new DialogBox(activity);
 
+        return v;
+    }
+
+    @Override
+    public void onResume() {
         loadData();
         loadJadwal();
 
-        return v;
+        super.onResume();
     }
 
     private void loadData(){
         txt_tanggal.setText(Converter.getDateString(new Date()));
     }
 
-    private void loadJadwal(){
+    void loadJadwal(){
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
-        body.add("tgl_awal", "");
-        body.add("tgl_akhir", "");
+        body.add("tgl_awal", Converter.DToString(new Date()));
+        body.add("tgl_akhir", Converter.DToString(new Date()));
         body.add("keywoard", "");
 
         new ApiVolley(activity, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
@@ -93,7 +99,17 @@ public class SurveyJadwalFragment extends Fragment {
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
                         try{
-                            JSONObject object = new JSONObject(response);
+                            listDonatur.clear();
+                            JSONArray object = new JSONArray(response);
+                            for(int i = 0; i < object.length(); i++){
+                                JSONObject donatur = object.getJSONObject(i);
+                                listDonatur.add(new DonaturModel(donatur.getString("id"),
+                                        donatur.getString("id_donatur"), donatur.getString("nama"),
+                                        donatur.getString("alamat"), donatur.getString("kontak"),
+                                        donatur.getInt("status") == 0));
+                            }
+
+                            adapter.notifyDataSetChanged();
                         }
                         catch (JSONException e){
                             Log.e("json_log", e.getMessage());

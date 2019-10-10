@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,9 +33,6 @@ import co.id.gmedia.yia.Utils.Converter;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CollectorJadwalFragment extends Fragment {
 
     private Activity activity;

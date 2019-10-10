@@ -13,6 +13,7 @@ import java.util.Locale;
 public class Converter {
 
     private static SimpleDateFormat d_format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private static SimpleDateFormat d1_format = new SimpleDateFormat("yyyy-MM-01", Locale.getDefault());
     private static SimpleDateFormat d_format_string = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
     public static String doubleToRupiah(double value){
@@ -35,6 +36,10 @@ public class Converter {
 
     public static String DToString(Date date){
         return d_format.format(date);
+    }
+
+    public static String DToFirstDayOfMonthString(Date date){
+        return d1_format.format(date);
     }
 
     public static String convertToBase64(Bitmap bitmap){

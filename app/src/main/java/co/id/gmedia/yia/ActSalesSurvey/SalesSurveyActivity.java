@@ -8,24 +8,43 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.Date;
+
+import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.DialogBox;
+import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.AppRequestCallback;
+import co.id.gmedia.yia.Utils.Converter;
+import co.id.gmedia.yia.Utils.JSONBuilder;
+import co.id.gmedia.yia.Utils.ServerURL;
+import co.id.gmedia.yia.Utils.TopCropCircularImageView;
 
 public class SalesSurveyActivity extends AppCompatActivity {
 
     private TextView txt_nama, txt_jumlah_jadwal, txt_jumlah_riwayat;
+    private TopCropCircularImageView img_foto;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private Fragment active_fragment;
+
+    private DialogBox dialogBox;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +54,7 @@ public class SalesSurveyActivity extends AppCompatActivity {
         txt_nama = findViewById(R.id.txt_nama);
         txt_jumlah_jadwal = findViewById(R.id.txt_jumlah_jadwal);
         txt_jumlah_riwayat = findViewById(R.id.txt_jumlah_riwayat);
+        img_foto = findViewById(R.id.img_foto);
 
         initToolbar();
         TabLayout tab_collector = findViewById(R.id.tab_collector);
@@ -57,22 +77,25 @@ public class SalesSurveyActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(new SurveyJadwalFragment());
-        initData();
+        dialogBox = new DialogBox(this);
+        sessionManager = new SessionManager(this);
+
+        active_fragment = new SurveyJadwalFragment();
+        loadFragment(active_fragment);
     }
 
     private void initData(){
         SessionManager session = new SessionManager(this);
         txt_nama.setText(session.getNama());
+        ImageUtils imageUtils = new ImageUtils();
+        imageUtils.LoadRealImage(session.getFoto(), img_foto);
     }
 
-    public void updateJumlah(boolean jadwal, int jumlah){
-        if(jadwal){
-            txt_jumlah_jadwal.setText(jumlah);
-        }
-        else{
-            txt_jumlah_riwayat.setText(jumlah);
-        }
+    @Override
+    protected void onResume() {
+        initData();
+        loadJadwalJumlah();
+        super.onResume();
     }
 
     private void switchTab(int position){
@@ -144,5 +167,111 @@ public class SalesSurveyActivity extends AppCompatActivity {
         else{
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void loadJadwalJumlah(){
+        dialogBox.showDialog(false);
+        JSONBuilder body = new JSONBuilder();
+        body.add("id_sales", sessionManager.getId());
+        body.add("tgl_awal", Converter.DToString(new Date()));
+        body.add("tgl_akhir", Converter.DToString(new Date()));
+        body.add("keywoard", "");
+
+        new ApiVolley(this, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
+                    @Override
+                    public void onSuccess(String response, String message) {
+                        try{
+                            JSONArray object = new JSONArray(response);
+                            txt_jumlah_jadwal.setText(String.valueOf(object.length()));
+                            loadHistoryJumlah();
+                        }
+                        catch (JSONException e){
+                            dialogBox.dismissDialog();
+                            Log.e("json_log", e.getMessage());
+                            View.OnClickListener clickListener = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialogBox.dismissDialog();
+                                    loadJadwalJumlah();
+                                }
+                            };
+
+                            dialogBox.showDialog(clickListener, "Ulangi Proses",
+                                    "Terjadi kesalahan saat mengambil data");
+                        }
+                    }
+
+                    @Override
+                    public void onEmpty(String message) {
+                        dialogBox.dismissDialog();
+                    }
+
+                    @Override
+                    public void onFail(String message) {
+                        dialogBox.dismissDialog();
+                        View.OnClickListener clickListener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialogBox.dismissDialog();
+                                loadJadwalJumlah();
+                            }
+                        };
+
+                        dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                    }
+                }));
+    }
+
+    private void loadHistoryJumlah(){
+        JSONBuilder body = new JSONBuilder();
+        body.add("id_sales", sessionManager.getId());
+        body.add("tgl_awal", Converter.DToFirstDayOfMonthString(new Date()));
+        body.add("tgl_akhir", Converter.DToString(new Date()));
+        body.add("keywoard", "");
+
+        new ApiVolley(this, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
+                    @Override
+                    public void onSuccess(String response, String message) {
+                        dialogBox.dismissDialog();
+                        try{
+                            JSONArray object = new JSONArray(response);
+                            txt_jumlah_riwayat.setText(String.valueOf(object.length()));
+                        }
+                        catch (JSONException e){
+                            Log.e("json_log", e.getMessage());
+                            View.OnClickListener clickListener = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialogBox.dismissDialog();
+                                    loadHistoryJumlah();
+                                }
+                            };
+
+                            dialogBox.showDialog(clickListener, "Ulangi Proses",
+                                    "Terjadi kesalahan saat mengambil data");
+                        }
+                    }
+
+                    @Override
+                    public void onEmpty(String message) {
+                        dialogBox.dismissDialog();
+                    }
+
+                    @Override
+                    public void onFail(String message) {
+                        dialogBox.dismissDialog();
+                        View.OnClickListener clickListener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialogBox.dismissDialog();
+                                loadHistoryJumlah();
+                            }
+                        };
+
+                        dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                    }
+                }));
     }
 }

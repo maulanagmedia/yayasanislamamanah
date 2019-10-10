@@ -3,30 +3,30 @@ package co.id.gmedia.yia.ActSalesSurvey;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
 
 import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.SessionManager;
+import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
 public class SalesSurveyDetailActivity extends AppCompatActivity{
 
-    private String id_rencana_kerja = "";
-    private String id_donatur = "";
+    private DonaturModel donatur;
 
     private EditText edt_nama, edt_alamat, edt_kontak;
-    private RadioButton rb_donasi_ya, rb_donasi_tidak;
+    private RadioButton rb_donasi_ya;
 
     private SessionManager sessionManager;
     private DialogBox dialogBox;
@@ -45,21 +45,33 @@ public class SalesSurveyDetailActivity extends AppCompatActivity{
 
         setTitle("Detail Survey");
         initUI();
+
+        if(getIntent().hasExtra("donatur")){
+            Gson gson = new Gson();
+            donatur = gson.fromJson(getIntent().getStringExtra("donatur"), DonaturModel.class);
+            initDonatur();
+        }
+    }
+
+    private void initDonatur(){
+        edt_nama.setText(donatur.getNama());
+        edt_alamat.setText(donatur.getAlamat());
+        edt_kontak.setText(donatur.getKontak());
     }
 
     private void initUI() {
-
         edt_nama = findViewById(R.id.edt_nama);
         edt_alamat = findViewById(R.id.edt_alamat);
         edt_kontak = findViewById(R.id.edt_kontak);
 
         rb_donasi_ya = findViewById(R.id.rb_donasi_ya);
-        rb_donasi_tidak = findViewById(R.id.rb_donasi_tidak);
 
         findViewById(R.id.btn_simpan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                simpanSurvey();
+                if(donatur != null){
+                    simpanSurvey();
+                }
             }
         });
 
@@ -70,54 +82,37 @@ public class SalesSurveyDetailActivity extends AppCompatActivity{
         dialogBox.showDialog(false);
 
         JSONBuilder body = new JSONBuilder();
-        body.add("id_rk", id_rencana_kerja);
+        body.add("id_rk", donatur.getId());
         body.add("id_sales", sessionManager.getId());
-        body.add("id_donatur", id_donatur);
+        body.add("id_donatur", donatur.getId_donatur());
         body.add("status_donasi", rb_donasi_ya.isChecked()?1:0);
 
         new ApiVolley(this, body.create(), "POST", ServerURL.saveSurvey,
-                new ApiVolley.VolleyCallback() {
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
                     @Override
-                    public void onSuccess(String result) {
+                    public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
-                        Log.d("savesurvey_log", result);
-                        try{
-                            JSONObject object = new JSONObject(result);
-                        }
-                        catch (JSONException e){
-                            e.printStackTrace();
-                            View.OnClickListener clickListener = new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    dialogBox.dismissDialog();
-                                    simpanSurvey();
-                                }
-                            };
+                        Toast.makeText(SalesSurveyDetailActivity.this, message, Toast.LENGTH_SHORT).show();
 
-                            dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
-                        }
+                        finish();
                     }
 
                     @Override
-                    public void onError(String result) {
+                    public void onEmpty(String message) {
                         dialogBox.dismissDialog();
-                        View.OnClickListener clickListener = new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                dialogBox.dismissDialog();
-                                simpanSurvey();
-
-                            }
-                        };
-
-                        dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                        Toast.makeText(SalesSurveyDetailActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
-                });
+
+                    @Override
+                    public void onFail(String message) {
+                        dialogBox.dismissDialog();
+                        Toast.makeText(SalesSurveyDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                }));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();

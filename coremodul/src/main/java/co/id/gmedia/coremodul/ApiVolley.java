@@ -56,7 +56,7 @@ public class ApiVolley {
 
         session = new SessionManager(context);
         token0  = iv.encodeMD5(iv.encodeBase64(iv.getCurrentDate("SSSHHMMddmmyyyyss")));
-        token1  = session.getUsername();
+        token1  = session.getId();
         token2  = iv.getCurrentDate("SSSHHyyyyssMMddmm");
         token3  = iv.sha256(token1+"&"+token2,token1+"die");
         token4  = session.getNik();
