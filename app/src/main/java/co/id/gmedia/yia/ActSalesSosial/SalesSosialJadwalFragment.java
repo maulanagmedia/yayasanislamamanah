@@ -2,7 +2,6 @@ package co.id.gmedia.yia.ActSalesSosial;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -65,6 +64,7 @@ public class SalesSosialJadwalFragment extends Fragment {
         context = root.getContext();
         session = new SessionManager(context);
         initUI();
+
         return root;
     }
 

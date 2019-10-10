@@ -1,19 +1,20 @@
 package co.id.gmedia.yia.Model;
 
 public class DonaturModel {
+    private String id;
     private String nama;
     private String alamat;
     private String kontak;
 
     private boolean dikunjungi = false;
 
-    public DonaturModel(String nama, String alamat, String kontak){
+    public DonaturModel(String id, String nama, String alamat, String kontak){
         this.nama = nama;
         this.alamat = alamat;
         this.kontak = kontak;
     }
 
-    public DonaturModel(String nama, String alamat, String kontak, boolean dikunjungi){
+    public DonaturModel(String id, String nama, String alamat, String kontak, boolean dikunjungi){
         this.nama = nama;
         this.alamat = alamat;
         this.kontak = kontak;

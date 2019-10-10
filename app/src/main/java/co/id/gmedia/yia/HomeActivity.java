@@ -30,7 +30,6 @@ import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActSalesBrosur.SalesBrosurDetailFragment;
 import co.id.gmedia.yia.ActSalesBrosur.SalesBrosurRiwayatFragment;
-import co.id.gmedia.yia.ui.home.HomeFragment;
 
 public class HomeActivity extends AppCompatActivity {
 

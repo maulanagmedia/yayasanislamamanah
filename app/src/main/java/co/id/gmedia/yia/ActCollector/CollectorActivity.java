@@ -1,5 +1,6 @@
 package co.id.gmedia.yia.ActCollector;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,13 +25,19 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.File;
 import java.util.ArrayList;
 
+import co.id.gmedia.coremodul.ImageUtils;
+import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.GoogleLocationManager;
 import co.id.gmedia.yia.Utils.ServerURL;
+import co.id.gmedia.yia.Utils.TopCropCircularImageView;
 
 public class CollectorActivity extends AppCompatActivity {
 
     private TextView txt_nama, txt_jumlah;
+    private TopCropCircularImageView img_foto;
+
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private Fragment active_fragment;
 
@@ -41,12 +48,13 @@ public class CollectorActivity extends AppCompatActivity {
 
         txt_nama = findViewById(R.id.txt_nama);
         txt_jumlah = findViewById(R.id.txt_jumlah);
+        img_foto = findViewById(R.id.img_foto);
 
         initToolbar();
         TabLayout tab_collector = findViewById(R.id.tab_collector);
         tab_collector.addTab(tab_collector.newTab().setText("Jadwal Kunjungan"));
         tab_collector.addTab(tab_collector.newTab().setText("History Collector"));
-        tab_collector.addTab(tab_collector.newTab().setText("Tambahan Donatur"));
+        tab_collector.addTab(tab_collector.newTab().setText("Donatur Luar"));
         tab_collector.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -65,24 +73,30 @@ public class CollectorActivity extends AppCompatActivity {
         });
 
         loadFragment(new CollectorJadwalFragment());
-        loadData();
+        loadProfil();
     }
 
-    private void loadData(){
-        txt_nama.setText("John Doe");
-        txt_jumlah.setText("7");
+    private void loadProfil(){
+        SessionManager session = new SessionManager(this);
+        txt_nama.setText(session.getNama());
+        ImageUtils imageUtils = new ImageUtils();
+        imageUtils.LoadRealImage(session.getFoto(), img_foto, 100, 100);
+    }
+
+    public void updateJumlah(int jumlah){
+        txt_jumlah.setText(String.valueOf(jumlah));
     }
 
     private void switchTab(int position){
         switch (position){
-            case 0 : active_fragment = new CollectorJadwalFragment();break;
-            case 1 : active_fragment = new CollectorHistoryFragment();break;
-            case 2 : active_fragment = new CollectorTambahDonaturFragment();break;
+            case 0 : loadFragment(new CollectorJadwalFragment());break;
+            case 1 : loadFragment(new CollectorHistoryFragment());break;
+            case 2 : loadFragment(new CollectorTambahDonaturFragment());break;
         }
-        loadFragment(active_fragment);
     }
 
-    private void loadFragment(Fragment fragment){
+    public void loadFragment(Fragment fragment){
+        active_fragment = fragment;
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         trans.replace(R.id.layout_container, fragment);
         trans.commit();
@@ -160,5 +174,20 @@ public class CollectorActivity extends AppCompatActivity {
                 }
             }
         }
+        else if(requestCode == GoogleLocationManager.ACTIVATE_LOCATION){
+            if(active_fragment instanceof CollectorTambahDonaturFragment){
+                ((CollectorTambahDonaturFragment)active_fragment).retryLocation();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == GoogleLocationManager.PERMISSION_LOCATION){
+            if(active_fragment instanceof CollectorTambahDonaturFragment){
+                ((CollectorTambahDonaturFragment)active_fragment).retryLocation();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

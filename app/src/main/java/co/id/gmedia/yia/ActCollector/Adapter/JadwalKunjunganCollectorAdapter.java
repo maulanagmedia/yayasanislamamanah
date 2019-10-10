@@ -23,7 +23,6 @@ import java.util.List;
 
 import co.id.gmedia.yia.ActCollector.CollectorDonaturDetailActivity;
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
-import co.id.gmedia.yia.ActSalesSurvey.SalesSurveyDetailActivity;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
 

@@ -19,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
@@ -88,8 +90,12 @@ public class JadwalKunjunganAdapter extends RecyclerView.Adapter<JadwalKunjungan
             rlInput.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Gson gson = new Gson();
                     Intent intent = new Intent(context, SalesSurveyDetailActivity.class);
+
+                    intent.putExtra("donatur", gson.toJson(b));
+                    intent.putExtra("id_rencana_kerja", "");
+
                     context.startActivity(intent);
                 }
             });

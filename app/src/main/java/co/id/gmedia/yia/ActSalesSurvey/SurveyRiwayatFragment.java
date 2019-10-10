@@ -12,23 +12,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import co.id.gmedia.yia.ActCollector.Adapter.HistoryCollectorAdapter;
-import co.id.gmedia.yia.ActCollector.Adapter.JadwalKunjunganAdapter;
+import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.DialogBox;
+import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActSalesSurvey.Adapter.SurveyRiwayatAdapter;
-import co.id.gmedia.yia.Model.DonaturModel;
-import co.id.gmedia.yia.Model.HistoryDonaturModel;
 import co.id.gmedia.yia.Model.SurveyRiwayatModel;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.AppRequestCallback;
+import co.id.gmedia.yia.Utils.JSONBuilder;
+import co.id.gmedia.yia.Utils.ServerURL;
 
 public class SurveyRiwayatFragment extends Fragment {
 
     private Activity activity;
     private SurveyRiwayatAdapter adapter;
     private List<SurveyRiwayatModel> listDonatur = new ArrayList<>();
+
+    private SessionManager session;
+    private DialogBox dialogBox;
 
     public SurveyRiwayatFragment() {
         // Required empty public constructor
@@ -47,14 +54,54 @@ public class SurveyRiwayatFragment extends Fragment {
         adapter = new SurveyRiwayatAdapter(activity, listDonatur);
         rv_history.setAdapter(adapter);
 
+        session = new SessionManager(activity);
+        dialogBox = new DialogBox(activity);
+
         loadHistory();
 
         return v;
     }
 
     private void loadHistory(){
-        listDonatur.add(new SurveyRiwayatModel(new DonaturModel("Leonardus Irfan", "Jl. Menur Raya 16", "085742089087"), "continuous", "biasa", new Date(), "Ya"));
-        listDonatur.add(new SurveyRiwayatModel(new DonaturModel("Bayu Mahendra", "Jl. Kasipah 19", "085742089087"), "single", "luar biasa", new Date(), "Tidak"));
-        adapter.notifyDataSetChanged();
+        dialogBox.showDialog(false);
+        JSONBuilder body = new JSONBuilder();
+        body.add("id_sales", session.getId());
+        body.add("tgl_awal", "");
+        body.add("tgl_akhir", "");
+        body.add("keywoard", "");
+
+        new ApiVolley(activity, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
+                    @Override
+                    public void onSuccess(String response, String message) {
+                        dialogBox.dismissDialog();
+                        try{
+                            JSONObject object = new JSONObject(response);
+                        }
+                        catch (JSONException e){
+                            e.printStackTrace();
+                            View.OnClickListener clickListener = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialogBox.dismissDialog();
+                                    loadHistory();
+                                }
+                            };
+
+                            dialogBox.showDialog(clickListener, "Ulangi Proses",
+                                    "Terjadi kesalahan saat mengambil data");
+                        }
+                    }
+
+                    @Override
+                    public void onEmpty(String message) {
+                        dialogBox.dismissDialog();
+                    }
+
+                    @Override
+                    public void onFail(String message) {
+                        dialogBox.dismissDialog();
+                    }
+                }));
     }
 }

@@ -17,6 +17,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
+import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.R;
 
@@ -57,13 +58,21 @@ public class SalesSurveyActivity extends AppCompatActivity {
         });
 
         loadFragment(new SurveyJadwalFragment());
-        loadData();
+        initData();
     }
 
-    private void loadData(){
-        txt_nama.setText("John Doe");
-        txt_jumlah_jadwal.setText("8");
-        txt_jumlah_riwayat.setText("2");
+    private void initData(){
+        SessionManager session = new SessionManager(this);
+        txt_nama.setText(session.getNama());
+    }
+
+    public void updateJumlah(boolean jadwal, int jumlah){
+        if(jadwal){
+            txt_jumlah_jadwal.setText(jumlah);
+        }
+        else{
+            txt_jumlah_riwayat.setText(jumlah);
+        }
     }
 
     private void switchTab(int position){

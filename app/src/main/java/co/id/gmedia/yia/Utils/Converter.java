@@ -1,5 +1,9 @@
 package co.id.gmedia.yia.Utils;
 
+import android.graphics.Bitmap;
+import android.util.Base64;
+
+import java.io.ByteArrayOutputStream;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,5 +35,12 @@ public class Converter {
 
     public static String DToString(Date date){
         return d_format.format(date);
+    }
+
+    public static String convertToBase64(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 }

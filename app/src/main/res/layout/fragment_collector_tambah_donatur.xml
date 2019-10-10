@@ -82,20 +82,16 @@
 
             </LinearLayout>
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/txt_kota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_input"
-                android:layout_marginTop="@dimen/dp10"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/style_textview_gray"
+                android:padding="@dimen/dp10"
                 android:layout_marginStart="@dimen/dp40"
-                android:paddingRight="@dimen/padding_default"
-                >
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sp_kota"/>
-            </RelativeLayout>
+                android:textColor="#4F4F4F"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -107,20 +103,17 @@
                 android:layout_marginStart="@dimen/dp40"
                 android:textColor="@color/color_black"/>
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/txt_kecamatan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_input"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/style_textview_gray"
+                android:padding="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginStart="@dimen/dp40"
-                android:paddingRight="@dimen/padding_default"
-                >
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sp_kecamatan"/>
-            </RelativeLayout>
+                android:textColor="#4F4F4F"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -132,20 +125,17 @@
                 android:layout_marginStart="@dimen/dp40"
                 android:textColor="@color/color_black"/>
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/txt_kelurahan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_input"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/style_textview_gray"
+                android:padding="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginStart="@dimen/dp40"
-                android:paddingRight="@dimen/padding_default"
-                >
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sp_kelurahan"/>
-            </RelativeLayout>
+                android:textColor="#4F4F4F"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -288,6 +278,7 @@
             android:layout_height="@dimen/image_size"/>
 
         <Button
+            android:id="@+id/btn_simpan"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Simpan Data"
