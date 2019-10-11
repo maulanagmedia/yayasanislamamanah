@@ -14,6 +14,8 @@ public class ServerURL {
     public static final String saveCalonDonatur = baseURL + "Donatur/add_calon_donatur/";
     public static final String getCalonDonatur = baseURL + "Donatur/calon_donatur/";
 
+    public static final String getRencanaKerjaSosial = baseURL + "Sales_sosial/Rencana_kerja/rk_petugas_sosial";
+    public static final String saveSosial = baseURL + "Sales_sosial/Rencana_kerja/ActionTempDonatur";
     public static final String getRencanaKerjaCollector = baseURL + "Collector/Rencana_kerja/index";
     public static final String getRencanaKerjaSurvey = baseURL + "Sales_checking/Rencana_kerja/rk_petugas_checking";
     public static final String saveSurvey = baseURL + "Sales_checking/Rencana_kerja/validasiDonatur";

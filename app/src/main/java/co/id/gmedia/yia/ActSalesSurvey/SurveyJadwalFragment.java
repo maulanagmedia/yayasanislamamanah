@@ -85,7 +85,7 @@ public class SurveyJadwalFragment extends Fragment {
         txt_tanggal.setText(Converter.getDateString(new Date()));
     }
 
-    void loadJadwal(){
+    private void loadJadwal(){
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());

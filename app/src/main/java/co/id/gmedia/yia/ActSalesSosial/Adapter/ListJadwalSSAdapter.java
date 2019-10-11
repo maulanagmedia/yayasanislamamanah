@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import co.id.gmedia.coremodul.CustomModel;
@@ -88,9 +90,9 @@ public class ListJadwalSSAdapter extends ArrayAdapter {
         holder.rlInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Gson gson = new Gson();
                 Intent intent = new Intent(context, SalesSosialJadwalDetailActivity.class);
-                intent.putExtra("id", item.getItem1());
+                intent.putExtra("donatur", gson.toJson(item));
                 context.startActivity(intent);
             }
         });

@@ -58,11 +58,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.CustomModel;
+import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.PhotoModel;
@@ -70,6 +74,9 @@ import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
 import co.id.gmedia.yia.ActSalesSosial.Adapter.ListPhotoAdapter;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.AppRequestCallback;
+import co.id.gmedia.yia.Utils.JSONBuilder;
+import co.id.gmedia.yia.Utils.ServerURL;
 
 public class SalesSosialJadwalDetailActivity extends AppCompatActivity implements LocationListener {
 
@@ -131,6 +138,9 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity implement
     private TextView tvLatitude, tvLongitude;
     private LinearLayout llBukaMap;
 
+    private CustomModel donatur;
+    private DialogBox dialogBox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +164,8 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity implement
         createLocationRequest();
         buildLocationSettingsRequest();
 
+        dialogBox = new DialogBox(this);
+
         if (checkPermission()){
 
             initLocation();
@@ -161,10 +173,18 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity implement
 
         initUI();
         initEvent();
+
+        if(getIntent().hasExtra("donatur")){
+            Gson gson = new Gson();
+            donatur = gson.fromJson(getIntent().getStringExtra("donatur"), CustomModel.class);
+
+            edtNama.setText(donatur.getItem2());
+            edtAlamat.setText(donatur.getItem3());
+            edtKontak.setText(donatur.getItem4());
+        }
     }
 
     private void initUI() {
-
         ivEdit = (ImageView) findViewById(R.id.iv_edit);
         edtNama = (EditText) findViewById(R.id.edt_nama);
         edtAlamat = (EditText) findViewById(R.id.edt_alamat);
@@ -173,15 +193,14 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity implement
         rbDonasiYa = (RadioButton) findViewById(R.id.rb_donasi_ya);
         rbDonasiTidak = (RadioButton) findViewById(R.id.rb_donasi_tidak);
         rgKaleng = (RadioGroup) findViewById(R.id.rg_kaleng);
-        rbKalengYa = (RadioButton) findViewById(R.id.rb_donasi_ya);
-        rbKalengTidak = (RadioButton) findViewById(R.id.rb_donasi_tidak);
+        rbKalengYa = (RadioButton) findViewById(R.id.rb_kaleng_ya);
+        rbKalengTidak = (RadioButton) findViewById(R.id.rb_kaleng_tidak);
         rlPhoto = (RelativeLayout) findViewById(R.id.rl_photo);
         rvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
         tvLatitude = (TextView) findViewById(R.id.tv_latitude);
         tvLongitude = (TextView) findViewById(R.id.tv_longitude);
         llBukaMap = (LinearLayout) findViewById(R.id.ll_buka_map);
         btnSimpan = (Button) findViewById(R.id.btn_simpan);
-
 
         listPhoto = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -231,6 +250,45 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity implement
                 startActivity(intent);
             }
         });
+
+        btnSimpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                simpanData();
+            }
+        });
+    }
+
+    private void simpanData(){
+        dialogBox.showDialog(false);
+        JSONBuilder body = new JSONBuilder();
+        body.add("id_rk", donatur.getItem1());
+        body.add("id_sales", session.getId());
+        body.add("donasi", rbDonasiYa.isChecked()?"1":"0");
+        body.add("lobi_kaleng", rbKalengYa.isChecked()?"ya":"tidak");
+
+        new ApiVolley(this, body.create(), "POST", ServerURL.saveSosial,
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
+                    @Override
+                    public void onSuccess(String response, String message) {
+                        dialogBox.dismissDialog();
+                        Toast.makeText(SalesSosialJadwalDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                        finish();
+                    }
+
+                    @Override
+                    public void onEmpty(String message) {
+                        dialogBox.dismissDialog();
+                        Toast.makeText(SalesSosialJadwalDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFail(String message) {
+                        dialogBox.dismissDialog();
+                        Toast.makeText(SalesSosialJadwalDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                }));
     }
 
     @Override
@@ -315,7 +373,6 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity implement
     }
 
     private void createLocationRequest() {
-
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
         mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
@@ -372,7 +429,10 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity implement
                         //isLocationRefresh = false;
                         isUpdateLocation = false;
                         //noinspection MissingPermission
-                        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED &&
+                                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                                        != PackageManager.PERMISSION_GRANTED) {
 
                             return;
                         }
