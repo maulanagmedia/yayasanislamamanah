@@ -13,6 +13,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -57,6 +58,7 @@ public class SalesBrosurRiwayatFragment extends Fragment {
     private ItemValidation iv = new ItemValidation();
     private TextView tvDate1, tvDate2;
     private EditText edtSearch;
+    private Button btnProcess;
 
     public SalesBrosurRiwayatFragment() {
         // Required empty public constructor
@@ -87,8 +89,10 @@ public class SalesBrosurRiwayatFragment extends Fragment {
         rlDate2 = (RelativeLayout) root.findViewById(R.id.rl_date2);
         tvDate1 = (TextView) root.findViewById(R.id.tv_date1);
         tvDate2 = (TextView) root.findViewById(R.id.tv_date2);
+        btnProcess = (Button) root.findViewById(R.id.btn_process);
 
-        dateFrom = iv.sumDate(iv.getCurrentDate(FormatItem.formatDateDisplay), -1, FormatItem.formatDateDisplay) ;
+        //dateFrom = iv.sumDate(iv.getCurrentDate(FormatItem.formatDateDisplay), -1, FormatItem.formatDateDisplay) ;
+        dateFrom = iv.getCurrentDate(FormatItem.formatDateDisplay);
         dateTo = iv.getCurrentDate(FormatItem.formatDateDisplay);
 
         tvDate1.setText(dateFrom);
@@ -99,17 +103,6 @@ public class SalesBrosurRiwayatFragment extends Fragment {
 
         adapter = new ListSalesBrosurAdapter((Activity) context, listData);
         lvCalon.setAdapter(adapter);
-
-        /*listData.add(new CustomModel("1", "Rokhim", "Jl. Mataram", "080989999", "2019-09-20 10:10:10"));
-        listData.add(new CustomModel("2", "Victor", "Jl. Pandanaran", "080989999", "2019-09-20 10:10:10"));
-        listData.add(new CustomModel("3", "Maul", "Jl. Pamularsih", "", "2019-09-20 10:10:10"));
-        listData.add(new CustomModel("4", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));
-        listData.add(new CustomModel("5", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));
-        listData.add(new CustomModel("6", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));
-        listData.add(new CustomModel("7", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));
-        listData.add(new CustomModel("8", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));*/
-
-        adapter.notifyDataSetChanged();
     }
 
     private void initEvent() {
@@ -182,7 +175,13 @@ public class SalesBrosurRiwayatFragment extends Fragment {
             }
         });
 
+        btnProcess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                initData();
+            }
+        });
     }
 
     private void initData() {
@@ -204,6 +203,7 @@ public class SalesBrosurRiwayatFragment extends Fragment {
             public void onSuccess(String result) {
 
                 dialogBox.dismissDialog();
+                listData.clear();
                 try {
 
                     JSONObject response = new JSONObject(result);

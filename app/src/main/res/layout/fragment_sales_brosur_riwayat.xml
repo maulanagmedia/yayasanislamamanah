@@ -115,7 +115,8 @@
             android:layout_marginTop="@dimen/padding_default"
             android:background="@drawable/bg_button_green"
             android:textColor="@color/colorWhite"
-            android:text="Proses"/>
+            android:text="Proses"
+            android:id="@+id/btn_process"/>
 
     </LinearLayout>
 
