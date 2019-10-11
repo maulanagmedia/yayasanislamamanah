@@ -2,6 +2,7 @@ package co.id.gmedia.yia.ActSalesBrosur;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,19 +23,27 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -68,19 +78,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.CustomModel;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.OptionItem;
 import co.id.gmedia.coremodul.PhotoModel;
+import co.id.gmedia.coremodul.SessionManager;
+import co.id.gmedia.yia.ActSalesBrosur.Adapter.SearchableSpinnerDialogOptionAdapter;
 import co.id.gmedia.yia.ActSalesSosial.Adapter.ListPhotoAdapter;
+import co.id.gmedia.yia.HomeActivity;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.DialogFactory;
+import co.id.gmedia.yia.Utils.SearchableSpinnerDialog.SimpleObjectModel;
 import co.id.gmedia.yia.Utils.ServerURL;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class SalesBrosurDetailFragment extends Fragment implements LocationListener {
 
     private View root;
     private Context context;
+    private SessionManager session;
     private EditText edtNama, edtAlamat, edtKontak;
     private Spinner spKota, spKecamatan, spKelurahan;
     private TextView tvLatitude, tvLongitude;
@@ -137,6 +156,8 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
     private List<OptionItem> listKota = new ArrayList<>(), listKecamatan = new ArrayList<>(), listKeluarahan = new ArrayList<>();
     private ArrayAdapter adapterKota, adapterKecamatan, adapterKelurahan;
     private String selectedKota = "", selectedKecamatan = "", selectedKelurahan = "";
+    private ImageView ivKota, ivKecamatan, ivKelurahan;
+    private TextView tvKota, tvKecamatan, tvKelurahan;
 
     public SalesBrosurDetailFragment() {
         // Required empty public constructor
@@ -176,6 +197,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
 
     private void initUI() {
 
+        session = new SessionManager(context);
         edtNama = (EditText) root.findViewById(R.id.edt_nama);
         spKota = (Spinner) root.findViewById(R.id.sp_kota);
         spKecamatan = (Spinner) root.findViewById(R.id.sp_kecamatan);
@@ -184,6 +206,13 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
         edtKontak = (EditText) root.findViewById(R.id.edt_kontak);
         rlPhoto = (RelativeLayout) root.findViewById(R.id.rl_photo);
         rvPhoto = (RecyclerView) root.findViewById(R.id.rv_photo);
+
+        ivKota = (ImageView) root.findViewById(R.id.iv_kota);
+        tvKota = (TextView) root.findViewById(R.id.tv_kota);
+        ivKecamatan = (ImageView) root.findViewById(R.id.iv_kecamatan);
+        tvKecamatan = (TextView) root.findViewById(R.id.tv_kecamatan);
+        ivKelurahan = (ImageView) root.findViewById(R.id.iv_kelurahan);
+        tvKelurahan = (TextView) root.findViewById(R.id.tv_kelurahan);
 
         tvLatitude = (TextView) root.findViewById(R.id.tv_latitude);
         tvLongitude = (TextView) root.findViewById(R.id.tv_longitude);
@@ -246,6 +275,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
+                                saveData();
                             }
                         })
                         .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
@@ -257,11 +287,292 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                         .show();
             }
         });
+
+        ivKota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(listKota.size() > 0){
+
+                    showDialog(listKota, 1);
+                }
+            }
+        });
+
+        ivKecamatan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(listKota.size() > 0){
+
+                    showDialog(listKecamatan, 2);
+                }
+            }
+        });
+
+        ivKelurahan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(listKota.size() > 0){
+
+                    showDialog(listKeluarahan, 3);
+                }
+            }
+        });
+    }
+
+    private void showdDialog(final List<OptionItem> listData, final int type){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater) ((Activity)context).getSystemService(LAYOUT_INFLATER_SERVICE);
+        View viewDialog = inflater.inflate(R.layout.dialog_list, null);
+        builder.setView(viewDialog);
+        builder.setCancelable(false);
+
+        final EditText edtSearch = (EditText) viewDialog.findViewById(R.id.edt_search);
+        final ListView lvList = (ListView) viewDialog.findViewById(R.id.lv_list);
+
+        final TextView tvBatal = (TextView) viewDialog.findViewById(R.id.tv_batal);
+        final TextView tvSimpan = (TextView) viewDialog.findViewById(R.id.tv_simpan);
+
+        AlertDialog alert = builder.create();
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        final ArrayAdapter[] adapterList = {new ArrayAdapter(context, R.layout.layout_simple_list, listData)};
+        lvList.setAdapter(adapterList[0]);
+
+        edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+
+                    String keyword = edtSearch.getText().toString().toLowerCase();
+
+                    List<OptionItem> newList = new ArrayList<>();
+
+                    for(OptionItem item : listData){
+
+                        if(item.getText().toLowerCase().contains(keyword)){
+
+                            newList.add(item);
+                        }
+                    }
+
+                    adapterList[0] = new ArrayAdapter(context, R.layout.layout_simple_list, newList);
+                    lvList.setAdapter(adapterList[0]);
+
+                    iv.hideSoftKey(context);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        final AlertDialog alertDialogs = alert;
+
+        lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                OptionItem item = (OptionItem) parent.getItemAtPosition(position);
+                if(type == 1){
+
+                    if(alertDialogs != null) {
+
+                        try {
+                            alertDialogs.dismiss();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    tvKota.setText(item.getText());
+                    selectedKota = item.getValue();
+                    getDataKecamatan(item.getValue());
+
+                }else if(type == 2){
+
+                    if(alertDialogs != null) {
+
+                        try {
+                            alertDialogs.dismiss();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    tvKecamatan.setText(item.getText());
+                    selectedKecamatan = item.getValue();
+                    getDataKelurahan(item.getValue());
+
+                }else if (type == 3){
+
+                    if(alertDialogs != null) {
+
+                        try {
+                            alertDialogs.dismiss();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    tvKelurahan.setText(item.getText());
+                    selectedKelurahan= item.getValue();
+                }
+            }
+        });
+
+        tvBatal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view2) {
+
+                if(alertDialogs != null) {
+
+                    try {
+                        alertDialogs.dismiss();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        tvSimpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view2) {
+
+                if(alertDialogs != null) {
+
+                    try {
+                        alertDialogs.dismiss();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+        });
+
+        try {
+
+            alert.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void showDialog(final List<OptionItem> listData, final int type){
+
+        final Dialog dialogChooser = DialogFactory.getInstance().createDialog((Activity) context,
+                R.layout.dialog_searchable_spinner, 90, 70);
+
+        final EditText txt_search = dialogChooser.findViewById(R.id.txt_search);
+
+        final SearchableSpinnerDialogOptionAdapter.ChooserListener listener = new SearchableSpinnerDialogOptionAdapter.ChooserListener() {
+            @Override
+            public void onSelected(String value, String text) {
+
+                if(type == 1){
+
+                    if(dialogChooser != null) {
+
+                        try {
+                            dialogChooser.dismiss();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    tvKota.setText(text);
+                    selectedKota = value;
+                    getDataKecamatan(value);
+
+                }else if(type == 2){
+
+                    if(dialogChooser != null) {
+
+                        try {
+                            dialogChooser.dismiss();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    tvKecamatan.setText(text);
+                    selectedKecamatan = value;
+                    getDataKelurahan(value);
+
+                }else if (type == 3){
+
+                    if(dialogChooser != null) {
+
+                        try {
+                            dialogChooser.dismiss();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    tvKelurahan.setText(text);
+                    selectedKelurahan= value;
+                }
+            }
+        };
+
+        final RecyclerView rv_items = dialogChooser.findViewById(R.id.rv_items);
+        final SearchableSpinnerDialogOptionAdapter[] dialogAdapter = {new SearchableSpinnerDialogOptionAdapter((Activity) context,
+                listData, listener)};
+
+        txt_search.setHint("Keyword");
+        txt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String search = s.toString();
+
+                String keyword = txt_search.getText().toString().toLowerCase();
+
+                List<OptionItem> newList = new ArrayList<>();
+
+                for(OptionItem item : listData){
+
+                    if(item.getText().toLowerCase().contains(keyword)){
+
+                        newList.add(item);
+                    }
+                }
+
+                dialogAdapter[0] = new SearchableSpinnerDialogOptionAdapter((Activity)context, newList, listener);
+                rv_items.setItemAnimator(new DefaultItemAnimator());
+                rv_items.setLayoutManager(new LinearLayoutManager((Activity) context));
+                rv_items.setAdapter(dialogAdapter[0]);
+                dialogAdapter[0].notifyDataSetChanged();
+            }
+        });
+
+        rv_items.setItemAnimator(new DefaultItemAnimator());
+        rv_items.setLayoutManager(new LinearLayoutManager((Activity) context));
+        rv_items.setAdapter(dialogAdapter[0]);
+
+        dialogChooser.show();
     }
 
     private void initData() {
 
-        adapterKota = new ArrayAdapter(context, R.layout.layout_simple_list, listKota);
+        /*adapterKota = new ArrayAdapter(context, R.layout.layout_simple_list, listKota);
         adapterKecamatan = new ArrayAdapter(context, R.layout.layout_simple_list, listKecamatan);
         adapterKelurahan = new ArrayAdapter(context, R.layout.layout_simple_list, listKeluarahan);
 
@@ -312,7 +623,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
         getDataKota();
     }
@@ -362,12 +673,12 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                     dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
                 }
 
-                adapterKota.notifyDataSetChanged();
+                /*adapterKota.notifyDataSetChanged();
 
                 if(listKota.size() > 0){
 
                     spKota.setSelection(0);
-                }
+                }*/
             }
 
             @Override
@@ -439,12 +750,12 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                     dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
                 }
 
-                adapterKecamatan.notifyDataSetChanged();
+                /*adapterKecamatan.notifyDataSetChanged();
 
                 if(listKecamatan.size() > 0){
 
                     spKecamatan.setSelection(0);
-                }
+                }*/
             }
 
             @Override
@@ -516,12 +827,12 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                     dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
                 }
 
-                adapterKelurahan.notifyDataSetChanged();
+                /*adapterKelurahan.notifyDataSetChanged();
 
                 if(listKeluarahan.size() > 0){
 
                     spKelurahan.setSelection(0);
-                }
+                }*/
             }
 
             @Override
@@ -546,9 +857,26 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
     private void saveData() {
 
         dialogBox.showDialog(false);
+
+        JSONArray jFoto = new JSONArray();
+
+        for(PhotoModel photo: listPhoto){
+
+            jFoto.put(photo.getKeterangan());
+        }
+
         JSONObject jBody = new JSONObject();
         try {
             jBody.put("nama", edtNama.getText().toString());
+            jBody.put("alamat", edtAlamat.getText().toString());
+            jBody.put("kontak", edtKontak.getText().toString());
+            jBody.put("lat", tvLatitude.getText().toString());
+            jBody.put("long", tvLongitude.getText().toString());
+            jBody.put("kota", selectedKota);
+            jBody.put("kecamatan", selectedKecamatan);
+            jBody.put("kelurahan", selectedKelurahan);
+            jBody.put("id_sales", session.getId());
+            jBody.put("foto", jFoto);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -564,19 +892,19 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                     String status = response.getJSONObject("metadata").getString("status");
                     String message = response.getJSONObject("metadata").getString("message");
 
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     if(iv.parseNullInteger(status) == 200){
 
-                        JSONArray ja = response.getJSONArray("response");
-                        for(int i = 0; i < ja.length(); i ++){
 
-                            JSONObject jo = ja.getJSONObject(i);
-                            listKota.add(
-                                    new OptionItem(
-                                            jo.getString("id")
-                                            ,jo.getString("kota")
-                                    )
-                            );
-                        }
+                        ((Activity)context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                HomeActivity.changeState(2);
+                            }
+                        });
+
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -585,19 +913,12 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                         public void onClick(View view) {
 
                             dialogBox.dismissDialog();
-                            getDataKota();
+                            saveData();
 
                         }
                     };
 
                     dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
-                }
-
-                adapterKota.notifyDataSetChanged();
-
-                if(listKota.size() > 0){
-
-                    spKota.setSelection(0);
                 }
             }
 
@@ -609,7 +930,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                     public void onClick(View view) {
 
                         dialogBox.dismissDialog();
-                        getDataKota();
+                        saveData();
 
                     }
                 };
@@ -648,7 +969,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
 
                     if(d != null){
 
-                        listPhoto.add(new PhotoModel(f.getAbsolutePath(), ""/*, baset64Image*/));
+                        listPhoto.add(new PhotoModel(f.getAbsolutePath(),  "", ImageUtils.convert(d)));
                         adapterPhoto.notifyDataSetChanged();
                     }
                 }

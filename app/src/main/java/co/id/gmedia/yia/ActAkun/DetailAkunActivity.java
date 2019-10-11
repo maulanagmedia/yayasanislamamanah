@@ -322,6 +322,70 @@ public class DetailAkunActivity extends AppCompatActivity {
         });
     }
 
+    private void savePassword(final String passlama,final String passBaru) {
+
+        dialogBox.showDialog(false);
+
+        JSONObject jBody = new JSONObject();
+
+        try {
+            jBody.put("id", session.getId());
+            jBody.put("password_lama", passlama);
+            jBody.put("password_baru", passBaru);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new ApiVolley(context, jBody, "POST", ServerURL.changePassword, new ApiVolley.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+                dialogBox.dismissDialog();
+                try {
+
+                    JSONObject response = new JSONObject(result);
+                    String status = response.getJSONObject("metadata").getString("status");
+                    String message = response.getJSONObject("metadata").getString("message");
+
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    if(iv.parseNullInteger(status) == 200){
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    View.OnClickListener clickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            dialogBox.dismissDialog();
+                            savePassword(passlama, passBaru);
+
+                        }
+                    };
+
+                    dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                }
+            }
+
+            @Override
+            public void onError(String result) {
+                dialogBox.dismissDialog();
+                View.OnClickListener clickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialogBox.dismissDialog();
+                        savePassword(passlama, passBaru);
+
+                    }
+                };
+
+                dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+            }
+        });
+    }
+
     private void showLabel(String label, String label1, String label2, final int jenis, String value, boolean isPassword){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -393,10 +457,14 @@ public class DetailAkunActivity extends AppCompatActivity {
 
                 if(alertDialogs != null) {
 
-                    try {
-                        alertDialogs.dismiss();
-                    }catch (Exception e){
-                        e.printStackTrace();
+                    if(edtValue.getText().toString().length() == 0){
+
+                        edtValue.setError("Harap diisi");
+                        edtValue.requestFocus();
+                        return;
+                    }else{
+
+                        edtValue.setError(null);
                     }
 
                     if(jenis == 1) {
@@ -407,7 +475,46 @@ public class DetailAkunActivity extends AppCompatActivity {
 
                         Bitmap b = ((BitmapDrawable)ivProfileMain.getDrawable()).getBitmap();
                         saveDataAkun(session.getNama(), edtValue.getText().toString(), ImageUtils.convert(b));
+                    }else if (jenis == 3){
+
+                        if(edtValue1.getText().toString().length() == 0){
+
+                            edtValue1.setError("Harap diisi");
+                            edtValue1.requestFocus();
+                            return;
+                        }else{
+
+                            edtValue1.setError(null);
+                        }
+
+                        if(edtValue2.getText().toString().length() == 0){
+
+                            edtValue2.setError("Harap diisi");
+                            edtValue2.requestFocus();
+                            return;
+                        }else{
+
+                            edtValue2.setError(null);
+                        }
+
+                        if(!edtValue1.getText().toString().equals(edtValue2.getText().toString())){
+
+                            edtValue2.setError("Password ulang tidak sama");
+                            edtValue2.requestFocus();
+                            return;
+                        }else{
+                            edtValue2.setError(null);
+                        }
+
+                        savePassword(edtValue.getText().toString(), edtValue1.getText().toString());
                     }
+
+                    try {
+                        alertDialogs.dismiss();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 }
             }
         });

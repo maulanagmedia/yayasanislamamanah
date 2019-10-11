@@ -7,6 +7,7 @@ public class ServerURL {
     private static final String baseURL = "http://gmedia.bz/yia/v3/api/";
 
     public static final String login = baseURL + "Authentication/";
+    public static final String changePassword = baseURL + "Authentication/update_password/";
     public static final String updateAkun = baseURL + "Authentication/process_user/";
     public static final String getKota = baseURL + "Master/kota/";
     public static final String getKecamatan = baseURL + "Master/kecamatan/";

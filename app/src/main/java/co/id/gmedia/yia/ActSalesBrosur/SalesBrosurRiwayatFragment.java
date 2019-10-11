@@ -100,14 +100,14 @@ public class SalesBrosurRiwayatFragment extends Fragment {
         adapter = new ListSalesBrosurAdapter((Activity) context, listData);
         lvCalon.setAdapter(adapter);
 
-        listData.add(new CustomModel("1", "Rokhim", "Jl. Mataram", "080989999", "2019-09-20 10:10:10"));
+        /*listData.add(new CustomModel("1", "Rokhim", "Jl. Mataram", "080989999", "2019-09-20 10:10:10"));
         listData.add(new CustomModel("2", "Victor", "Jl. Pandanaran", "080989999", "2019-09-20 10:10:10"));
         listData.add(new CustomModel("3", "Maul", "Jl. Pamularsih", "", "2019-09-20 10:10:10"));
         listData.add(new CustomModel("4", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));
         listData.add(new CustomModel("5", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));
         listData.add(new CustomModel("6", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));
         listData.add(new CustomModel("7", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));
-        listData.add(new CustomModel("8", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));
+        listData.add(new CustomModel("8", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10"));*/
 
         adapter.notifyDataSetChanged();
     }
@@ -219,7 +219,10 @@ public class SalesBrosurRiwayatFragment extends Fragment {
                             listData.add(
                                     new CustomModel(
                                             jo.getString("id")
-                                            ,jo.getString("kecamatan")
+                                            ,jo.getString("nama")
+                                            ,jo.getString("alamat")
+                                            ,jo.getString("kontak")
+                                            ,jo.getString("insert_at")
                                     )
                             );
                         }

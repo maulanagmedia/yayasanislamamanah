@@ -35,9 +35,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private LinearLayout llInfo, llRiwayat;
-    private Context context;
-    private TextView tvInfo, tvRiwayat, tvTitle2;
-    private View vInfo, vRiwayat;
+    private static Context context;
+    private static TextView tvInfo, tvRiwayat, tvTitle2;
+    private static View vInfo, vRiwayat;
     private ImageView ivAkun;
     private LinearLayout llAkun;
     private TextView tvAdmin;
@@ -146,7 +146,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void changeState(int state){
+    public static void changeState(int state){
 
         if(state == 1){
 
@@ -154,8 +154,8 @@ public class HomeActivity extends AppCompatActivity {
             callFragment(context, fragment);
 
             //UI
-            tvInfo.setTextColor(getResources().getColor(R.color.colorTitle));
-            tvRiwayat.setTextColor(getResources().getColor(R.color.colorWhite));
+            tvInfo.setTextColor(context.getResources().getColor(R.color.colorTitle));
+            tvRiwayat.setTextColor(context.getResources().getColor(R.color.colorWhite));
             vInfo.setVisibility(View.VISIBLE);
             vRiwayat.setVisibility(View.GONE);
         }else if (state == 2){
@@ -164,8 +164,8 @@ public class HomeActivity extends AppCompatActivity {
             callFragment(context, fragment);
 
             //UI
-            tvInfo.setTextColor(getResources().getColor(R.color.colorWhite));
-            tvRiwayat.setTextColor(getResources().getColor(R.color.colorTitle));
+            tvInfo.setTextColor(context.getResources().getColor(R.color.colorWhite));
+            tvRiwayat.setTextColor(context.getResources().getColor(R.color.colorTitle));
             vInfo.setVisibility(View.GONE);
             vRiwayat.setVisibility(View.VISIBLE);
         }

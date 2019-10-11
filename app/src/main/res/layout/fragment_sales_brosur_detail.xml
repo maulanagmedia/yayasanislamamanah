@@ -48,6 +48,7 @@
                     android:imeOptions="actionNext"
                     android:id="@+id/edt_nama"
                     android:textSize="@dimen/text_small"
+                    android:text=""
                     android:layout_marginTop="@dimen/padding_default"
                     android:padding="@dimen/padding_default"/>
             </LinearLayout>
@@ -86,9 +87,40 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:src="@drawable/ic_drop"
+                        android:id="@+id/iv_kota"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_marginRight="@dimen/padding_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_kota"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="28dp"
+                        android:layout_toLeftOf="@id/iv_kota"
+                        android:padding="@dimen/padding_default"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_input"
                     android:paddingLeft="@dimen/padding_default"
                     android:paddingRight="@dimen/padding_default"
+                    android:visibility="gone"
                     >
 
                     <Spinner
@@ -109,7 +141,38 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:src="@drawable/ic_drop"
+                        android:id="@+id/iv_kecamatan"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_marginRight="@dimen/padding_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_kecamatan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="28dp"
+                        android:layout_toLeftOf="@id/iv_kecamatan"
+                        android:padding="@dimen/padding_default"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_input"
+                    android:visibility="gone"
                     android:paddingLeft="@dimen/padding_default"
                     android:paddingRight="@dimen/padding_default"
                     >
@@ -132,7 +195,38 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:src="@drawable/ic_drop"
+                        android:id="@+id/iv_kelurahan"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_marginRight="@dimen/padding_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_kelurahan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="28dp"
+                        android:layout_toLeftOf="@id/iv_kelurahan"
+                        android:padding="@dimen/padding_default"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_input"
+                    android:visibility="gone"
                     android:paddingLeft="@dimen/padding_default"
                     android:paddingRight="@dimen/padding_default"
                     >
@@ -160,6 +254,7 @@
                     android:inputType="textPersonName"
                     android:imeOptions="actionNext"
                     android:text=""
+                    android:id="@+id/edt_alamat"
                     android:textSize="@dimen/text_small"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/padding_default"
@@ -317,9 +412,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_input"
-                    android:inputType="textPhonetic"
+                    android:inputType="phone"
                     android:imeOptions="actionDone"
                     android:text=""
+                    android:id="@+id/edt_kontak"
                     android:textSize="@dimen/text_small"
                     android:layout_marginTop="@dimen/padding_default"
                     android:padding="@dimen/padding_default"/>

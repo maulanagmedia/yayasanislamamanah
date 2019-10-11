@@ -54,7 +54,8 @@ public class ListSalesBrosurAdapter extends ArrayAdapter {
         }
 
         CustomModel item = items.get(position);
-        holder.tvTanggal.setText(iv.ChangeFormatDateString(item.getItem5(), FormatItem.formatTimestamp, FormatItem.formatDateTimeDisplay1));
+        //holder.tvTanggal.setText(iv.ChangeFormatDateString(item.getItem5(), FormatItem.formatTimestamp, FormatItem.formatDateTimeDisplay1));
+        holder.tvTanggal.setText(item.getItem5());
         holder.tvNama.setText(item.getItem2());
         holder.tvAlamat.setText(item.getItem3());
         holder.tvKontak.setText(item.getItem4());
