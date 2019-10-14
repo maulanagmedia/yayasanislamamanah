@@ -128,7 +128,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(String result) {
                 dialogBox.dismissDialog();
                 try {
-
                     JSONObject response = new JSONObject(result);
                     String status = response.getJSONObject("metadata").getString("status");
                     String message = response.getJSONObject("metadata").getString("message");

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,10 +81,20 @@ public class CollectorJadwalFragment extends Fragment {
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
                         try{
-                            JSONObject object = new JSONObject(response);
+                            listDonatur.clear();
+                            JSONArray object = new JSONArray(response);
+                            for(int i = 0; i < object.length(); i++){
+                                JSONObject donatur = object.getJSONObject(i);
+                                listDonatur.add(new DonaturModel(donatur.getString("id"),
+                                        donatur.getString("id_donatur"), donatur.getString("nama"),
+                                        donatur.getString("alamat"), donatur.getString("kontak"),
+                                        donatur.getString("status").equals("Sudah dikunjungi")));
+                            }
+
+                            adapter.notifyDataSetChanged();
 
                             if(activity instanceof CollectorActivity){
-                                ((CollectorActivity)activity).updateJumlah(8);
+                                ((CollectorActivity)activity).updateJumlah(object.length());
                             }
                         }
                         catch (JSONException e){

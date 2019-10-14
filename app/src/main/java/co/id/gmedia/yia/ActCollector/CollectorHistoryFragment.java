@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +24,7 @@ import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActCollector.Adapter.HistoryCollectorAdapter;
+import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.Model.HistoryDonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
@@ -36,7 +38,7 @@ public class CollectorHistoryFragment extends Fragment {
 
     private Activity activity;
     private HistoryCollectorAdapter adapter;
-    private List<HistoryDonaturModel> listDonatur = new ArrayList<>();
+    private List<DonaturModel> listDonatur = new ArrayList<>();
 
     private DialogBox dialogBox;
 
@@ -76,11 +78,17 @@ public class CollectorHistoryFragment extends Fragment {
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
                         try{
-                            JSONObject object = new JSONObject(response);
-
-                            if(activity instanceof CollectorActivity){
-                                ((CollectorActivity)activity).updateJumlah(8);
+                            listDonatur.clear();
+                            JSONArray object = new JSONArray(response);
+                            for(int i = 0; i < object.length(); i++){
+                                JSONObject donatur = object.getJSONObject(i);
+                                listDonatur.add(new DonaturModel(donatur.getString("id"),
+                                        donatur.getString("id_donatur"), donatur.getString("nama"),
+                                        donatur.getString("alamat"), donatur.getString("kontak"),
+                                        donatur.getString("status").equals("Sudah dikunjungi")));
                             }
+
+                            adapter.notifyDataSetChanged();
                         }
                         catch (JSONException e){
                             Log.e("json_log", e.getMessage());

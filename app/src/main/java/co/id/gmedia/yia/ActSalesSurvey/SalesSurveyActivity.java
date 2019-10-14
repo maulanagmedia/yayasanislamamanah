@@ -176,6 +176,7 @@ public class SalesSurveyActivity extends AppCompatActivity {
         body.add("tgl_awal", Converter.DToString(new Date()));
         body.add("tgl_akhir", Converter.DToString(new Date()));
         body.add("keywoard", "");
+        body.add("status", "");
 
         new ApiVolley(this, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
@@ -229,6 +230,7 @@ public class SalesSurveyActivity extends AppCompatActivity {
         body.add("tgl_awal", Converter.DToFirstDayOfMonthString(new Date()));
         body.add("tgl_akhir", Converter.DToString(new Date()));
         body.add("keywoard", "");
+        body.add("status", "0");
 
         new ApiVolley(this, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {

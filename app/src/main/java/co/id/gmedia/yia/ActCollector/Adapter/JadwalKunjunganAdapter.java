@@ -92,9 +92,7 @@ public class JadwalKunjunganAdapter extends RecyclerView.Adapter<JadwalKunjungan
                 public void onClick(View v) {
                     Gson gson = new Gson();
                     Intent intent = new Intent(context, SalesSurveyDetailActivity.class);
-
                     intent.putExtra("donatur", gson.toJson(b));
-
                     context.startActivity(intent);
                 }
             });

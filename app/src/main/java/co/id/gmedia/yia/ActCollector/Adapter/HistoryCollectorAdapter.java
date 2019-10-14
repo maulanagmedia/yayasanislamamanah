@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.Model.HistoryDonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.Converter;
@@ -19,9 +20,9 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
         <HistoryCollectorAdapter.HistoryCollectorViewHolder> {
 
     private Context context;
-    private List<HistoryDonaturModel> listDonatur;
+    private List<DonaturModel> listDonatur;
 
-    public HistoryCollectorAdapter(Context context, List<HistoryDonaturModel> listDonatur){
+    public HistoryCollectorAdapter(Context context, List<DonaturModel> listDonatur){
         this.context = context;
         this.listDonatur = listDonatur;
     }
@@ -60,11 +61,12 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
             txt_jumlah_donasi = itemView.findViewById(R.id.txt_jumlah_donasi);
         }
 
-        void bind(HistoryDonaturModel b){
-            txt_nama_donatur.setText(b.getDonatur().getNama());
-            txt_alamat_donatur.setText(b.getDonatur().getAlamat());
-            txt_kontak_donatur.setText(b.getDonatur().getKontak());
-            txt_tanggal.setText(Converter.DToString(b.getTanggal()));
+        void bind(DonaturModel b){
+            txt_nama_donatur.setText(b.getNama());
+            txt_alamat_donatur.setText(b.getAlamat());
+            txt_kontak_donatur.setText(b.getKontak());
+
+            /*txt_tanggal.setText(Converter.DToString(b.getTanggal()));
             txt_jenis_donasi.setText(b.getJenis());
             txt_waktu_donasi.setText(b.getWaktu());
             txt_jumlah_donasi.setText(Converter.doubleToRupiah(b.getJumlah()));
@@ -74,7 +76,7 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
             }
             else{
                 txt_tambahan.setVisibility(View.GONE);
-            }
+            }*/
         }
     }
 }

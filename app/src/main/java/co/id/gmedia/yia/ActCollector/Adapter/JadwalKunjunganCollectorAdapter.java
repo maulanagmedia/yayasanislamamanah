@@ -19,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import co.id.gmedia.yia.ActCollector.CollectorDonaturDetailActivity;
@@ -85,11 +87,13 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
                 rlInput.setVisibility(View.VISIBLE);
             }
 
-            rlInput.setOnClickListener(new View.OnClickListener() {
+            //TODO, dikembalikan ke rInput
+            img_cek.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Gson gson = new Gson();
                     Intent intent = new Intent(context, CollectorDonaturDetailActivity.class);
+                    intent.putExtra("donatur", gson.toJson(b));
                     context.startActivity(intent);
                 }
             });

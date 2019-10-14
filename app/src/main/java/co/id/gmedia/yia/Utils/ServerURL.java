@@ -20,5 +20,6 @@ public class ServerURL {
     public static final String getRencanaKerjaCollector = baseURL + "Collector/Rencana_kerja/index";
     public static final String getRencanaKerjaSurvey = baseURL + "Sales_checking/Rencana_kerja/rk_petugas_checking";
     public static final String saveSurvey = baseURL + "Sales_checking/Rencana_kerja/validasiDonatur";
+    public static final String saveCollector = baseURL + "Collector/Rencana_kerja/jemput_infaq";
     public static final String tambahDonaturLuarCollector = baseURL + "Collector/Rencana_kerja/data_luar";
 }
