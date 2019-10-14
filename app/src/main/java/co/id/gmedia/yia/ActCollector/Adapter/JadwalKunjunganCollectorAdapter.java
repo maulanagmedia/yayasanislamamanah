@@ -87,8 +87,7 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
                 rlInput.setVisibility(View.VISIBLE);
             }
 
-            //TODO, dikembalikan ke rInput
-            img_cek.setOnClickListener(new View.OnClickListener() {
+            rlInput.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Gson gson = new Gson();
