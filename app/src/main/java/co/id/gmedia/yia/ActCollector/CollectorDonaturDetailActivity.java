@@ -151,7 +151,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
-        body.add("id_template", "");
+        body.add("id_template", donatur.getId());
         body.add("id_donatur", donatur.getId_donatur());
         body.add("nominal", txt_nominal.getText().toString().replaceAll("[Rp,.\\s]", ""));
         body.add("kaleng_kembali", txt_jumlah_kaleng.getText().toString());
