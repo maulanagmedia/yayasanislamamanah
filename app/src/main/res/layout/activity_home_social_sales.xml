@@ -57,7 +57,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="0"
                             android:id="@+id/tv_title1"
                             android:textStyle="bold"
                             android:textSize="@dimen/text_title"
@@ -90,7 +89,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="0"
                             android:id="@+id/tv_title2"
                             android:textStyle="bold"
                             android:textSize="@dimen/text_title"
@@ -119,7 +117,8 @@
                     android:orientation="vertical"
                     android:layout_centerInParent="true">
 
-                    <ImageView
+                    <co.id.gmedia.yia.Utils.TopCropCircularImageView
+                        android:id="@+id/img_foto"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/ic_profile"/>

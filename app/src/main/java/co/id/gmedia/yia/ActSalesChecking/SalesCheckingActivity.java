@@ -84,7 +84,7 @@ public class SalesCheckingActivity extends AppCompatActivity {
         loadFragment(active_fragment);
     }
 
-    private void initData(){
+    private void initAkun(){
         SessionManager session = new SessionManager(this);
         txt_nama.setText(session.getNama());
         ImageUtils imageUtils = new ImageUtils();
@@ -93,7 +93,7 @@ public class SalesCheckingActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        initData();
+        initAkun();
         loadJadwalJumlah();
         super.onResume();
     }

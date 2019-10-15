@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,27 +19,37 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.Date;
+
+import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialJadwalFragment;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialRiwayatFragment;
+import co.id.gmedia.yia.Utils.AppRequestCallback;
+import co.id.gmedia.yia.Utils.Converter;
+import co.id.gmedia.yia.Utils.JSONBuilder;
+import co.id.gmedia.yia.Utils.ServerURL;
+import co.id.gmedia.yia.Utils.TopCropCircularImageView;
 
 public class HomeSocialSalesActivity extends AppCompatActivity {
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private LinearLayout llInfo, llRiwayat;
     private Context context;
-    private TextView tvjadwalKunjungan, tvRiwayat, tvTitle2;
+    private TextView tvjadwalKunjungan, tvRiwayat, tvTitle1, tvTitle2;
     private View vInfo, vRiwayat;
-    private ImageView ivAkun;
-    private LinearLayout llAkun;
+    private TopCropCircularImageView img_foto;
     private TextView tvAdmin;
     private SessionManager session;
 
@@ -98,19 +109,102 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
         initEvent();
     }
 
+    @Override
+    protected void onResume() {
+        initAkun();
+        loadJumlahJadwal();
+        super.onResume();
+    }
+
+    private void initAkun(){
+        tvAdmin.setText(session.getNama());
+        if(session.getFoto().charAt(session.getFoto().length() - 1) != '/'){
+            ImageUtils imageUtils = new ImageUtils();
+            imageUtils.LoadRealImage(session.getFoto(), img_foto);
+        }
+    }
+
+    private void loadJumlahJadwal(){
+        JSONBuilder body = new JSONBuilder();
+        body.add("id_sales", session.getId());
+        body.add("tgl_awal", Converter.DToString(new Date()));
+        body.add("tgl_akhir", Converter.DToString(new Date()));
+        body.add("keywoard", "");
+        body.add("status", "");
+
+        new ApiVolley(this, body.create(), "POST", ServerURL.getRencanaKerjaSosial,
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
+                    @Override
+                    public void onSuccess(String response, String message) {
+                        try{
+                            JSONArray object = new JSONArray(response);
+                            tvTitle1.setText(String.valueOf(object.length()));
+                            loadHistoryJumlah();
+                        }
+                        catch (JSONException e){
+                            Log.e("json_log", e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onEmpty(String message) {
+                        tvTitle1.setText(0);
+                    }
+
+                    @Override
+                    public void onFail(String message) {
+                        Log.e("rk_sosial_log", message);
+                    }
+                }));
+    }
+
+    private void loadHistoryJumlah(){
+        JSONBuilder body = new JSONBuilder();
+        body.add("id_sales", session.getId());
+        body.add("tgl_awal", Converter.DToFirstDayOfMonthString(new Date()));
+        body.add("tgl_akhir", Converter.DToString(new Date()));
+        body.add("keywoard", "");
+        body.add("status", "0");
+
+        new ApiVolley(this, body.create(), "POST", ServerURL.getRencanaKerjaSosial,
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
+                    @Override
+                    public void onSuccess(String response, String message) {
+                        try{
+                            JSONArray object = new JSONArray(response);
+                            tvTitle2.setText(String.valueOf(object.length()));
+                        }
+                        catch (JSONException e){
+                            Log.e("json_log", e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onEmpty(String message) {
+                        tvTitle2.setText(String.valueOf(0));
+                    }
+
+                    @Override
+                    public void onFail(String message) {
+                        Log.e("rk_sosial_log", message);
+                    }
+                }));
+    }
+
     private void initUI() {
 
         llInfo = (LinearLayout) findViewById(R.id.ll_info);
         llRiwayat = (LinearLayout) findViewById(R.id.ll_riwayat);
         tvjadwalKunjungan = (TextView) findViewById(R.id.tv_jadwal_kunjungan);
         tvRiwayat = (TextView) findViewById(R.id.tv_riwayat);
+        tvTitle1 = findViewById(R.id.tv_title1);
         tvTitle2 = (TextView) findViewById(R.id.tv_title2);
         vInfo = (View) findViewById(R.id.v_info);
         vRiwayat = (View) findViewById(R.id.v_riwayat);
         tvAdmin = (TextView) findViewById(R.id.tv_admin);
+        img_foto = findViewById(R.id.img_foto);
 
         session = new SessionManager(context);
-        tvAdmin.setText(session.getNama());
 
         changeState(1);
     }

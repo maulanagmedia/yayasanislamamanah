@@ -14,6 +14,7 @@ public class Converter {
 
     private static SimpleDateFormat d_format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     private static SimpleDateFormat d1_format = new SimpleDateFormat("yyyy-MM-01", Locale.getDefault());
+    private static SimpleDateFormat d_slash_format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     private static SimpleDateFormat d_format_string = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
     public static String doubleToRupiah(double value){
@@ -25,6 +26,10 @@ public class Converter {
         return d_format_string.format(date);
     }
 
+    public static String getSlashedDateString(Date date){
+        return d_slash_format.format(date);
+    }
+
     public static Date stringDToDate(String date){
         try {
             return d_format.parse(date);
@@ -32,6 +37,16 @@ public class Converter {
             e.printStackTrace();
             return new Date();
         }
+    }
+
+    public static String DTToString(int year, int month, int date, int hour, int minute, int second){
+        return String.format(Locale.getDefault(), "%4d-%02d-%02d %02d:%02d:%02d",
+                year, month, date, hour, minute, second);
+    }
+
+    public static String DToString(int year, int month, int date){
+        return String.format(Locale.getDefault(), "%4d-%02d-%02d",
+                year, month, date);
     }
 
     public static String DToString(Date date){

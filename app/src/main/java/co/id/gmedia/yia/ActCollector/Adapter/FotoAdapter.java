@@ -20,13 +20,13 @@ import java.util.List;
 
 import co.id.gmedia.yia.R;
 
-public class TambahanDonaturFotoAdapter extends RecyclerView.Adapter
-        <TambahanDonaturFotoAdapter.TambahanDonaturFotoViewHolder> {
+public class FotoAdapter extends RecyclerView.Adapter
+        <FotoAdapter.TambahanDonaturFotoViewHolder> {
 
     private Context context;
     private List<String> listGambar;
 
-    public TambahanDonaturFotoAdapter(Context context, List<String> listGambar){
+    public FotoAdapter(Context context, List<String> listGambar){
         this.context = context;
         this.listGambar = listGambar;
     }

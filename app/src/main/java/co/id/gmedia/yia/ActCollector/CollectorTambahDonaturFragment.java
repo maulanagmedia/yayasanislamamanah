@@ -40,7 +40,7 @@ import java.util.List;
 import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.SessionManager;
-import co.id.gmedia.yia.ActCollector.Adapter.TambahanDonaturFotoAdapter;
+import co.id.gmedia.yia.ActCollector.Adapter.FotoAdapter;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
@@ -57,7 +57,7 @@ import co.id.gmedia.yia.Utils.ServerURL;
 public class CollectorTambahDonaturFragment extends Fragment {
 
     private Activity activity;
-    private TambahanDonaturFotoAdapter adapter;
+    private FotoAdapter adapter;
     private List<String> listGambar = new ArrayList<>();
     private List<SimpleObjectModel> listKota = new ArrayList<>(), listKecamatan = new ArrayList<>(), listKelurahan = new ArrayList<>();
     private String selectedKota = "", selectedKecamatan = "", selectedKelurahan = "";
@@ -94,7 +94,7 @@ public class CollectorTambahDonaturFragment extends Fragment {
         RecyclerView rv_foto = v.findViewById(R.id.rv_foto);
         rv_foto.setItemAnimator(new DefaultItemAnimator());
         rv_foto.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
-        adapter = new TambahanDonaturFotoAdapter(activity, listGambar);
+        adapter = new FotoAdapter(activity, listGambar);
         rv_foto.setAdapter(adapter);
 
         txt_jumlah_donasi = v.findViewById(R.id.txt_jumlah_donasi);
@@ -191,7 +191,6 @@ public class CollectorTambahDonaturFragment extends Fragment {
         }
 
         body.add("foto", new JSONArray(listFoto));
-        Log.d("donaturluar_log", "body : " + body.create());
 
         new ApiVolley(activity, body.create(), "POST",
                 ServerURL.tambahDonaturLuarCollector, new AppRequestCallback

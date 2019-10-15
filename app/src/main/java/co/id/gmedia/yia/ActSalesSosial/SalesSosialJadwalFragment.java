@@ -32,6 +32,7 @@ import co.id.gmedia.yia.ActSalesSosial.Adapter.ListJadwalSSAdapter;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
+import co.id.gmedia.yia.Utils.DateTimeChooser;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
@@ -49,7 +50,8 @@ public class SalesSosialJadwalFragment extends Fragment {
     private TextView tvDate1, tvDate2;
     private EditText edtSearch;
     private SessionManager session;
-    private String dateFrom = "", dateTo = "";
+    private String dateFrom = Converter.DToString(new Date());
+    private String dateTo = Converter.DToString(new Date());
 
     public SalesSosialJadwalFragment() {
         // Required empty public constructor
@@ -82,11 +84,41 @@ public class SalesSosialJadwalFragment extends Fragment {
         tvDate2 = (TextView) root.findViewById(R.id.tv_date2);
         edtSearch = (EditText) root.findViewById(R.id.edt_search);
 
-        dateFrom = iv.sumDate(iv.getCurrentDate(FormatItem.formatDateDisplay), -1, FormatItem.formatDateDisplay) ;
-        dateTo = iv.getCurrentDate(FormatItem.formatDateDisplay);
+        rlDate1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateTimeChooser.getInstance().selectDate(context, new DateTimeChooser.DateTimeListener() {
+                    @Override
+                    public void onFinished(String dateString) {
+                        dateFrom = dateString;
+                        tvDate1.setText(Converter.getSlashedDateString(Converter.stringDToDate(dateString)));
+                    }
+                });
+            }
+        });
 
-        tvDate1.setText(dateFrom);
-        tvDate2.setText(dateTo);
+        rlDate2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateTimeChooser.getInstance().selectDate(context, new DateTimeChooser.DateTimeListener() {
+                    @Override
+                    public void onFinished(String dateString) {
+                        dateTo = dateString;
+                        tvDate2.setText(Converter.getSlashedDateString(Converter.stringDToDate(dateString)));
+                    }
+                });
+            }
+        });
+
+        root.findViewById(R.id.btn_proses).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData();
+            }
+        });
+
+        tvDate1.setText(Converter.getSlashedDateString(Converter.stringDToDate(dateFrom)));
+        tvDate2.setText(Converter.getSlashedDateString(Converter.stringDToDate(dateTo)));
         dialogBox = new DialogBox(context);
 
         String curdate = iv.getCurrentDate(FormatItem.formatDate1);
@@ -117,8 +149,8 @@ public class SalesSosialJadwalFragment extends Fragment {
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
-        body.add("tgl_awal", Converter.DToString(new Date()));
-        body.add("tgl_akhir", Converter.DToString(new Date()));
+        body.add("tgl_awal", dateFrom);
+        body.add("tgl_akhir", dateTo);
         body.add("keyword", edtSearch.getText().toString());
         body.add("status", "");
 
@@ -158,6 +190,9 @@ public class SalesSosialJadwalFragment extends Fragment {
 
                     @Override
                     public void onEmpty(String message) {
+                        listData.clear();
+                        adapter.notifyDataSetChanged();
+
                         dialogBox.dismissDialog();
                     }
 

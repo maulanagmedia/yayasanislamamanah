@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -39,6 +40,7 @@ import co.id.gmedia.yia.ActSalesSosial.Adapter.ListRiwayatSSAdapter;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
+import co.id.gmedia.yia.Utils.DateTimeChooser;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
@@ -48,8 +50,8 @@ public class SalesSosialRiwayatFragment extends Fragment {
     private Context context;
     private SessionManager session;
     private RelativeLayout rlDate1, rlDate2;
-    private String dateFrom = "", dateTo = "";
-    private ItemValidation iv = new ItemValidation();
+    private String dateFrom = Converter.DToFirstDayOfMonthString(new Date()),
+            dateTo = Converter.DToString(new Date());
     private TextView tvDate1, tvDate2;
     private DialogBox dialogBox;
     private ListView lvRiwayat;
@@ -86,14 +88,13 @@ public class SalesSosialRiwayatFragment extends Fragment {
         tvDate1 = (TextView) root.findViewById(R.id.tv_date1);
         tvDate2 = (TextView) root.findViewById(R.id.tv_date2);
         edtSearch = (EditText) root.findViewById(R.id.edt_search);
-
         lvRiwayat = (ListView) root.findViewById(R.id.lv_riwayat);
 
         adapter = new ListRiwayatSSAdapter((Activity) context, listData);
         lvRiwayat.setAdapter(adapter);
 
-        dateFrom = iv.sumDate(iv.getCurrentDate(FormatItem.formatDateDisplay), -1, FormatItem.formatDateDisplay) ;
-        dateTo = iv.getCurrentDate(FormatItem.formatDateDisplay);
+        tvDate1.setText(Converter.getSlashedDateString(Converter.stringDToDate(dateFrom)));
+        tvDate2.setText(Converter.getSlashedDateString(Converter.stringDToDate(dateTo)));
 
         tvDate1.setText(dateFrom);
         tvDate2.setText(dateTo);
@@ -103,72 +104,36 @@ public class SalesSosialRiwayatFragment extends Fragment {
     }
 
     private void initEvent() {
-
         rlDate1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                final Calendar customDate;
-                SimpleDateFormat sdf = new SimpleDateFormat(FormatItem.formatDateDisplay);
-
-                Date dateValue = null;
-
-                try {
-                    dateValue = sdf.parse(dateFrom);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                customDate = Calendar.getInstance();
-                final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            public void onClick(View v) {
+                DateTimeChooser.getInstance().selectDate(context, new DateTimeChooser.DateTimeListener() {
                     @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-                        customDate.set(Calendar.YEAR,year);
-                        customDate.set(Calendar.MONTH,month);
-                        customDate.set(Calendar.DATE,date);
-
-                        SimpleDateFormat sdFormat = new SimpleDateFormat(FormatItem.formatDateDisplay, Locale.US);
-                        dateFrom = sdFormat.format(customDate.getTime());
-                        tvDate1.setText(dateFrom);
+                    public void onFinished(String dateString) {
+                        dateFrom = dateString;
+                        tvDate1.setText(Converter.getSlashedDateString(Converter.stringDToDate(dateString)));
                     }
-                };
-
-                SimpleDateFormat yearOnly = new SimpleDateFormat("yyyy");
-                new DatePickerDialog(context ,date , iv.parseNullInteger(yearOnly.format(dateValue)),dateValue.getMonth(),dateValue.getDate()).show();
+                });
             }
         });
 
         rlDate2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                final Calendar customDate;
-                SimpleDateFormat sdf = new SimpleDateFormat(FormatItem.formatDateDisplay);
-
-                Date dateValue = null;
-
-                try {
-                    dateValue = sdf.parse(dateTo);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                customDate = Calendar.getInstance();
-                final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            public void onClick(View v) {
+                DateTimeChooser.getInstance().selectDate(context, new DateTimeChooser.DateTimeListener() {
                     @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-                        customDate.set(Calendar.YEAR,year);
-                        customDate.set(Calendar.MONTH,month);
-                        customDate.set(Calendar.DATE,date);
-
-                        SimpleDateFormat sdFormat = new SimpleDateFormat(FormatItem.formatDateDisplay, Locale.US);
-                        dateTo = sdFormat.format(customDate.getTime());
-                        tvDate2.setText(dateTo);
+                    public void onFinished(String dateString) {
+                        dateTo = dateString;
+                        tvDate2.setText(Converter.getSlashedDateString(Converter.stringDToDate(dateString)));
                     }
-                };
+                });
+            }
+        });
 
-                SimpleDateFormat yearOnly = new SimpleDateFormat("yyyy");
-                new DatePickerDialog(context ,date , iv.parseNullInteger(yearOnly.format(dateValue)),dateValue.getMonth(),dateValue.getDate()).show();
+        root.findViewById(R.id.btn_proses).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData();
             }
         });
     }
@@ -177,8 +142,8 @@ public class SalesSosialRiwayatFragment extends Fragment {
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
-        body.add("tgl_awal", Converter.DToFirstDayOfMonthString(new Date()));
-        body.add("tgl_akhir", Converter.DToString(new Date()));
+        body.add("tgl_awal", dateFrom);
+        body.add("tgl_akhir", dateTo);
         body.add("keyword", edtSearch.getText().toString());
         body.add("status", "0");
 
@@ -218,6 +183,9 @@ public class SalesSosialRiwayatFragment extends Fragment {
 
                     @Override
                     public void onEmpty(String message) {
+                        listData.clear();
+                        adapter.notifyDataSetChanged();
+
                         dialogBox.dismissDialog();
                     }
 
