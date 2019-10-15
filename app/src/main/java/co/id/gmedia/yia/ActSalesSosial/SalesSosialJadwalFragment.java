@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import co.id.gmedia.coremodul.ApiVolley;
@@ -30,6 +31,7 @@ import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActSalesSosial.Adapter.ListJadwalSSAdapter;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
+import co.id.gmedia.yia.Utils.Converter;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
@@ -115,9 +117,10 @@ public class SalesSosialJadwalFragment extends Fragment {
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
-        body.add("tgl_awal", iv.ChangeFormatDateString(dateFrom, FormatItem.formatDateDisplay, FormatItem.formatDate));
-        body.add("tgl_akhir", iv.ChangeFormatDateString(dateTo, FormatItem.formatDateDisplay, FormatItem.formatDate));
+        body.add("tgl_awal", Converter.DToString(new Date()));
+        body.add("tgl_akhir", Converter.DToString(new Date()));
         body.add("keyword", edtSearch.getText().toString());
+        body.add("status", "");
 
         new ApiVolley(context, body.create(), "POST", ServerURL.getRencanaKerjaSosial,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +20,7 @@ import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActCollector.CollectorActivity;
-import co.id.gmedia.yia.ActSalesSurvey.SalesSurveyActivity;
+import co.id.gmedia.yia.ActSalesChecking.SalesCheckingActivity;
 import co.id.gmedia.yia.Utils.ServerURL;
 
 public class LoginActivity extends AppCompatActivity {
@@ -196,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent = new Intent(context, HomeSocialSalesActivity.class);
                 break;
             case "3" :
-                intent = new Intent(context, SalesSurveyActivity.class);
+                intent = new Intent(context, SalesCheckingActivity.class);
                 break;
             case "4":
                 intent = new Intent(context, CollectorActivity.class);

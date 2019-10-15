@@ -40,7 +40,7 @@ public class CollectorJadwalFragment extends Fragment {
     private JadwalKunjunganCollectorAdapter adapter;
     private List<DonaturModel> listDonatur = new ArrayList<>();
 
-    private TextView txt_tanggal;
+    //private TextView txt_tanggal;
 
     private DialogBox dialogBox;
 
@@ -55,7 +55,7 @@ public class CollectorJadwalFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_collector_jadwal, container, false);
 
         dialogBox = new DialogBox(activity);
-        txt_tanggal = v.findViewById(R.id.txt_tanggal);
+        //txt_tanggal = v.findViewById(R.id.txt_tanggal);
 
         RecyclerView rv_jadwal = v.findViewById(R.id.rv_jadwal);
         rv_jadwal.setItemAnimator(new DefaultItemAnimator());
@@ -69,7 +69,7 @@ public class CollectorJadwalFragment extends Fragment {
     }
 
     private void loadData(){
-        txt_tanggal.setText(Converter.getDateString(new Date()));
+        //txt_tanggal.setText(Converter.getDateString(new Date()));
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("collector", new SessionManager(activity).getId());
@@ -115,6 +115,9 @@ public class CollectorJadwalFragment extends Fragment {
                     @Override
                     public void onEmpty(String message) {
                         dialogBox.dismissDialog();
+                        if(activity instanceof CollectorActivity){
+                            ((CollectorActivity)activity).updateJumlah(0);
+                        }
                     }
 
                     @Override

@@ -1,4 +1,4 @@
-package co.id.gmedia.yia.ActSalesSurvey;
+package co.id.gmedia.yia.ActSalesChecking;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -24,7 +24,7 @@ import java.util.List;
 import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.SessionManager;
-import co.id.gmedia.yia.ActSalesSurvey.Adapter.SurveyRiwayatAdapter;
+import co.id.gmedia.yia.ActSalesChecking.Adapter.CheckingRiwayatAdapter;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.Model.SurveyRiwayatModel;
 import co.id.gmedia.yia.R;
@@ -33,16 +33,16 @@ import co.id.gmedia.yia.Utils.Converter;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
-public class SurveyRiwayatFragment extends Fragment {
+public class CheckingRiwayatFragment extends Fragment {
 
     private Activity activity;
-    private SurveyRiwayatAdapter adapter;
+    private CheckingRiwayatAdapter adapter;
     private List<SurveyRiwayatModel> listDonatur = new ArrayList<>();
 
     private SessionManager session;
     private DialogBox dialogBox;
 
-    public SurveyRiwayatFragment() {
+    public CheckingRiwayatFragment() {
         // Required empty public constructor
     }
 
@@ -51,12 +51,12 @@ public class SurveyRiwayatFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         activity = getActivity();
-        View v = inflater.inflate(R.layout.fragment_survey_riwayat, container, false);
+        View v = inflater.inflate(R.layout.fragment_checking_riwayat, container, false);
 
         RecyclerView rv_history = v.findViewById(R.id.rv_history);
         rv_history.setItemAnimator(new DefaultItemAnimator());
         rv_history.setLayoutManager(new LinearLayoutManager(activity));
-        adapter = new SurveyRiwayatAdapter(activity, listDonatur);
+        adapter = new CheckingRiwayatAdapter(activity, listDonatur);
         rv_history.setAdapter(adapter);
 
         session = new SessionManager(activity);

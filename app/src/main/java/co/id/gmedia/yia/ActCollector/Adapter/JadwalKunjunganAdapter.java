@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
-import co.id.gmedia.yia.ActSalesSurvey.SalesSurveyDetailActivity;
+import co.id.gmedia.yia.ActSalesChecking.SalesCheckingDetailActivity;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
 
@@ -91,7 +91,7 @@ public class JadwalKunjunganAdapter extends RecyclerView.Adapter<JadwalKunjungan
                 @Override
                 public void onClick(View v) {
                     Gson gson = new Gson();
-                    Intent intent = new Intent(context, SalesSurveyDetailActivity.class);
+                    Intent intent = new Intent(context, SalesCheckingDetailActivity.class);
                     intent.putExtra("donatur", gson.toJson(b));
                     context.startActivity(intent);
                 }

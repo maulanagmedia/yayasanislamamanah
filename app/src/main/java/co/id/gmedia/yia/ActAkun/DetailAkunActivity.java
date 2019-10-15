@@ -214,6 +214,8 @@ public class DetailAkunActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 Intent intent = new Intent(context, LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 session.logoutUser(intent);
                             }
                         })

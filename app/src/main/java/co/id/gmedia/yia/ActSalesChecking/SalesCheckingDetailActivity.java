@@ -1,4 +1,4 @@
-package co.id.gmedia.yia.ActSalesSurvey;
+package co.id.gmedia.yia.ActSalesChecking;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,7 +29,7 @@ import co.id.gmedia.yia.Utils.GoogleLocationManager;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
-public class SalesSurveyDetailActivity extends AppCompatActivity{
+public class SalesCheckingDetailActivity extends AppCompatActivity{
 
     private DonaturModel donatur;
 
@@ -46,7 +46,7 @@ public class SalesSurveyDetailActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sales_survey_detail);
+        setContentView(R.layout.activity_sales_checking_detail);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getWindow().setSoftInputMode(
@@ -108,7 +108,7 @@ public class SalesSurveyDetailActivity extends AppCompatActivity{
             public void onClick(View v) {
                 if(donatur != null){
                     if(lat == 0 || lng == 0){
-                        Toast.makeText(SalesSurveyDetailActivity.this, "Lokasi tidak terdekteksi, " +
+                        Toast.makeText(SalesCheckingDetailActivity.this, "Lokasi tidak terdekteksi, " +
                                 "tidak bisa melanjutkan survey", Toast.LENGTH_SHORT).show();
                     }
                     else{
@@ -139,7 +139,7 @@ public class SalesSurveyDetailActivity extends AppCompatActivity{
                     @Override
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
-                        Toast.makeText(SalesSurveyDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SalesCheckingDetailActivity.this, message, Toast.LENGTH_SHORT).show();
 
                         finish();
                     }
@@ -147,13 +147,13 @@ public class SalesSurveyDetailActivity extends AppCompatActivity{
                     @Override
                     public void onEmpty(String message) {
                         dialogBox.dismissDialog();
-                        Toast.makeText(SalesSurveyDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SalesCheckingDetailActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFail(String message) {
                         dialogBox.dismissDialog();
-                        Toast.makeText(SalesSurveyDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SalesCheckingDetailActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 }));
     }

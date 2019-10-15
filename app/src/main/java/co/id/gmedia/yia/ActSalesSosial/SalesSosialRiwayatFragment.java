@@ -37,6 +37,9 @@ import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActSalesSosial.Adapter.ListRiwayatSSAdapter;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.AppRequestCallback;
+import co.id.gmedia.yia.Utils.Converter;
+import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
 public class SalesSosialRiwayatFragment extends Fragment {
@@ -96,16 +99,7 @@ public class SalesSosialRiwayatFragment extends Fragment {
         tvDate2.setText(dateTo);
         dialogBox = new DialogBox(context);
 
-        listData.add(new CustomModel("1", "Rokhim", "Jl. Mataram", "080989999", "2019-09-20 10:10:10", "1", "Donatur setuju mendaftar"));
-        listData.add(new CustomModel("2", "Victor", "Jl. Pandanaran", "080989999", "2019-09-20 10:10:10", "0", "Donatur menolak mendaftar"));
-        listData.add(new CustomModel("3", "Maul", "Jl. Pamularsih", "", "2019-09-20 10:10:10", "1", "Donatur setuju mendaftar"));
-        listData.add(new CustomModel("4", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10", "1", "Donatur setuju mendaftar"));
-        listData.add(new CustomModel("5", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10", "1", "Donatur setuju mendaftar"));
-        listData.add(new CustomModel("6", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10", "1", "Donatur setuju mendaftar"));
-        listData.add(new CustomModel("7", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10", "1", "Donatur setuju mendaftar"));
-        listData.add(new CustomModel("8", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10", "1", "Donatur setuju mendaftar"));
-
-        adapter.notifyDataSetChanged();
+        initData();
     }
 
     private void initEvent() {
@@ -180,78 +174,69 @@ public class SalesSosialRiwayatFragment extends Fragment {
     }
 
     private void initData() {
-
         dialogBox.showDialog(false);
+        JSONBuilder body = new JSONBuilder();
+        body.add("id_sales", session.getId());
+        body.add("tgl_awal", Converter.DToFirstDayOfMonthString(new Date()));
+        body.add("tgl_akhir", Converter.DToString(new Date()));
+        body.add("keyword", edtSearch.getText().toString());
+        body.add("status", "0");
 
-        JSONObject jBody = new JSONObject();
-        try {
-            jBody.put("id_sales", session.getId());
-            jBody.put("tgl_awal", iv.ChangeFormatDateString(dateFrom, FormatItem.formatDateDisplay, FormatItem.formatDate));
-            jBody.put("tgl_akhir", iv.ChangeFormatDateString(dateTo, FormatItem.formatDateDisplay, FormatItem.formatDate));
-            jBody.put("keyword", edtSearch.getText().toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        new ApiVolley(context, jBody, "POST", ServerURL.getCalonDonatur, new ApiVolley.VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
-
-                dialogBox.dismissDialog();
-                try {
-
-                    JSONObject response = new JSONObject(result);
-                    String status = response.getJSONObject("metadata").getString("status");
-                    String message = response.getJSONObject("metadata").getString("message");
-
-                    if(iv.parseNullInteger(status) == 200){
-
-                        JSONArray ja = response.getJSONArray("response");
-                        for(int i = 0; i < ja.length(); i ++){
-
-                            JSONObject jo = ja.getJSONObject(i);
-                            listData.add(
-                                    new CustomModel(
-                                            jo.getString("id")
-                                            ,jo.getString("kecamatan")
-                                    )
-                            );
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    View.OnClickListener clickListener = new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            dialogBox.dismissDialog();
-                            initData();
-
-                        }
-                    };
-
-                    dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
-                }
-
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onError(String result) {
-                dialogBox.dismissDialog();
-                View.OnClickListener clickListener = new View.OnClickListener() {
+        new ApiVolley(context, body.create(), "POST", ServerURL.getRencanaKerjaSosial,
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
                     @Override
-                    public void onClick(View view) {
-
+                    public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
-                        initData();
+                        try{
+                            listData.clear();
+                            JSONArray obj = new JSONArray(response);
+                            for(int i = 0; i < obj.length(); i++){
+                                JSONObject jadwal = obj.getJSONObject(i);
+                                listData.add(new CustomModel(jadwal.getString("id"),
+                                        jadwal.getString("nama"), jadwal.getString("alamat"),
+                                        jadwal.getString("kontak"), "tanggal",
+                                        jadwal.getString("status").equals("0")?"1":"0"));
+                            }
 
+                            adapter.notifyDataSetChanged();
+                        }
+                        catch (JSONException e){
+                            dialogBox.dismissDialog();
+                            View.OnClickListener clickListener = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    dialogBox.dismissDialog();
+                                    initData();
+
+                                }
+                            };
+
+                            dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                        }
                     }
-                };
 
-                dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
-            }
-        });
+                    @Override
+                    public void onEmpty(String message) {
+                        dialogBox.dismissDialog();
+                    }
+
+                    @Override
+                    public void onFail(String message) {
+                        dialogBox.dismissDialog();
+                        View.OnClickListener clickListener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                dialogBox.dismissDialog();
+                                initData();
+
+                            }
+                        };
+
+                        dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                    }
+                }));
     }
 
 }

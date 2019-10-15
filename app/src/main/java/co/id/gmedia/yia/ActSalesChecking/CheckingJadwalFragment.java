@@ -1,4 +1,4 @@
-package co.id.gmedia.yia.ActSalesSurvey;
+package co.id.gmedia.yia.ActSalesChecking;
 
 
 import android.app.Activity;
@@ -37,7 +37,7 @@ import co.id.gmedia.yia.Utils.ServerURL;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SurveyJadwalFragment extends Fragment {
+public class CheckingJadwalFragment extends Fragment {
 
     private Activity activity;
     private JadwalKunjunganAdapter adapter;
@@ -48,7 +48,7 @@ public class SurveyJadwalFragment extends Fragment {
 
     private TextView txt_tanggal;
 
-    public SurveyJadwalFragment() {
+    public CheckingJadwalFragment() {
         // Required empty public constructor
     }
 
@@ -57,7 +57,7 @@ public class SurveyJadwalFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         activity = getActivity();
-        View v = inflater.inflate(R.layout.fragment_survey_jadwal, container, false);
+        View v = inflater.inflate(R.layout.fragment_checking_jadwal, container, false);
 
         txt_tanggal = v.findViewById(R.id.txt_tanggal);
 

@@ -1,4 +1,4 @@
-package co.id.gmedia.yia.ActSalesSurvey.Adapter;
+package co.id.gmedia.yia.ActSalesChecking.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,12 +15,12 @@ import co.id.gmedia.yia.Model.SurveyRiwayatModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.Converter;
 
-public class SurveyRiwayatAdapter extends RecyclerView.Adapter<SurveyRiwayatAdapter.SurveyRiwayatViewHolder> {
+public class CheckingRiwayatAdapter extends RecyclerView.Adapter<CheckingRiwayatAdapter.SurveyRiwayatViewHolder> {
 
     private Context context;
     private List<SurveyRiwayatModel> listDonatur;
 
-    public SurveyRiwayatAdapter(Context context, List<SurveyRiwayatModel> listDonatur){
+    public CheckingRiwayatAdapter(Context context, List<SurveyRiwayatModel> listDonatur){
         this.context = context;
         this.listDonatur = listDonatur;
     }

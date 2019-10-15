@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".ActCollector.CollectorDonaturDetailActivity"></activity>
-        <activity android:name=".ActSalesSurvey.SalesSurveyDetailActivity" />
+        <activity android:name=".ActSalesChecking.SalesCheckingDetailActivity" />
         <activity
             android:name=".ActSalesBrosur.DetailCurrentPosActivity"
             android:label="@string/title_activity_detail_current_pos"
@@ -33,7 +33,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActSalesSurvey.SalesSurveyActivity"
+            android:name=".ActSalesChecking.SalesCheckingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

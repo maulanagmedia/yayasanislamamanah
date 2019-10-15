@@ -100,7 +100,6 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
             img_plus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     LayoutInflater inflater = (LayoutInflater) ((Activity)context).getSystemService(LAYOUT_INFLATER_SERVICE);
                     View viewDialog = inflater.inflate(R.layout.dialog_choser_collection, null);

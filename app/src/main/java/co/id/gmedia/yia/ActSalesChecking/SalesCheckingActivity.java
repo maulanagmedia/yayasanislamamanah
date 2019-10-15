@@ -1,4 +1,4 @@
-package co.id.gmedia.yia.ActSalesSurvey;
+package co.id.gmedia.yia.ActSalesChecking;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -36,7 +36,7 @@ import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 import co.id.gmedia.yia.Utils.TopCropCircularImageView;
 
-public class SalesSurveyActivity extends AppCompatActivity {
+public class SalesCheckingActivity extends AppCompatActivity {
 
     private TextView txt_nama, txt_jumlah_jadwal, txt_jumlah_riwayat;
     private TopCropCircularImageView img_foto;
@@ -49,7 +49,7 @@ public class SalesSurveyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sales_survey);
+        setContentView(R.layout.activity_sales_checking);
 
         txt_nama = findViewById(R.id.txt_nama);
         txt_jumlah_jadwal = findViewById(R.id.txt_jumlah_jadwal);
@@ -80,7 +80,7 @@ public class SalesSurveyActivity extends AppCompatActivity {
         dialogBox = new DialogBox(this);
         sessionManager = new SessionManager(this);
 
-        active_fragment = new SurveyJadwalFragment();
+        active_fragment = new CheckingJadwalFragment();
         loadFragment(active_fragment);
     }
 
@@ -100,8 +100,8 @@ public class SalesSurveyActivity extends AppCompatActivity {
 
     private void switchTab(int position){
         switch (position){
-            case 0 : active_fragment = new SurveyJadwalFragment();break;
-            case 1 : active_fragment = new SurveyRiwayatFragment();break;
+            case 0 : active_fragment = new CheckingJadwalFragment();break;
+            case 1 : active_fragment = new CheckingRiwayatFragment();break;
         }
         loadFragment(active_fragment);
     }
@@ -206,6 +206,7 @@ public class SalesSurveyActivity extends AppCompatActivity {
                     @Override
                     public void onEmpty(String message) {
                         dialogBox.dismissDialog();
+                        txt_jumlah_jadwal.setText(0);
                     }
 
                     @Override
@@ -259,6 +260,7 @@ public class SalesSurveyActivity extends AppCompatActivity {
                     @Override
                     public void onEmpty(String message) {
                         dialogBox.dismissDialog();
+                        txt_jumlah_riwayat.setText(String.valueOf(0));
                     }
 
                     @Override
