@@ -643,6 +643,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                     JSONObject response = new JSONObject(result);
                     String status = response.getJSONObject("metadata").getString("status");
                     String message = response.getJSONObject("metadata").getString("message");
+                    listKota.clear();
 
                     if(iv.parseNullInteger(status) == 200){
 
@@ -703,6 +704,11 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
 
         dialogBox.showDialog(false);
 
+        selectedKecamatan = "";
+        tvKecamatan.setText("");
+        selectedKelurahan = "";
+        tvKelurahan.setText("");
+
         JSONObject jBody = new JSONObject();
         try {
             jBody.put("id_kota", idKota);
@@ -720,6 +726,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                     JSONObject response = new JSONObject(result);
                     String status = response.getJSONObject("metadata").getString("status");
                     String message = response.getJSONObject("metadata").getString("message");
+                    listKecamatan.clear();
 
                     if(iv.parseNullInteger(status) == 200){
 
@@ -780,6 +787,9 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
 
         dialogBox.showDialog(false);
 
+        selectedKelurahan = "";
+        tvKelurahan.setText("");
+
         JSONObject jBody = new JSONObject();
         try {
             jBody.put("id_kecamatan", idKecamatan);
@@ -797,6 +807,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
                     JSONObject response = new JSONObject(result);
                     String status = response.getJSONObject("metadata").getString("status");
                     String message = response.getJSONObject("metadata").getString("message");
+                    listKeluarahan.clear();
 
                     if(iv.parseNullInteger(status) == 200){
 

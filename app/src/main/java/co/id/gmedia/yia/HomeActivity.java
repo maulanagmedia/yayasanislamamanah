@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private LinearLayout llInfo, llRiwayat;
     private static Context context;
-    private static TextView tvInfo, tvRiwayat, tvTitle2;
+    public static TextView tvInfo, tvRiwayat, tvTitle2;
     private static View vInfo, vRiwayat;
     private ImageView ivAkun;
     private LinearLayout llAkun;
