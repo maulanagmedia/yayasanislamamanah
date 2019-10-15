@@ -40,6 +40,7 @@ import co.id.gmedia.coremodul.FormatItem;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActSalesBrosur.Adapter.ListSalesBrosurAdapter;
+import co.id.gmedia.yia.HomeActivity;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.ServerURL;
 
@@ -186,6 +187,8 @@ public class SalesBrosurRiwayatFragment extends Fragment {
 
     private void initData() {
 
+        HomeActivity.tvTitle2.setText("0");
+
         dialogBox.showDialog(false);
 
         JSONObject jBody = new JSONObject();
@@ -226,6 +229,8 @@ public class SalesBrosurRiwayatFragment extends Fragment {
                                     )
                             );
                         }
+
+                        HomeActivity.tvTitle2.setText(String.valueOf(ja.length()));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
