@@ -1,6 +1,7 @@
 package co.id.gmedia.yia.ActCollector.Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -11,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,9 +27,15 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
+import co.id.gmedia.yia.ActSalesChecking.CheckingJadwalFragment;
 import co.id.gmedia.yia.ActSalesChecking.SalesCheckingDetailActivity;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.AppRequestCallback;
+import co.id.gmedia.yia.Utils.Converter;
+import co.id.gmedia.yia.Utils.DialogFactory;
+import co.id.gmedia.yia.Utils.JSONBuilder;
+import co.id.gmedia.yia.Utils.ServerURL;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 

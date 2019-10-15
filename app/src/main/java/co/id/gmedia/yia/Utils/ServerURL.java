@@ -22,4 +22,5 @@ public class ServerURL {
     public static final String saveSurvey = baseURL + "Sales_checking/Rencana_kerja/validasiDonatur";
     public static final String saveCollector = baseURL + "Collector/Rencana_kerja/jemput_infaq";
     public static final String tambahDonaturLuarCollector = baseURL + "Collector/Rencana_kerja/data_luar";
+    public static final String berhentiDonasi = baseURL + "Collector/Rencana_kerja/donatur_out";
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp10"
+    app:cardCornerRadius="@dimen/dp10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp20">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Berhenti Donasi"
+            android:gravity="center"
+            android:textSize="@dimen/text_big"
+            android:textColor="@color/colorBlack" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masukkan jumlah kaleng kembali"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/txt_kaleng_kembali"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp15"
+            android:gravity="center"
+            android:inputType="number"/>
+
+        <Button
+            android:id="@+id/btn_dialog_berhenti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Berhenti donasi"
+            android:background="@drawable/bg_button_red"
+            android:textColor="@color/color_white"
+            android:textAllCaps="false"
+            android:layout_margin="@dimen/dp10"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
