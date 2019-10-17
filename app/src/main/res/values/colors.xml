@@ -21,8 +21,10 @@
     <color name="colorTitle">#4EF750</color>
     <color name="colorGreen1">#218D17</color>
     <color name="colorGreen2">#66C25C</color>
+    <color name="colorGreen3">#4DC43F</color>
     <color name="colorLogin">#21810D</color>
     <color name="colorGreyActive">#E0E0E0</color>
     <color name="colorGreyDeactive">#C0C0C0</color>
     <color name="colorGAP">#ECECEC</color>
+    <color name="colorOrange">#F48B09</color>
 </resources>

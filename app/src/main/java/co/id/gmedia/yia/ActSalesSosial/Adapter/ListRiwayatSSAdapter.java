@@ -68,9 +68,6 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
 
         holder.tvStatus.setText(item.getItem7());
 
-
-
-
         return convertView;
 
     }

@@ -164,10 +164,16 @@ public class SalesSosialJadwalFragment extends Fragment {
                             JSONArray obj = new JSONArray(response);
                             for(int i = 0; i < obj.length(); i++){
                                 JSONObject jadwal = obj.getJSONObject(i);
-                                listData.add(new CustomModel(jadwal.getString("id"),
-                                        jadwal.getString("nama"), jadwal.getString("alamat"),
-                                        jadwal.getString("kontak"), "tanggal",
-                                        jadwal.getString("status").equals("0")?"1":"0"));
+                                listData.add(new CustomModel(
+                                        jadwal.getString("id")
+                                        ,jadwal.getString("nama")
+                                        ,jadwal.getString("alamat")
+                                        ,jadwal.getString("kontak")
+                                        ,"tanggal"
+                                        ,jadwal.getString("status").equals("0")?"1":"0"
+                                        ,jadwal.getString("lat")
+                                        ,jadwal.getString("long")
+                                ));
                             }
 
                             adapter.notifyDataSetChanged();

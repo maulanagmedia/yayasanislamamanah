@@ -40,4 +40,5 @@
     <dimen name="dp40">40dp</dimen>
     <dimen name="image_size">220dp</dimen>
     <dimen name="big_icon_size">40dp</dimen>
+    <dimen name="radius_corner">6dp</dimen>
 </resources>

@@ -45,8 +45,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -56,6 +58,7 @@ import com.google.android.gms.tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.R;
 
@@ -65,6 +68,7 @@ public class DetailCurrentPosActivity extends AppCompatActivity implements OnMap
     private Context context;
     private SessionManager session;
     private ImageView ivRefresh;
+    private ItemValidation iv = new ItemValidation();
 
     //permission
     private String[] appPermission =  {
@@ -104,6 +108,7 @@ public class DetailCurrentPosActivity extends AppCompatActivity implements OnMap
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private Boolean mRequestingLocationUpdates;
     private Location mCurrentLocation;
+    private String namaDonatur = "", latitudeString = "", longitudeString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +150,15 @@ public class DetailCurrentPosActivity extends AppCompatActivity implements OnMap
     private void initUI() {
 
         ivRefresh = (ImageView) findViewById(R.id.iv_refresh);
+
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle != null) {
+
+            namaDonatur = bundle.getString("nama", "");
+            latitudeString = bundle.getString("lat", "");
+            longitudeString = bundle.getString("long", "");
+        }
 
         //initLocation();
     }
@@ -393,6 +407,7 @@ public class DetailCurrentPosActivity extends AppCompatActivity implements OnMap
     }
 
     public void setCriteria() {
+
         criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         criteria.setAltitudeRequired(false);
@@ -536,6 +551,16 @@ public class DetailCurrentPosActivity extends AppCompatActivity implements OnMap
 
                 mMap.clear();
                 LatLng latLng = new LatLng(this.latitude, this.longitude);
+
+                if(!latitudeString.equals("")){
+
+                    Marker donaturPoint = mMap.addMarker(new MarkerOptions().position(new LatLng(iv.parseNullDouble(latitudeString), iv.parseNullDouble(longitudeString)))
+                            .snippet(namaDonatur)
+                            .title(namaDonatur)
+                            .icon(BitmapDescriptorFactory
+                                    .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                }
+
                 mMap.addMarker(new MarkerOptions().position(latLng).title("Posisi Anda"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15).build();

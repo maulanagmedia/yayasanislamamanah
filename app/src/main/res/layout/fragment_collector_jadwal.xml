@@ -9,27 +9,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginTop="@dimen/padding_big"
         android:layout_marginLeft="@dimen/padding_big"
         android:layout_marginRight="@dimen/padding_big"
-        >
+        android:gravity="center"
+        android:weightSum="2">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_20"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="Jadwal Kunjungan"
-            android:gravity="center"
-            android:textStyle="bold"/>
+            android:textSize="@dimen/text_medium"
+            android:textStyle="bold" />
 
-        <!--<TextView
-            android:id="@+id/txt_tanggal"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_small"
-            android:gravity="center"
-            android:textStyle="bold"/>-->
+            android:orientation="vertical"
+            android:paddingRight="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_default"
+            >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:id="@+id/btn_rekap_setoran"
+                android:background="@drawable/bg_button_white"
+                android:textColor="@color/colorGreen3"
+                android:textSize="11sp"
+                android:text="Lihat Rekap Setoran"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

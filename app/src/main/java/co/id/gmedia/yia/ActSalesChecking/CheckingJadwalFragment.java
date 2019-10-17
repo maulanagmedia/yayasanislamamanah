@@ -104,10 +104,16 @@ public class CheckingJadwalFragment extends Fragment {
                             JSONArray object = new JSONArray(response);
                             for(int i = 0; i < object.length(); i++){
                                 JSONObject donatur = object.getJSONObject(i);
-                                listDonatur.add(new DonaturModel(donatur.getString("id"),
-                                        donatur.getString("id_donatur"), donatur.getString("nama"),
-                                        donatur.getString("alamat"), donatur.getString("kontak"),
-                                        donatur.getInt("status") == 0));
+                                listDonatur.add(new DonaturModel(
+                                        donatur.getString("id")
+                                        ,donatur.getString("id_donatur")
+                                        ,donatur.getString("nama")
+                                        ,donatur.getString("alamat")
+                                        ,donatur.getString("kontak")
+                                        ,donatur.getString("total_kaleng")
+                                        ,donatur.getString("lat")
+                                        ,donatur.getString("long")
+                                        ,donatur.getInt("status") == 0));
                             }
 
                             adapter.notifyDataSetChanged();

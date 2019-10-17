@@ -181,6 +181,9 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
                             }
 
                             Intent intent = new Intent(context, DetailCurrentPosActivity.class);
+                            intent.putExtra("nama", b.getNama());
+                            intent.putExtra("lat", b.getLatitude());
+                            intent.putExtra("long", b.getLognitude());
                             context.startActivity(intent);
                         }
                     });
@@ -248,18 +251,21 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
                     @Override
                     public void onSuccess(String response, String message) {
+
                         dialogBox.dismissDialog();
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onEmpty(String message) {
+
                         dialogBox.dismissDialog();
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFail(String message) {
+
                         dialogBox.dismissDialog();
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     }

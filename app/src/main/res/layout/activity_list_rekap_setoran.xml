@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActSalesChecking.SalesCheckingActivity">
+    tools:context=".ActCollector.ListRekapSetoranActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,37 +12,6 @@
         android:orientation="vertical"
         android:id="@+id/ll_header"
         android:layout_margin="@dimen/padding_default">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_input"
-            >
-
-            <ImageView
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@mipmap/ic_search1"
-                android:id="@+id/iv_search"
-                android:layout_margin="@dimen/padding_default"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"/>
-
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/iv_search"
-                android:background="@android:color/transparent"
-                android:padding="@dimen/padding_default"
-                android:text=""
-                android:id="@+id/edt_search"
-                android:textSize="@dimen/text_small"
-                android:hint="Keyword"
-                android:inputType="textPersonName"
-                android:imeOptions="actionDone"/>
-
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,20 +80,21 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_proses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_default"
             android:background="@drawable/bg_button_green"
             android:textColor="@color/colorWhite"
-            android:text="Proses"/>
+            android:text="Proses"
+            android:id="@+id/btn_process"/>
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_history"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/ll_header"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_setoran"
+        android:layout_below="@id/ll_header"
+        android:padding="@dimen/padding_default"/>
 
 </RelativeLayout>

@@ -52,7 +52,7 @@ public class SalesCheckingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sales_checking);
 
         txt_nama = findViewById(R.id.txt_nama);
-        txt_jumlah_jadwal = findViewById(R.id.txt_jumlah_jadwal);
+        txt_jumlah_jadwal = (TextView) findViewById(R.id.txt_jumlah_jadwal);
         txt_jumlah_riwayat = findViewById(R.id.txt_jumlah_riwayat);
         img_foto = findViewById(R.id.img_foto);
 
@@ -206,7 +206,7 @@ public class SalesCheckingActivity extends AppCompatActivity {
                     @Override
                     public void onEmpty(String message) {
                         dialogBox.dismissDialog();
-                        txt_jumlah_jadwal.setText(0);
+                        txt_jumlah_jadwal.setText("0");
                     }
 
                     @Override
@@ -228,7 +228,7 @@ public class SalesCheckingActivity extends AppCompatActivity {
     private void loadHistoryJumlah(){
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", sessionManager.getId());
-        body.add("tgl_awal", Converter.DToFirstDayOfMonthString(new Date()));
+        body.add("tgl_awal", Converter.DToString(new Date()));
         body.add("tgl_akhir", Converter.DToString(new Date()));
         body.add("keywoard", "");
         body.add("status", "0");
@@ -260,7 +260,7 @@ public class SalesCheckingActivity extends AppCompatActivity {
                     @Override
                     public void onEmpty(String message) {
                         dialogBox.dismissDialog();
-                        txt_jumlah_riwayat.setText(String.valueOf(0));
+                        txt_jumlah_riwayat.setText("0");
                     }
 
                     @Override

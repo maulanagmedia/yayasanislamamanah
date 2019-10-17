@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.google.gson.Gson;
 import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.SessionManager;
+import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
@@ -46,6 +50,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
     private double lat = 0, lng = 0;
 
     private String current = "";
+    private LinearLayout llBukaMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+
         edt_nama = findViewById(R.id.edt_nama);
         edt_alamat = findViewById(R.id.edt_alamat);
         edt_kontak = findViewById(R.id.edt_kontak);
@@ -94,6 +100,17 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         tv_longitude = findViewById(R.id.tv_longitude);
         txt_jumlah_kaleng = findViewById(R.id.txt_jumlah_kaleng);
         txt_nominal = findViewById(R.id.txt_nominal);
+        llBukaMap = (LinearLayout) findViewById(R.id.ll_buka_map);
+
+        llBukaMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, DetailCurrentPosActivity.class);
+                startActivity(intent);
+            }
+        });
+
         txt_nominal.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -123,7 +140,6 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
                     current = formatted;
                     txt_nominal.setText(formatted);
                     txt_nominal.setSelection(formatted.length());
-
                     txt_nominal.addTextChangedListener(this);
                 }
             }
@@ -138,7 +154,25 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
                                 "tidak bisa melanjutkan survey", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        jemputInfaq();
+
+                        AlertDialog dialog = new AlertDialog.Builder(context)
+                                .setTitle("Konfirmasi")
+                                .setMessage("Apakah anda yakin ingin menyimpan data?")
+                                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        jemputInfaq();
+                                    }
+                                })
+                                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .show();
+
                     }
                 }
             }
@@ -148,6 +182,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
     }
 
     private void jemputInfaq(){
+
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
@@ -155,16 +190,28 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         body.add("id_donatur", donatur.getId_donatur());
         body.add("nominal", txt_nominal.getText().toString().replaceAll("[Rp,.\\s]", ""));
         body.add("kaleng_kembali", txt_jumlah_kaleng.getText().toString());
-        body.add("latitude", lat);
-        body.add("longitude", lng);
+        body.add("latitude", tv_latitude.getText().toString());
+        body.add("longitude", tv_longitude.getText().toString());
 
-        new ApiVolley(this, body.create(), "POST", ServerURL.saveCollector,
+        new ApiVolley(this, body.create(), "POST", ServerURL.saveCollector, new ApiVolley.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onError(String result) {
+
+            }
+        });
+
+        new ApiVolley(context, body.create(), "POST", ServerURL.saveCollector,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
                     @Override
                     public void onSuccess(String response, String message) {
+
                         dialogBox.dismissDialog();
                         Toast.makeText(CollectorDonaturDetailActivity.this, message, Toast.LENGTH_SHORT).show();
-
                         finish();
                     }
 

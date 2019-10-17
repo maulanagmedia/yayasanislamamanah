@@ -17,9 +17,9 @@
     <ImageView
         android:layout_width="@dimen/icon_size_big"
         android:layout_height="@dimen/icon_size_big"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/padding_big"
+        android:layout_marginTop="@dimen/padding_big"
         android:layout_marginRight="@dimen/padding_big"
         android:src="@drawable/ic_refresg"
         android:id="@+id/iv_refresh"

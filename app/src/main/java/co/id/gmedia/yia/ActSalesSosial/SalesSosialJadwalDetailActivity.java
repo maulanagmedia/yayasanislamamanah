@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -21,6 +24,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +45,7 @@ import co.id.gmedia.coremodul.CustomModel;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActCollector.Adapter.FotoAdapter;
+import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
@@ -63,7 +68,8 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
 
     private GoogleLocationManager locationManager;
     private double lat = 0, lng = 0;
-
+    private LinearLayout llBukaMap;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +82,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
         );
 
         setTitle("Detail Survey");
+        context = this;
         sessionManager = new SessionManager(this);
         locationManager = new GoogleLocationManager(this, new GoogleLocationManager.LocationUpdateListener() {
             @Override
@@ -106,6 +113,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
     }
 
     private void initUI() {
+
         edt_nama = findViewById(R.id.edt_nama);
         edt_alamat = findViewById(R.id.edt_alamat);
         edt_kontak = findViewById(R.id.edt_kontak);
@@ -114,6 +122,8 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
         tv_latitude = findViewById(R.id.tv_latitude);
         tv_longitude = findViewById(R.id.tv_longitude);
         txt_jumlah_kaleng = findViewById(R.id.txt_jumlah_kaleng);
+        llBukaMap = (LinearLayout) findViewById(R.id.ll_buka_map);
+
         rb_kaleng_ya.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -135,7 +145,56 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
                                 "tidak bisa melanjutkan survey", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        simpanData();
+
+                        if(edt_nama.getText().toString().length() == 0){
+
+                            edt_nama.setError("Harap diisi");
+                            edt_nama.requestFocus();
+                            return;
+                        }else{
+
+                            edt_nama.setError(null);
+                        }
+
+                        if(edt_alamat.getText().toString().length() == 0){
+
+                            edt_alamat.setError("Harap diisi");
+                            edt_alamat.requestFocus();
+                            return;
+                        }else{
+
+                            edt_alamat.setError(null);
+                        }
+
+                        if(edt_kontak.getText().toString().length() == 0){
+
+                            edt_kontak.setError("Harap diisi");
+                            edt_kontak.requestFocus();
+                            return;
+                        }else{
+
+                            edt_kontak.setError(null);
+                        }
+
+                        AlertDialog dialog = new AlertDialog.Builder(context)
+                                .setTitle("Konfirmasi")
+                                .setMessage("Apakah anda yakin ingin menyimpan dat?")
+                                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        simpanData();
+                                    }
+                                })
+                                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .show();
+
+
                     }
                 }
             }
@@ -160,6 +219,15 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
             }
         });
 
+        llBukaMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, DetailCurrentPosActivity.class);
+                startActivity(intent);
+            }
+        });
+
         dialogBox = new DialogBox(this);
     }
 
@@ -169,8 +237,8 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
         JSONBuilder body = new JSONBuilder();
         body.add("id_rk", donatur.getItem1());
         body.add("id_sales", sessionManager.getId());
-        body.add("donasi", rb_donasi_ya.isChecked()?1:0);
-        body.add("lobi_kaleng", rb_kaleng_ya.isChecked()?"ya":"tidak");
+        body.add("donasi", rb_donasi_ya.isChecked() ? 1 : 0);
+        body.add("lobi_kaleng", rb_kaleng_ya.isChecked()? "ya" : "tidak");
         body.add("total_kaleng", rb_kaleng_ya.isChecked()?txt_jumlah_kaleng.getText().toString():"");
         body.add("latitude", lat);
         body.add("longitude", lng);
@@ -233,6 +301,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
         if(requestCode == GoogleLocationManager.PERMISSION_LOCATION){
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 locationManager.startLocationUpdates();

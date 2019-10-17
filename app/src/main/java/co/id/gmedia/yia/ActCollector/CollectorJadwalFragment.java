@@ -2,6 +2,7 @@ package co.id.gmedia.yia.ActCollector;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -43,6 +45,7 @@ public class CollectorJadwalFragment extends Fragment {
     //private TextView txt_tanggal;
 
     private DialogBox dialogBox;
+    private Button btnRekapSetoran;
 
     public CollectorJadwalFragment() {
         // Required empty public constructor
@@ -60,12 +63,26 @@ public class CollectorJadwalFragment extends Fragment {
         RecyclerView rv_jadwal = v.findViewById(R.id.rv_jadwal);
         rv_jadwal.setItemAnimator(new DefaultItemAnimator());
         rv_jadwal.setLayoutManager(new LinearLayoutManager(activity));
+        btnRekapSetoran = (Button) v.findViewById(R.id.btn_rekap_setoran);
         adapter = new JadwalKunjunganCollectorAdapter(activity, listDonatur);
         rv_jadwal.setAdapter(adapter);
 
+        initEvent();
         loadData();
 
         return v;
+    }
+
+    private void initEvent() {
+
+        btnRekapSetoran.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(activity, ListRekapSetoranActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadData(){
@@ -85,10 +102,16 @@ public class CollectorJadwalFragment extends Fragment {
                             JSONArray object = new JSONArray(response);
                             for(int i = 0; i < object.length(); i++){
                                 JSONObject donatur = object.getJSONObject(i);
-                                listDonatur.add(new DonaturModel(donatur.getString("id"),
-                                        donatur.getString("id_donatur"), donatur.getString("nama"),
-                                        donatur.getString("alamat"), donatur.getString("kontak"),
-                                        donatur.getString("status").equals("Sudah dikunjungi")));
+                                listDonatur.add(new DonaturModel(
+                                        donatur.getString("id")
+                                        ,donatur.getString("id_donatur")
+                                        ,donatur.getString("nama")
+                                        ,donatur.getString("alamat")
+                                        ,donatur.getString("kontak")
+                                        ,donatur.getString("lat")
+                                        ,donatur.getString("long")
+                                        ,donatur.getString("status").equals("0")
+                                ));
                             }
 
                             adapter.notifyDataSetChanged();

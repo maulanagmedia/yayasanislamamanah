@@ -416,7 +416,7 @@
             android:layout_marginTop="@dimen/padding_default"
             android:background="@color/colorGAP"/>
 
-        <!--<RelativeLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_default"
@@ -475,7 +475,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/image_height"
             android:layout_marginTop="@dimen/padding_big"
-            android:id="@+id/rv_photo"/>-->
+            android:id="@+id/rv_photo"/>
 
         <Button
             android:layout_width="match_parent"
