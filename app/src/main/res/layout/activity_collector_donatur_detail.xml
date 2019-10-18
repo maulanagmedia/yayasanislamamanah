@@ -175,6 +175,192 @@
             android:layout_marginTop="@dimen/padding_default"
             android:background="@color/colorGAP"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_medium">
+
+            <ImageView
+                android:layout_width="@dimen/icon_size2"
+                android:layout_height="@dimen/icon_size2"
+                android:src="@drawable/ic_location"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/padding_mid"
+                android:id="@+id/ic_kota"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toRightOf="@id/ic_kota"
+                android:layout_marginLeft="@dimen/padding_default">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:text="Kota"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_big" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:src="@drawable/ic_drop"
+                        android:id="@+id/iv_kota"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_marginRight="@dimen/padding_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_kota"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="28dp"
+                        android:layout_toLeftOf="@id/iv_kota"
+                        android:padding="@dimen/padding_default"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input"
+                    android:paddingLeft="@dimen/padding_default"
+                    android:paddingRight="@dimen/padding_default"
+                    android:visibility="gone"
+                    >
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sp_kota"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:text="Kecamatan"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_big"
+                    android:layout_marginTop="@dimen/padding_default"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:src="@drawable/ic_drop"
+                        android:id="@+id/iv_kecamatan"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_marginRight="@dimen/padding_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_kecamatan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="28dp"
+                        android:layout_toLeftOf="@id/iv_kecamatan"
+                        android:padding="@dimen/padding_default"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input"
+                    android:visibility="gone"
+                    android:paddingLeft="@dimen/padding_default"
+                    android:paddingRight="@dimen/padding_default"
+                    >
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sp_kecamatan"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:text="Kelurahan"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_big"
+                    android:layout_marginTop="@dimen/padding_default"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:src="@drawable/ic_drop"
+                        android:id="@+id/iv_kelurahan"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_marginRight="@dimen/padding_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_kelurahan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="28dp"
+                        android:layout_toLeftOf="@id/iv_kelurahan"
+                        android:padding="@dimen/padding_default"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input"
+                    android:visibility="gone"
+                    android:paddingLeft="@dimen/padding_default"
+                    android:paddingRight="@dimen/padding_default"
+                    >
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sp_kelurahan"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

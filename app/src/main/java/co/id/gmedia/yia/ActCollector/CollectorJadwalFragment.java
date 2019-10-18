@@ -75,9 +75,14 @@ public class CollectorJadwalFragment extends Fragment {
         rv_jadwal.setAdapter(adapter);
 
         initEvent();
-        loadData();
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
     }
 
     private void initEvent() {

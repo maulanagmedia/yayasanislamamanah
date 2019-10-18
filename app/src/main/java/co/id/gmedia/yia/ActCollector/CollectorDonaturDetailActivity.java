@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,8 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
 
     private String current = "";
     private LinearLayout llBukaMap;
+    private ImageView ivKota, ivKecamatan, ivKelurahan;
+    private TextView tvKota, tvKecamatan, tvKelurahan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         edt_nama.setText(donatur.getNama());
         edt_alamat.setText(donatur.getAlamat());
         edt_kontak.setText(donatur.getKontak());
+
     }
 
     private void initUI() {
@@ -101,6 +105,13 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         txt_jumlah_kaleng = findViewById(R.id.txt_jumlah_kaleng);
         txt_nominal = findViewById(R.id.txt_nominal);
         llBukaMap = (LinearLayout) findViewById(R.id.ll_buka_map);
+
+        ivKota = (ImageView) findViewById(R.id.iv_kota);
+        tvKota = (TextView) findViewById(R.id.tv_kota);
+        ivKecamatan = (ImageView) findViewById(R.id.iv_kecamatan);
+        tvKecamatan = (TextView) findViewById(R.id.tv_kecamatan);
+        ivKelurahan = (ImageView) findViewById(R.id.iv_kelurahan);
+        tvKelurahan = (TextView) findViewById(R.id.tv_kelurahan);
 
         llBukaMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,18 +203,6 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         body.add("kaleng_kembali", txt_jumlah_kaleng.getText().toString());
         body.add("latitude", tv_latitude.getText().toString());
         body.add("longitude", tv_longitude.getText().toString());
-
-        new ApiVolley(this, body.create(), "POST", ServerURL.saveCollector, new ApiVolley.VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
-
-            }
-
-            @Override
-            public void onError(String result) {
-
-            }
-        });
 
         new ApiVolley(context, body.create(), "POST", ServerURL.saveCollector,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
