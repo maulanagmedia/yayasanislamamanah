@@ -89,8 +89,8 @@ public class CheckingJadwalFragment extends Fragment {
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
-        body.add("tgl_awal", Converter.DToString(new Date()));
-        body.add("tgl_akhir", Converter.DToString(new Date()));
+        //body.add("tgl_awal", Converter.DToString(new Date()));
+        //body.add("tgl_akhir", Converter.DToString(new Date()));
         body.add("keywoard", "");
         body.add("status", "");
 
@@ -123,6 +123,11 @@ public class CheckingJadwalFragment extends Fragment {
                                         , listUrlFoto));
                             }
 
+                            //Update teks jumlah di Activity
+                            if(activity instanceof SalesCheckingActivity){
+                                ((SalesCheckingActivity)activity).updateJumlahJadwal(object.length());
+                            }
+
                             adapter.notifyDataSetChanged();
                         }
                         catch (JSONException e){
@@ -142,6 +147,14 @@ public class CheckingJadwalFragment extends Fragment {
 
                     @Override
                     public void onEmpty(String message) {
+                        listDonatur.clear();
+                        adapter.notifyDataSetChanged();
+
+                        //Update teks jumlah di Activity
+                        if(activity instanceof SalesCheckingActivity){
+                            ((SalesCheckingActivity)activity).updateJumlahJadwal(0);
+                        }
+
                         dialogBox.dismissDialog();
                     }
 

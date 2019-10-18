@@ -112,7 +112,6 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         initAkun();
-        loadJumlahJadwal();
         super.onResume();
     }
 
@@ -124,72 +123,12 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
         }
     }
 
-    private void loadJumlahJadwal(){
-        JSONBuilder body = new JSONBuilder();
-        body.add("id_sales", session.getId());
-        body.add("tgl_awal", Converter.DToString(new Date()));
-        body.add("tgl_akhir", Converter.DToString(new Date()));
-        body.add("keywoard", "");
-        body.add("status", "");
-
-        new ApiVolley(this, body.create(), "POST", ServerURL.getRencanaKerjaSosial,
-                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
-                    @Override
-                    public void onSuccess(String response, String message) {
-                        try{
-                            JSONArray object = new JSONArray(response);
-                            tvTitle1.setText(String.valueOf(object.length()));
-                            loadHistoryJumlah();
-                        }
-                        catch (JSONException e){
-                            Log.e("json_log", e.getMessage());
-                        }
-                    }
-
-                    @Override
-                    public void onEmpty(String message) {
-                        tvTitle1.setText(String.valueOf(0));
-                        loadHistoryJumlah();
-                    }
-
-                    @Override
-                    public void onFail(String message) {
-                        Log.e("rk_sosial_log", message);
-                    }
-                }));
+    public void updateJumlahJadwal(int jumlah){
+        tvTitle1.setText(String.valueOf(jumlah));
     }
 
-    private void loadHistoryJumlah(){
-        JSONBuilder body = new JSONBuilder();
-        body.add("id_sales", session.getId());
-        body.add("tgl_awal", Converter.DToFirstDayOfMonthString(new Date()));
-        body.add("tgl_akhir", Converter.DToString(new Date()));
-        body.add("keywoard", "");
-        body.add("status", "0");
-
-        new ApiVolley(this, body.create(), "POST", ServerURL.getRencanaKerjaSosial,
-                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
-                    @Override
-                    public void onSuccess(String response, String message) {
-                        try{
-                            JSONArray object = new JSONArray(response);
-                            tvTitle2.setText(String.valueOf(object.length()));
-                        }
-                        catch (JSONException e){
-                            Log.e("json_log", e.getMessage());
-                        }
-                    }
-
-                    @Override
-                    public void onEmpty(String message) {
-                        tvTitle2.setText(String.valueOf(0));
-                    }
-
-                    @Override
-                    public void onFail(String message) {
-                        Log.e("rk_sosial_log", message);
-                    }
-                }));
+    public void updateJumlahRiwayat(int jumlah){
+        tvTitle2.setText(String.valueOf(jumlah));
     }
 
     private void initUI() {

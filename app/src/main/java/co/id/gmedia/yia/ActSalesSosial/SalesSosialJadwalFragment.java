@@ -29,6 +29,7 @@ import co.id.gmedia.coremodul.FormatItem;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActSalesSosial.Adapter.ListJadwalSSAdapter;
+import co.id.gmedia.yia.HomeSocialSalesActivity;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
@@ -149,8 +150,8 @@ public class SalesSosialJadwalFragment extends Fragment {
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
-        body.add("tgl_awal", dateFrom);
-        body.add("tgl_akhir", dateTo);
+        //body.add("tgl_awal", dateFrom);
+        //body.add("tgl_akhir", dateTo);
         body.add("keyword", edtSearch.getText().toString());
         body.add("status", "");
 
@@ -177,6 +178,11 @@ public class SalesSosialJadwalFragment extends Fragment {
                                 ));
                             }
 
+                            //Update teks jumlah di Activity
+                            if(context instanceof HomeSocialSalesActivity){
+                                ((HomeSocialSalesActivity)context).updateJumlahJadwal(obj.length());
+                            }
+
                             adapter.notifyDataSetChanged();
                         }
                         catch (JSONException e){
@@ -199,6 +205,11 @@ public class SalesSosialJadwalFragment extends Fragment {
                     public void onEmpty(String message) {
                         listData.clear();
                         adapter.notifyDataSetChanged();
+
+                        //Update teks jumlah di Activity
+                        if(context instanceof HomeSocialSalesActivity){
+                            ((HomeSocialSalesActivity)context).updateJumlahJadwal(0);
+                        }
 
                         dialogBox.dismissDialog();
                     }

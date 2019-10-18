@@ -94,7 +94,6 @@ public class SalesCheckingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         initAkun();
-        loadJadwalJumlah();
         super.onResume();
     }
 
@@ -169,113 +168,11 @@ public class SalesCheckingActivity extends AppCompatActivity {
         }
     }
 
-    private void loadJadwalJumlah(){
-        dialogBox.showDialog(false);
-        JSONBuilder body = new JSONBuilder();
-        body.add("id_sales", sessionManager.getId());
-        body.add("tgl_awal", Converter.DToString(new Date()));
-        body.add("tgl_akhir", Converter.DToString(new Date()));
-        body.add("keywoard", "");
-        body.add("status", "");
-
-        new ApiVolley(this, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
-                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
-                    @Override
-                    public void onSuccess(String response, String message) {
-                        try{
-                            JSONArray object = new JSONArray(response);
-                            txt_jumlah_jadwal.setText(String.valueOf(object.length()));
-                            loadHistoryJumlah();
-                        }
-                        catch (JSONException e){
-                            dialogBox.dismissDialog();
-                            Log.e("json_log", e.getMessage());
-                            View.OnClickListener clickListener = new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    dialogBox.dismissDialog();
-                                    loadJadwalJumlah();
-                                }
-                            };
-
-                            dialogBox.showDialog(clickListener, "Ulangi Proses",
-                                    "Terjadi kesalahan saat mengambil data");
-                        }
-                    }
-
-                    @Override
-                    public void onEmpty(String message) {
-                        dialogBox.dismissDialog();
-                        txt_jumlah_jadwal.setText("0");
-                    }
-
-                    @Override
-                    public void onFail(String message) {
-                        dialogBox.dismissDialog();
-                        View.OnClickListener clickListener = new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                dialogBox.dismissDialog();
-                                loadJadwalJumlah();
-                            }
-                        };
-
-                        dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
-                    }
-                }));
+    public void updateJumlahJadwal(int jumlah){
+        txt_jumlah_jadwal.setText(String.valueOf(jumlah));
     }
 
-    private void loadHistoryJumlah(){
-        JSONBuilder body = new JSONBuilder();
-        body.add("id_sales", sessionManager.getId());
-        body.add("tgl_awal", Converter.DToString(new Date()));
-        body.add("tgl_akhir", Converter.DToString(new Date()));
-        body.add("keywoard", "");
-        body.add("status", "0");
-
-        new ApiVolley(this, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
-                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
-                    @Override
-                    public void onSuccess(String response, String message) {
-                        dialogBox.dismissDialog();
-                        try{
-                            JSONArray object = new JSONArray(response);
-                            txt_jumlah_riwayat.setText(String.valueOf(object.length()));
-                        }
-                        catch (JSONException e){
-                            Log.e("json_log", e.getMessage());
-                            View.OnClickListener clickListener = new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    dialogBox.dismissDialog();
-                                    loadHistoryJumlah();
-                                }
-                            };
-
-                            dialogBox.showDialog(clickListener, "Ulangi Proses",
-                                    "Terjadi kesalahan saat mengambil data");
-                        }
-                    }
-
-                    @Override
-                    public void onEmpty(String message) {
-                        dialogBox.dismissDialog();
-                        txt_jumlah_riwayat.setText("0");
-                    }
-
-                    @Override
-                    public void onFail(String message) {
-                        dialogBox.dismissDialog();
-                        View.OnClickListener clickListener = new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                dialogBox.dismissDialog();
-                                loadHistoryJumlah();
-                            }
-                        };
-
-                        dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
-                    }
-                }));
+    public void updateJumlahRiwayat(int jumlah){
+        txt_jumlah_riwayat.setText(String.valueOf(jumlah));
     }
 }
