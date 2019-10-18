@@ -1,6 +1,7 @@
 package co.id.gmedia.yia.ActCollector.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import co.id.gmedia.coremodul.CustomModel;
+import co.id.gmedia.coremodul.FormatItem;
 import co.id.gmedia.coremodul.ItemValidation;
+import co.id.gmedia.yia.ActCollector.DetailSetoranActivity;
 import co.id.gmedia.yia.R;
 
 public class ListRekapSetoranAdapter extends ArrayAdapter {
@@ -57,17 +60,50 @@ public class ListRekapSetoranAdapter extends ArrayAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        CustomModel item = items.get(position);
+        final CustomModel item = items.get(position);
         //holder.tvTanggal.setText(iv.ChangeFormatDateString(item.getItem5(), FormatItem.formatTimestamp, FormatItem.formatDateTimeDisplay1));
         //holder.tvKontak.setText(item.getItem4());
 
-        holder.tvItem1.setText(item.getItem1());
+        holder.tvItem1.setText(iv.ChangeFormatDateString(item.getItem1(), FormatItem.formatDate, FormatItem.formatDate1));
         holder.tvItem2.setText(iv.ChangeToCurrencyFormat(item.getItem2()));
         holder.tvItem3.setText(iv.ChangeToCurrencyFormat(item.getItem3()));
         holder.tvItem4.setText(iv.ChangeToCurrencyFormat(item.getItem4()));
         holder.tvItem5.setText(iv.ChangeToCurrencyFormat(item.getItem5()));
         holder.tvItem6.setText(iv.ChangeToCurrencyFormat(item.getItem6()));
         holder.tvItem7.setText(iv.ChangeToCurrencyFormat(item.getItem7()));
+
+        holder.tvBtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, DetailSetoranActivity.class);
+                intent.putExtra("tgl", item.getItem1());
+                intent.putExtra("filter", "");
+                context.startActivity(intent);
+            }
+        });
+
+        holder.tvBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, DetailSetoranActivity.class);
+                intent.putExtra("tgl", item.getItem1());
+                intent.putExtra("filter", "kurang");
+                context.startActivity(intent);
+            }
+        });
+
+        holder.tvBtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, DetailSetoranActivity.class);
+                intent.putExtra("tgl", item.getItem1());
+                intent.putExtra("filter", "lebih");
+                context.startActivity(intent);
+            }
+        });
 
         return convertView;
 

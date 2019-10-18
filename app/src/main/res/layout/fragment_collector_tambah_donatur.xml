@@ -33,10 +33,13 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/icon_size2"
+                    android:layout_height="@dimen/icon_size2"
                     android:src="@drawable/ic_name"
-                    android:layout_margin="@dimen/dp10"/>
+                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp10"
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -54,10 +57,10 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="14sp"
-                android:background="@drawable/style_textview_gray"
+                android:background="@drawable/bg_input"
                 android:padding="@dimen/dp10"
                 android:inputType="textPersonName"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="#4F4F4F"/>
 
             <LinearLayout
@@ -67,10 +70,13 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/icon_size2"
+                    android:layout_height="@dimen/icon_size2"
                     android:src="@drawable/ic_location"
-                    android:layout_margin="@dimen/dp10"/>
+                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp10"
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -88,9 +94,9 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="14sp"
-                android:background="@drawable/style_textview_gray"
+                android:background="@drawable/bg_input"
                 android:padding="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="#4F4F4F"/>
 
             <TextView
@@ -100,7 +106,7 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="@color/color_black"/>
 
             <TextView
@@ -109,10 +115,10 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="14sp"
-                android:background="@drawable/style_textview_gray"
+                android:background="@drawable/bg_input"
                 android:padding="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="#4F4F4F"/>
 
             <TextView
@@ -122,7 +128,7 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="@color/color_black"/>
 
             <TextView
@@ -131,10 +137,10 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="14sp"
-                android:background="@drawable/style_textview_gray"
+                android:background="@drawable/bg_input"
                 android:padding="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="#4F4F4F"/>
 
             <TextView
@@ -144,7 +150,7 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="@color/color_black"/>
 
             <EditText
@@ -154,10 +160,10 @@
                 android:inputType="text"
                 android:textStyle="bold"
                 android:textSize="14sp"
-                android:background="@drawable/style_textview_gray"
+                android:background="@drawable/bg_input"
                 android:padding="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="#4F4F4F"/>
 
             <LinearLayout
@@ -167,10 +173,13 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/icon_size2"
+                    android:layout_height="@dimen/icon_size2"
                     android:src="@drawable/ic_kontak"
-                    android:layout_margin="@dimen/dp10"/>
+                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp10"
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -189,9 +198,9 @@
                 android:inputType="text"
                 android:textStyle="bold"
                 android:textSize="14sp"
-                android:background="@drawable/style_textview_gray"
+                android:background="@drawable/bg_input"
                 android:padding="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="#4F4F4F"/>
 
         </LinearLayout>
@@ -214,7 +223,7 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="@color/color_black"/>
 
             <TextView
@@ -223,7 +232,7 @@
                 android:text="Jumlah Donasi"
                 android:textSize="14sp"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="@color/color_black"/>
 
             <EditText
@@ -231,12 +240,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:imeOptions="actionDone"
                 android:textStyle="bold"
                 android:textSize="14sp"
-                android:background="@drawable/style_textview_gray"
+                android:background="@drawable/bg_input"
                 android:padding="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp40"
+                android:layout_marginStart="@dimen/padding_super"
                 android:textColor="#4F4F4F"/>
 
         </LinearLayout>
@@ -249,9 +259,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp20"
-            android:layout_marginStart="@dimen/dp40"
-            android:layout_marginEnd="@dimen/dp40">
+            android:paddingTop="@dimen/dp20"
+            android:paddingBottom="@dimen/dp20"
+            android:paddingLeft="@dimen/padding_small"
+            android:paddingRight="@dimen/padding_small"
+            android:layout_marginStart="@dimen/padding_big"
+            android:layout_marginEnd="@dimen/padding_big">
 
             <TextView
                 android:layout_width="0dp"
@@ -267,7 +280,7 @@
                 android:layout_width="40dp"
                 android:layout_height="30dp"
                 android:padding="5dp"
-                android:background="@drawable/style_button_green"
+                android:background="@drawable/bg_button_green"
                 android:src="@drawable/ic_photo_camera"/>
 
         </LinearLayout>
@@ -284,7 +297,7 @@
             android:text="Simpan Data"
             android:layout_marginTop="@dimen/dp40"
             android:layout_marginBottom="@dimen/dp20"
-            android:background="@drawable/style_button_green"
+            android:background="@drawable/bg_button_green"
             android:textColor="@color/color_white"
             android:textAllCaps="false"/>
 

@@ -15,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.CustomModel;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActCollector.Adapter.JadwalKunjunganCollectorAdapter;
@@ -43,6 +47,8 @@ public class CollectorJadwalFragment extends Fragment {
 
     private DialogBox dialogBox;
     private Button btnRekapSetoran;
+    private CheckBox cbk1, cbk2, cbk3;
+    private RecyclerView rv_jadwal;
 
     public CollectorJadwalFragment() {
         // Required empty public constructor
@@ -57,7 +63,11 @@ public class CollectorJadwalFragment extends Fragment {
         dialogBox = new DialogBox(activity);
         //txt_tanggal = v.findViewById(R.id.txt_tanggal);
 
-        RecyclerView rv_jadwal = v.findViewById(R.id.rv_jadwal);
+        rv_jadwal = v.findViewById(R.id.rv_jadwal);
+        cbk1 = (CheckBox) v.findViewById(R.id.cb_k1);
+        cbk2 = (CheckBox) v.findViewById(R.id.cb_k2);
+        cbk3 = (CheckBox) v.findViewById(R.id.cb_k3);
+
         rv_jadwal.setItemAnimator(new DefaultItemAnimator());
         rv_jadwal.setLayoutManager(new LinearLayoutManager(activity));
         btnRekapSetoran = (Button) v.findViewById(R.id.btn_rekap_setoran);
@@ -80,6 +90,56 @@ public class CollectorJadwalFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        cbk1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                filterData();
+            }
+        });
+
+        cbk2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                filterData();
+            }
+        });
+
+        cbk3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                filterData();
+            }
+        });
+    }
+
+    private void filterData(){
+
+        final List<DonaturModel> newFilteredDonatur = new ArrayList<>();
+
+        for(DonaturModel item : listDonatur){
+
+            if(item.getRk().equals("rk1") && cbk1.isChecked()){
+
+                newFilteredDonatur.add(item);
+            }else if(item.getRk().equals("rk2") && cbk2.isChecked()){
+
+                newFilteredDonatur.add(item);
+            }else if(item.getRk().equals("rk3") && cbk3.isChecked()){
+
+                newFilteredDonatur.add(item);
+            }
+        }
+
+        if(activity instanceof CollectorActivity){
+            ((CollectorActivity)activity).updateJumlah(newFilteredDonatur.size());
+        }
+
+        adapter = new JadwalKunjunganCollectorAdapter(activity, newFilteredDonatur);
+        rv_jadwal.setAdapter(adapter);
     }
 
     private void loadData(){
@@ -107,6 +167,8 @@ public class CollectorJadwalFragment extends Fragment {
                                         ,donatur.getString("kontak")
                                         ,donatur.getString("lat")
                                         ,donatur.getString("long")
+                                        ,donatur.getString("total_kaleng")
+                                        ,donatur.getString("rk")
                                         ,donatur.getString("status").equals("0")
                                 ));
                             }

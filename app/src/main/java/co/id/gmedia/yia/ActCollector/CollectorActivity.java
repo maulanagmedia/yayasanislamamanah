@@ -9,12 +9,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.fxn.pix.Pix;
@@ -35,6 +41,7 @@ import co.id.gmedia.yia.Utils.TopCropCircularImageView;
 
 public class CollectorActivity extends AppCompatActivity {
 
+    private Context context;
     private TextView txt_nama, txt_jumlah;
     private TopCropCircularImageView img_foto;
 
@@ -45,6 +52,18 @@ public class CollectorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collector);
+
+        context = this;
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+
+            if (bundle.getBoolean("exit", false)) {
+
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        }
 
         txt_nama = findViewById(R.id.txt_nama);
         txt_jumlah = findViewById(R.id.txt_jumlah);
@@ -194,5 +213,45 @@ public class CollectorActivity extends AppCompatActivity {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater) ((Activity)context).getSystemService(LAYOUT_INFLATER_SERVICE);
+        View viewDialog = inflater.inflate(R.layout.layout_exit_dialog, null);
+        builder.setView(viewDialog);
+        builder.setCancelable(false);
+
+        final Button btnYa = (Button) viewDialog.findViewById(R.id.btn_ya);
+        final Button btnTidak = (Button) viewDialog.findViewById(R.id.btn_tidak);
+
+        final AlertDialog alert = builder.create();
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        btnYa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view2) {
+
+                if(alert != null) alert.dismiss();
+
+                Intent intent = new Intent(context, CollectorActivity.class);
+                intent.putExtra("exit", true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
+        btnTidak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view2) {
+
+                if(alert != null) alert.dismiss();
+            }
+        });
+
+        alert.show();
     }
 }

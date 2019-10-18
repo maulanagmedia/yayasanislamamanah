@@ -12,6 +12,7 @@
     <dimen name="padding_dex">10dp</dimen>
     <dimen name="padding_medium">12dp</dimen>
     <dimen name="padding_big">16dp</dimen>
+    <dimen name="padding_super">24dp</dimen>
     <dimen name="line_default">1dp</dimen>
     <dimen name="line_custom">4dp</dimen>
     <dimen name="menu_height">110dp</dimen>

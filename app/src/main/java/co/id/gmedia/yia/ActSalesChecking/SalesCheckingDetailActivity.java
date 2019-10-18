@@ -244,7 +244,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         body.add("id_rk", donatur.getId());
         body.add("id_sales", sessionManager.getId());
         body.add("id_donatur", donatur.getId_donatur());
-        body.add("status_donasi", rb_donasi_ya.isChecked()?1:0);
+        body.add("status_donasi", rb_donasi_ya.isChecked() ? 1 : 2);
         body.add("lobi_kaleng", rb_kaleng_ya.isChecked()?"ya":"tidak");
         body.add("total_kaleng", rb_kaleng_ya.isChecked()?txt_jumlah_kaleng.getText().toString():"");
         body.add("latitude", lat);

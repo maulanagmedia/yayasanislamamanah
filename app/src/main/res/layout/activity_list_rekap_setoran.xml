@@ -94,6 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lv_setoran"
+        android:divider="@null"
         android:layout_below="@id/ll_header"
         android:padding="@dimen/padding_default"/>
 

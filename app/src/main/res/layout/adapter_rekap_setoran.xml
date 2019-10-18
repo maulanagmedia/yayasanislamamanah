@@ -43,7 +43,7 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="0.4"
+                        android:layout_weight="0.45"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
@@ -60,14 +60,14 @@
                             android:gravity="center"
                             android:id="@+id/tv_item2"
                             android:text="0"
-                            android:textSize="@dimen/text_20"/>
+                            android:textSize="@dimen/text_medium"/>
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.35"/>
+                        android:layout_weight="0.30"/>
 
                     <TextView
                         android:layout_width="0dp"
@@ -113,7 +113,7 @@
                             android:gravity="center"
                             android:text="0"
                             android:id="@+id/tv_item3"
-                            android:textSize="@dimen/text_20"/>
+                            android:textSize="@dimen/text_medium"/>
 
                     </LinearLayout>
 
@@ -136,7 +136,7 @@
                             android:gravity="right"
                             android:text="0"
                             android:id="@+id/tv_item4"
-                            android:textSize="@dimen/text_20"/>
+                            android:textSize="@dimen/text_medium"/>
 
                     </LinearLayout>
 
@@ -177,7 +177,7 @@
                             android:gravity="center"
                             android:text="0"
                             android:id="@+id/tv_item5"
-                            android:textSize="@dimen/text_20"/>
+                            android:textSize="@dimen/text_medium"/>
 
                     </LinearLayout>
 
@@ -200,7 +200,7 @@
                             android:gravity="right"
                             android:text="0"
                             android:id="@+id/tv_item6"
-                            android:textSize="@dimen/text_20"/>
+                            android:textSize="@dimen/text_medium"/>
 
                     </LinearLayout>
 
@@ -242,7 +242,7 @@
                             android:text="Total"
                             android:textStyle="bold"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/text_20"/>
+                            android:textSize="@dimen/text_medium"/>
 
                     </LinearLayout>
 
@@ -260,7 +260,7 @@
                             android:textStyle="bold"
                             android:id="@+id/tv_item7"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/text_20"/>
+                            android:textSize="@dimen/text_medium"/>
 
                     </LinearLayout>
 

@@ -71,15 +71,17 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
 
     class JadwalKunjunganViewHolder extends RecyclerView.ViewHolder{
 
-        TextView txt_nama, txt_alamat, txt_kontak;
+        TextView txt_nama, txt_alamat, txt_kontak, txt_rk;
         ImageView img_plus, img_cek;
         RelativeLayout rlInput;
 
         JadwalKunjunganViewHolder(@NonNull View itemView) {
             super(itemView);
+
             txt_nama = itemView.findViewById(R.id.txt_nama);
             txt_alamat = itemView.findViewById(R.id.txt_alamat);
             txt_kontak = itemView.findViewById(R.id.txt_kontak);
+            txt_rk = itemView.findViewById(R.id.txt_rk);
             img_cek = itemView.findViewById(R.id.img_cek);
             img_plus = itemView.findViewById(R.id.img_plus);
             rlInput = itemView.findViewById(R.id.rl_input);
@@ -90,6 +92,7 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
             txt_nama.setText(b.getNama());
             txt_kontak.setText(b.getKontak());
             txt_alamat.setText(b.getAlamat());
+            txt_rk.setText(b.getRk().toUpperCase());
 
             if(b.isDikunjungi()){
                 img_cek.setVisibility(View.VISIBLE);
@@ -135,7 +138,7 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
                         @Override
                         public void onClick(View v) {
                             alert.dismiss();
-                            showBerhentiDialog(b.getId_donatur());
+                            showBerhentiDialog(b.getId_donatur(), b.getKaleng());
                         }
                     });
 
@@ -143,6 +146,11 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
                         @Override
                         public void onClick(View v) {
 
+                            Gson gson = new Gson();
+                            Intent intent = new Intent(context, CollectorDonaturDetailActivity.class);
+                            intent.putExtra("donatur", gson.toJson(b));
+                            intent.putExtra("edit", true);
+                            context.startActivity(intent);
                         }
                     });
 
@@ -214,18 +222,19 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
         }
     }
 
-    private void showBerhentiDialog(final String id_donatur){
+    private void showBerhentiDialog(final String id_donatur, final String kaleng){
         final Dialog dialog_berhenti = DialogFactory.getInstance().createDialog((Activity) context,
                 R.layout.dialog_berhenti_donasi, 90);
 
         final EditText txt_kaleng_kembali = dialog_berhenti.findViewById(R.id.txt_kaleng_kembali);
-        txt_kaleng_kembali.setText("0");
+        txt_kaleng_kembali.setText(kaleng);
+        final EditText txt_keterangan = dialog_berhenti.findViewById(R.id.txt_keterangan);
 
         dialog_berhenti.findViewById(R.id.btn_dialog_berhenti).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!txt_kaleng_kembali.getText().toString().equals("")){
-                    berhentiDonasi(id_donatur, Integer.parseInt(txt_kaleng_kembali.getText().toString()));
+                    berhentiDonasi(id_donatur, Integer.parseInt(txt_kaleng_kembali.getText().toString()), txt_keterangan.getText().toString());
                     dialog_berhenti.dismiss();
                 }
                 else{
@@ -237,7 +246,7 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
         dialog_berhenti.show();
     }
 
-    private void berhentiDonasi(String id_donatur, int kaleng_kembali){
+    private void berhentiDonasi(String id_donatur, int kaleng_kembali, String keterangan){
         final DialogBox dialogBox = new DialogBox(context);
         dialogBox.showDialog(false);
 
@@ -246,6 +255,7 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
         body.add("id_user", new SessionManager(context).getId());
         body.add("tgl_berhenti", Converter.DToString(new Date()));
         body.add("kaleng_kembali", kaleng_kembali);
+        body.add("ket_berhenti", keterangan);
 
         new ApiVolley(context, body.create(), "POST", ServerURL.berhentiDonasi,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {

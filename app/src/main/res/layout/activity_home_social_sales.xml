@@ -115,7 +115,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_centerInParent="true">
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
 
                     <co.id.gmedia.yia.Utils.TopCropCircularImageView
                         android:id="@+id/img_foto"

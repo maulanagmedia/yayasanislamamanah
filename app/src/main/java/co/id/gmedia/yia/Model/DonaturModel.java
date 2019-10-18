@@ -12,6 +12,7 @@ public class DonaturModel {
     private String kaleng;
     private String latitude;
     private String lognitude;
+    private String rk;
 
     private List<String> listUrlPhoto = new ArrayList<>();
     private boolean dikunjungi = false;
@@ -81,6 +82,19 @@ public class DonaturModel {
         this.dikunjungi = dikunjungi;
     }
 
+    public DonaturModel(String id, String id_donatur, String nama, String alamat, String kontak, String latitude, String longitude, String kaleng, String rk, boolean dikunjungi){
+        this.id = id;
+        this.id_donatur = id_donatur;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.kontak = kontak;
+        this.latitude = latitude;
+        this.lognitude = longitude;
+        this.kaleng = kaleng;
+        this.rk = rk;
+        this.dikunjungi = dikunjungi;
+    }
+
     public String getId() {
         return id;
     }
@@ -131,6 +145,14 @@ public class DonaturModel {
 
     public void setKaleng(String kaleng) {
         this.kaleng = kaleng;
+    }
+
+    public String getRk() {
+        return rk;
+    }
+
+    public void setRk(String rk) {
+        this.rk = rk;
     }
 
     public List<String> getListUrlPhoto() {
