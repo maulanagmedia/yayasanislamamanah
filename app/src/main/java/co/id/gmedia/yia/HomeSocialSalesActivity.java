@@ -148,7 +148,8 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
 
                     @Override
                     public void onEmpty(String message) {
-                        tvTitle1.setText(0);
+                        tvTitle1.setText(String.valueOf(0));
+                        loadHistoryJumlah();
                     }
 
                     @Override

@@ -173,6 +173,7 @@ public class SalesSosialJadwalFragment extends Fragment {
                                         ,jadwal.getString("status").equals("0")?"1":"0"
                                         ,jadwal.getString("lat")
                                         ,jadwal.getString("long")
+                                        ,jadwal.getString("image")
                                 ));
                             }
 

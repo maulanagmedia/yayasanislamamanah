@@ -2,6 +2,7 @@ package co.id.gmedia.yia.ActSalesSosial;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -19,6 +20,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -35,6 +37,7 @@ import com.fxn.utility.ImageQuality;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,10 +56,11 @@ import co.id.gmedia.yia.Utils.GoogleLocationManager;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
-public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
+public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
 
     private CustomModel donatur;
-    private List<String> listGambar = new ArrayList<>();
+    private List<String> listGambarDetail = new ArrayList<>();
+    private List<String> listGambarUpload = new ArrayList<>();
     private FotoAdapter adapter;
 
     private TextView tv_latitude, tv_longitude;
@@ -110,6 +114,17 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
         edt_nama.setText(donatur.getItem2());
         edt_alamat.setText(donatur.getItem3());
         edt_kontak.setText(donatur.getItem4());
+
+        try{
+            JSONArray array_gambar = new JSONArray(donatur.getItem9());
+            for(int i = 0; i < array_gambar.length(); i++){
+                Log.d("gambar_log", array_gambar.getJSONObject(i).getString("image"));
+                listGambarDetail.add(array_gambar.getJSONObject(i).getString("image"));
+            }
+        }
+        catch (JSONException e){
+            Log.e("parse_error_log", e.getMessage());
+        }
     }
 
     private void initUI() {
@@ -200,10 +215,16 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
             }
         });
 
+        RecyclerView rv_foto_detail = findViewById(R.id.rv_foto_detail);
+        rv_foto_detail.setItemAnimator(new DefaultItemAnimator());
+        rv_foto_detail.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        adapter = new FotoAdapter(this, listGambarDetail, false);
+        rv_foto_detail.setAdapter(adapter);
+
         RecyclerView rv_foto = findViewById(R.id.rv_foto);
         rv_foto.setItemAnimator(new DefaultItemAnimator());
         rv_foto.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        adapter = new FotoAdapter(this, listGambar);
+        adapter = new FotoAdapter(this, listGambarUpload);
         rv_foto.setAdapter(adapter);
 
         findViewById(R.id.img_gambar).setOnClickListener(new View.OnClickListener() {
@@ -245,7 +266,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
 
         ArrayList<String> listFoto = new ArrayList<>();
 
-        for(String path : listGambar){
+        for(String path : listGambarUpload){
             File image = new File(path);
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
@@ -285,7 +306,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity{
             if(data != null){
                 ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
                 for(String s : returnValue){
-                    listGambar.add(Uri.fromFile(new File(s)).getPath());
+                    listGambarUpload.add(Uri.fromFile(new File(s)).getPath());
                 }
 
                 adapter.notifyDataSetChanged();

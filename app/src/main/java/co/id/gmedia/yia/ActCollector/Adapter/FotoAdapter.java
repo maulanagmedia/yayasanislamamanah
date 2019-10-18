@@ -26,9 +26,17 @@ public class FotoAdapter extends RecyclerView.Adapter
     private Context context;
     private List<String> listGambar;
 
+    private boolean isRemovable = true;
+
     public FotoAdapter(Context context, List<String> listGambar){
         this.context = context;
         this.listGambar = listGambar;
+    }
+
+    public FotoAdapter(Context context, List<String> listGambar, boolean isRemovable){
+        this.context = context;
+        this.listGambar = listGambar;
+        this.isRemovable = isRemovable;
     }
 
     @NonNull
@@ -50,17 +58,32 @@ public class FotoAdapter extends RecyclerView.Adapter
 
     class TambahanDonaturFotoViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView img_foto;
+        ImageView img_foto, img_close;
 
         TambahanDonaturFotoViewHolder(@NonNull View itemView) {
             super(itemView);
             img_foto = itemView.findViewById(R.id.img_foto);
+            img_close = itemView.findViewById(R.id.img_close);
         }
 
         void bind(String url){
             Glide.with(context).load(url).transition(DrawableTransitionOptions.withCrossFade()).
                     apply(new RequestOptions().placeholder(new ColorDrawable(Color.WHITE)).
                             diskCacheStrategy(DiskCacheStrategy.NONE)).into(img_foto);
+
+            if(isRemovable){
+                img_close.setVisibility(View.VISIBLE);
+                img_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listGambar.remove(getAdapterPosition());
+                        FotoAdapter.this.notifyItemRemoved(getAdapterPosition());
+                    }
+                });
+            }
+            else{
+                img_close.setVisibility(View.GONE);
+            }
         }
     }
 }

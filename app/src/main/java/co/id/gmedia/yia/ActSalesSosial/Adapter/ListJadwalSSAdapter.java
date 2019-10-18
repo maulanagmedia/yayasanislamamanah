@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import co.id.gmedia.coremodul.CustomModel;
-import co.id.gmedia.coremodul.FormatItem;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialJadwalDetailActivity;

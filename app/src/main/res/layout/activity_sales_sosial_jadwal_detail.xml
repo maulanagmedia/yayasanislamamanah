@@ -416,10 +416,26 @@
             android:layout_marginTop="@dimen/padding_default"
             android:background="@color/colorGAP"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="Foto"
+            android:layout_marginTop="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_big"
+            android:paddingRight="@dimen/padding_big"
+            android:textSize="@dimen/text_big" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_foto_detail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_height"
+            android:layout_marginTop="@dimen/padding_big" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_default"
+            android:layout_marginTop="@dimen/padding_medium"
             android:paddingLeft="@dimen/padding_big"
             android:paddingRight="@dimen/padding_big">
 
