@@ -3,8 +3,13 @@ package co.id.gmedia.yia.ActCollector;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,19 +24,31 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.DialogBox;
+import co.id.gmedia.coremodul.ItemValidation;
+import co.id.gmedia.coremodul.OptionItem;
 import co.id.gmedia.coremodul.SessionManager;
+import co.id.gmedia.yia.ActSalesBrosur.Adapter.SearchableSpinnerDialogOptionAdapter;
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
+import co.id.gmedia.yia.Utils.DialogFactory;
 import co.id.gmedia.yia.Utils.GoogleLocationManager;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
@@ -54,6 +71,12 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
     private LinearLayout llBukaMap;
     private ImageView ivKota, ivKecamatan, ivKelurahan;
     private TextView tvKota, tvKecamatan, tvKelurahan;
+    private List<OptionItem> listKota = new ArrayList<>(), listKecamatan = new ArrayList<>(), listKeluarahan = new ArrayList<>();
+    private String selectedKota = "", selectedKecamatan = "", selectedKelurahan = "";
+    private ItemValidation iv = new ItemValidation();
+    private RelativeLayout rlLokasi;
+    private LinearLayout llNominal;
+    private boolean isEdit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,13 +102,41 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
             }
         });
         locationManager.startLocationUpdates();
+
         initUI();
+        initEvent();
+        getDataKota();
 
         if(getIntent().hasExtra("donatur")){
             Gson gson = new Gson();
             donatur = gson.fromJson(getIntent().getStringExtra("donatur"), DonaturModel.class);
             initDonatur();
         }
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+
+            isEdit = bundle.getBoolean("edit", false);
+            if(isEdit){
+
+                rlLokasi.setVisibility(View.VISIBLE);
+                llNominal.setVisibility(View.GONE);
+
+                setTitle("Detail Donatur");
+                selectedKota = donatur.getIdKota();
+                selectedKecamatan = donatur.getIdKecamatan();
+                selectedKelurahan = donatur.getIdKelurahan();
+
+                tvKota.setText(donatur.getKota());
+                tvKecamatan.setText(donatur.getKecamatan());
+                tvKelurahan.setText(donatur.getKelurahan());
+            }else{
+
+                rlLokasi.setVisibility(View.GONE);
+                llNominal.setVisibility(View.VISIBLE);
+            }
+        }
+
     }
 
     private void initDonatur(){
@@ -105,6 +156,9 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         txt_jumlah_kaleng = findViewById(R.id.txt_jumlah_kaleng);
         txt_nominal = findViewById(R.id.txt_nominal);
         llBukaMap = (LinearLayout) findViewById(R.id.ll_buka_map);
+
+        rlLokasi = (RelativeLayout) findViewById(R.id.rl_lokasi);
+        llNominal = (LinearLayout) findViewById(R.id.ll_nominal);
 
         ivKota = (ImageView) findViewById(R.id.iv_kota);
         tvKota = (TextView) findViewById(R.id.tv_kota);
@@ -192,19 +246,414 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         dialogBox = new DialogBox(this);
     }
 
+    private void initEvent() {
+
+
+        ivKota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(listKota.size() > 0){
+
+                    showDialog(listKota, 1);
+                }
+            }
+        });
+
+        ivKecamatan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(listKota.size() > 0){
+
+                    showDialog(listKecamatan, 2);
+                }
+            }
+        });
+
+        ivKelurahan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(listKota.size() > 0){
+
+                    showDialog(listKeluarahan, 3);
+                }
+            }
+        });
+    }
+
+    private void showDialog(final List<OptionItem> listData, final int type){
+
+        final Dialog dialogChooser = DialogFactory.getInstance().createDialog((Activity) context,
+                R.layout.dialog_searchable_spinner, 90, 70);
+
+        final EditText txt_search = dialogChooser.findViewById(R.id.txt_search);
+
+        final SearchableSpinnerDialogOptionAdapter.ChooserListener listener = new SearchableSpinnerDialogOptionAdapter.ChooserListener() {
+            @Override
+            public void onSelected(String value, String text) {
+
+                if(type == 1){
+
+                    if(dialogChooser != null) {
+
+                        try {
+                            dialogChooser.dismiss();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    tvKota.setText(text);
+                    selectedKota = value;
+                    getDataKecamatan(value);
+
+                }else if(type == 2){
+
+                    if(dialogChooser != null) {
+
+                        try {
+                            dialogChooser.dismiss();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    tvKecamatan.setText(text);
+                    selectedKecamatan = value;
+                    getDataKelurahan(value);
+
+                }else if (type == 3){
+
+                    if(dialogChooser != null) {
+
+                        try {
+                            dialogChooser.dismiss();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    tvKelurahan.setText(text);
+                    selectedKelurahan= value;
+                }
+            }
+        };
+
+        final RecyclerView rv_items = dialogChooser.findViewById(R.id.rv_items);
+        final SearchableSpinnerDialogOptionAdapter[] dialogAdapter = {new SearchableSpinnerDialogOptionAdapter((Activity) context,
+                listData, listener)};
+
+        txt_search.setHint("Keyword");
+        txt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String search = s.toString();
+
+                String keyword = txt_search.getText().toString().toLowerCase();
+
+                List<OptionItem> newList = new ArrayList<>();
+
+                for(OptionItem item : listData){
+
+                    if(item.getText().toLowerCase().contains(keyword)){
+
+                        newList.add(item);
+                    }
+                }
+
+                dialogAdapter[0] = new SearchableSpinnerDialogOptionAdapter((Activity)context, newList, listener);
+                rv_items.setItemAnimator(new DefaultItemAnimator());
+                rv_items.setLayoutManager(new LinearLayoutManager((Activity) context));
+                rv_items.setAdapter(dialogAdapter[0]);
+                dialogAdapter[0].notifyDataSetChanged();
+            }
+        });
+
+        rv_items.setItemAnimator(new DefaultItemAnimator());
+        rv_items.setLayoutManager(new LinearLayoutManager((Activity) context));
+        rv_items.setAdapter(dialogAdapter[0]);
+
+        dialogChooser.show();
+    }
+
+    private void getDataKota() {
+
+        dialogBox.showDialog(false);
+        JSONObject jBody = new JSONObject();
+
+        new ApiVolley(context, jBody, "GET", ServerURL.getKota, new ApiVolley.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+                dialogBox.dismissDialog();
+                try {
+
+                    JSONObject response = new JSONObject(result);
+                    String status = response.getJSONObject("metadata").getString("status");
+                    String message = response.getJSONObject("metadata").getString("message");
+                    listKota.clear();
+
+                    if(iv.parseNullInteger(status) == 200){
+
+                        JSONArray ja = response.getJSONArray("response");
+                        for(int i = 0; i < ja.length(); i ++){
+
+                            JSONObject jo = ja.getJSONObject(i);
+                            listKota.add(
+                                    new OptionItem(
+                                            jo.getString("id")
+                                            ,jo.getString("kota")
+                                    )
+                            );
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    View.OnClickListener clickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            dialogBox.dismissDialog();
+                            getDataKota();
+
+                        }
+                    };
+
+                    dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                }
+
+                /*adapterKota.notifyDataSetChanged();
+
+                if(listKota.size() > 0){
+
+                    spKota.setSelection(0);
+                }*/
+            }
+
+            @Override
+            public void onError(String result) {
+                dialogBox.dismissDialog();
+                View.OnClickListener clickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialogBox.dismissDialog();
+                        getDataKota();
+
+                    }
+                };
+
+                dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+            }
+        });
+    }
+
+    private void getDataKecamatan(final String idKota) {
+
+        dialogBox.showDialog(false);
+
+        selectedKecamatan = "";
+        tvKecamatan.setText("");
+        selectedKelurahan = "";
+        tvKelurahan.setText("");
+
+        JSONObject jBody = new JSONObject();
+        try {
+            jBody.put("id_kota", idKota);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new ApiVolley(context, jBody, "POST", ServerURL.getKecamatan, new ApiVolley.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+                dialogBox.dismissDialog();
+                try {
+
+                    JSONObject response = new JSONObject(result);
+                    String status = response.getJSONObject("metadata").getString("status");
+                    String message = response.getJSONObject("metadata").getString("message");
+                    listKecamatan.clear();
+
+                    if(iv.parseNullInteger(status) == 200){
+
+                        JSONArray ja = response.getJSONArray("response");
+                        for(int i = 0; i < ja.length(); i ++){
+
+                            JSONObject jo = ja.getJSONObject(i);
+                            listKecamatan.add(
+                                    new OptionItem(
+                                            jo.getString("id")
+                                            ,jo.getString("kecamatan")
+                                    )
+                            );
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    View.OnClickListener clickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            dialogBox.dismissDialog();
+                            getDataKecamatan(idKota);
+
+                        }
+                    };
+
+                    dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                }
+
+                /*adapterKecamatan.notifyDataSetChanged();
+
+                if(listKecamatan.size() > 0){
+
+                    spKecamatan.setSelection(0);
+                }*/
+            }
+
+            @Override
+            public void onError(String result) {
+                dialogBox.dismissDialog();
+                View.OnClickListener clickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialogBox.dismissDialog();
+                        getDataKecamatan(idKota);
+
+                    }
+                };
+
+                dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+            }
+        });
+    }
+
+    private void getDataKelurahan(final String idKecamatan) {
+
+        dialogBox.showDialog(false);
+
+        selectedKelurahan = "";
+        tvKelurahan.setText("");
+
+        JSONObject jBody = new JSONObject();
+        try {
+            jBody.put("id_kecamatan", idKecamatan);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new ApiVolley(context, jBody, "POST", ServerURL.getKelurahan, new ApiVolley.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+                dialogBox.dismissDialog();
+                try {
+
+                    JSONObject response = new JSONObject(result);
+                    String status = response.getJSONObject("metadata").getString("status");
+                    String message = response.getJSONObject("metadata").getString("message");
+                    listKeluarahan.clear();
+
+                    if(iv.parseNullInteger(status) == 200){
+
+                        JSONArray ja = response.getJSONArray("response");
+                        for(int i = 0; i < ja.length(); i ++){
+
+                            JSONObject jo = ja.getJSONObject(i);
+                            listKeluarahan.add(
+                                    new OptionItem(
+                                            jo.getString("id")
+                                            ,jo.getString("kelurahan")
+                                    )
+                            );
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    View.OnClickListener clickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            dialogBox.dismissDialog();
+                            getDataKelurahan(idKecamatan);
+
+                        }
+                    };
+
+                    dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                }
+
+                /*adapterKelurahan.notifyDataSetChanged();
+
+                if(listKeluarahan.size() > 0){
+
+                    spKelurahan.setSelection(0);
+                }*/
+            }
+
+            @Override
+            public void onError(String result) {
+
+                dialogBox.dismissDialog();
+                View.OnClickListener clickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialogBox.dismissDialog();
+                        getDataKelurahan(idKecamatan);
+
+                    }
+                };
+
+                dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+            }
+        });
+    }
+
     private void jemputInfaq(){
 
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
-        body.add("id_sales", session.getId());
-        body.add("id_template", donatur.getId());
-        body.add("id_donatur", donatur.getId_donatur());
-        body.add("nominal", txt_nominal.getText().toString().replaceAll("[Rp,.\\s]", ""));
-        body.add("kaleng_kembali", txt_jumlah_kaleng.getText().toString());
-        body.add("latitude", tv_latitude.getText().toString());
-        body.add("longitude", tv_longitude.getText().toString());
 
-        new ApiVolley(context, body.create(), "POST", ServerURL.saveCollector,
+        String url = ServerURL.saveCollector;
+
+        if(isEdit){
+
+            url = ServerURL.updateDonatur;
+            body.add("id", donatur.getId_donatur());
+            body.add("nama", edt_nama.getText().toString());
+            body.add("alamat", edt_alamat.getText().toString());
+            body.add("kontak", edt_kontak.getText().toString());
+            body.add("kota", selectedKota);
+            body.add("kecamatan", selectedKecamatan);
+            body.add("kelurahan", selectedKelurahan);
+        }else{
+
+            body.add("id_sales", session.getId());
+            body.add("id_template", donatur.getId());
+            body.add("id_donatur", donatur.getId_donatur());
+            body.add("nominal", txt_nominal.getText().toString().replaceAll("[Rp,.\\s]", ""));
+            body.add("kaleng_kembali", txt_jumlah_kaleng.getText().toString());
+            body.add("latitude", tv_latitude.getText().toString());
+            body.add("longitude", tv_longitude.getText().toString());
+        }
+
+        new ApiVolley(context, body.create(), "POST", url,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
                     @Override
                     public void onSuccess(String response, String message) {

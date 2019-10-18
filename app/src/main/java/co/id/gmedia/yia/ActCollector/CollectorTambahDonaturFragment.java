@@ -2,7 +2,9 @@ package co.id.gmedia.yia.ActCollector;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -149,7 +151,24 @@ public class CollectorTambahDonaturFragment extends Fragment {
         v.findViewById(R.id.btn_simpan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tambahDonatur();
+
+                AlertDialog dialog = new AlertDialog.Builder(activity)
+                        .setTitle("Konfirmasi")
+                        .setMessage("Apakah anda yakin ingin menyimpan data ?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                tambahDonatur();
+                            }
+                        })
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
             }
         });
 

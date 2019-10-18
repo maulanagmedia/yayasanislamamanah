@@ -153,7 +153,7 @@ public class SalesSosialJadwalFragment extends Fragment {
         //body.add("tgl_awal", dateFrom);
         //body.add("tgl_akhir", dateTo);
         body.add("keyword", edtSearch.getText().toString());
-        body.add("status", "");
+        body.add("status", "1");
 
         new ApiVolley(context, body.create(), "POST", ServerURL.getRencanaKerjaSosial,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {

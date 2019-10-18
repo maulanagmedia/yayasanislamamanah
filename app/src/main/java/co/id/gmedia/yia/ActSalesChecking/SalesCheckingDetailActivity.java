@@ -126,8 +126,10 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         txt_jumlah_kaleng.setText(donatur.getKaleng());
 
         for(String url : donatur.getListUrlPhoto()){
-            listPhotoDetail.add(new PhotoModel(url, ""));
+            listPhotoDetail.add(new PhotoModel("", url));
         }
+
+        adapterPhotoDetail.notifyDataSetChanged();
     }
 
     private void initUI() {
@@ -241,6 +243,9 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
 
         JSONBuilder body = new JSONBuilder();
         body.add("id_rk", donatur.getId());
+        body.add("nama", edt_nama.getText().toString());
+        body.add("alamat", edt_alamat.getText().toString());
+        body.add("kontak", edt_kontak.getText().toString());
         body.add("id_sales", sessionManager.getId());
         body.add("id_donatur", donatur.getId_donatur());
         body.add("status_donasi", rb_donasi_ya.isChecked() ? 1 : 2);

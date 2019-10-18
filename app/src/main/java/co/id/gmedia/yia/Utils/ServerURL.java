@@ -26,4 +26,5 @@ public class ServerURL {
     public static final String getRekapSetoran = baseURL + "Collector/Rencana_kerja/hasil_setoran_collector/";
     public static final String getRekapSetoranByOut = baseURL + "Collector/Rencana_kerja/view_donatur_out/";
     public static final String getRekapSetoranByJenis = baseURL + "Collector/Rencana_kerja/donatur_rekap_setoran/";
+    public static final String updateDonatur = baseURL + "Collector/Rencana_kerja/Edit_donatur/";
 }

@@ -45,7 +45,7 @@ public class CheckingRiwayatAdapter extends RecyclerView.Adapter<CheckingRiwayat
     class SurveyRiwayatViewHolder extends RecyclerView.ViewHolder{
 
         TextView txt_tanggal, txt_waktu_donasi, txt_lobi_kaleng,
-                txt_nama_donatur, txt_alamat_donatur, txt_kontak_donatur;
+                txt_nama_donatur, txt_alamat_donatur, txt_kontak_donatur, txt_donasi;
 
         SurveyRiwayatViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,15 +55,26 @@ public class CheckingRiwayatAdapter extends RecyclerView.Adapter<CheckingRiwayat
             txt_kontak_donatur = itemView.findViewById(R.id.txt_kontak_donatur);
             txt_waktu_donasi = itemView.findViewById(R.id.txt_waktu_donasi);
             txt_lobi_kaleng = itemView.findViewById(R.id.txt_lobi_kaleng);
+            txt_donasi = itemView.findViewById(R.id.txt_donasi);
         }
 
         void bind(SurveyRiwayatModel b){
+
             txt_nama_donatur.setText(b.getDonatur().getNama());
             txt_alamat_donatur.setText(b.getDonatur().getAlamat());
             txt_kontak_donatur.setText(b.getDonatur().getKontak());
             txt_tanggal.setText(Converter.DToString(b.getTanggal()));
             txt_waktu_donasi.setText(b.getWaktu());
             txt_lobi_kaleng.setText(b.getLobi_kaleng());
+
+            if(!b.getDonasi().toUpperCase().equals("YA")){
+
+                txt_donasi.setTextColor(context.getResources().getColor(R.color.colorRed));
+            }else{
+                txt_donasi.setTextColor(context.getResources().getColor(R.color.colorGreen1));
+            }
+
+            txt_donasi.setText("Bersedia Donasi : " + b.getDonasi());
         }
     }
 }

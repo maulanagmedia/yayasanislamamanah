@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.Model.HistoryDonaturModel;
 import co.id.gmedia.yia.R;
@@ -20,6 +21,7 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
         <HistoryCollectorAdapter.HistoryCollectorViewHolder> {
 
     private Context context;
+    private ItemValidation iv = new ItemValidation();
     private List<DonaturModel> listDonatur;
 
     public HistoryCollectorAdapter(Context context, List<DonaturModel> listDonatur){
@@ -47,7 +49,7 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
     class HistoryCollectorViewHolder extends RecyclerView.ViewHolder{
 
         TextView txt_tambahan, txt_tanggal, txt_waktu_donasi, txt_jenis_donasi,
-                txt_jumlah_donasi, txt_nama_donatur, txt_alamat_donatur, txt_kontak_donatur;
+                txt_jumlah_donasi, txt_nama_donatur, txt_alamat_donatur, txt_kontak_donatur, txt_nominal, txt_jenis;
 
         HistoryCollectorViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,12 +61,16 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
             txt_jenis_donasi = itemView.findViewById(R.id.txt_jenis_donasi);
             txt_waktu_donasi = itemView.findViewById(R.id.txt_waktu_donasi);
             txt_jumlah_donasi = itemView.findViewById(R.id.txt_jumlah_donasi);
+            txt_nominal= itemView.findViewById(R.id.txt_nominal);
+            txt_jenis= itemView.findViewById(R.id.txt_jenis);
         }
 
         void bind(DonaturModel b){
             txt_nama_donatur.setText(b.getNama());
             txt_alamat_donatur.setText(b.getAlamat());
             txt_kontak_donatur.setText(b.getKontak());
+            txt_nominal.setText(iv.ChangeToCurrencyFormat(b.getNominal()));
+            txt_jenis.setText(b.getJenisDonatur());
 
             /*txt_tanggal.setText(Converter.DToString(b.getTanggal()));
             txt_jenis_donasi.setText(b.getJenis());

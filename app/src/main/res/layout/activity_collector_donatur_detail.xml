@@ -178,7 +178,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_medium">
+            android:layout_marginTop="@dimen/padding_medium"
+            android:id="@+id/rl_lokasi">
 
             <ImageView
                 android:layout_width="@dimen/icon_size2"

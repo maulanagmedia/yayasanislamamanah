@@ -13,6 +13,8 @@ public class DonaturModel {
     private String latitude;
     private String lognitude;
     private String rk;
+    private String idKota, idKecamatan, idKelurahan, kota, kecamatan, kelurahan;
+    private String nominal, jenisDonatur;
 
     private List<String> listUrlPhoto = new ArrayList<>();
     private boolean dikunjungi = false;
@@ -95,6 +97,25 @@ public class DonaturModel {
         this.dikunjungi = dikunjungi;
     }
 
+    public DonaturModel(String id, String id_donatur, String nama, String alamat, String kontak, String latitude, String longitude, String kaleng, String rk, String idKota, String idKecamatan, String idKelurahan, String kota, String kecamatan, String kelurahan, boolean dikunjungi){
+        this.id = id;
+        this.id_donatur = id_donatur;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.kontak = kontak;
+        this.latitude = latitude;
+        this.lognitude = longitude;
+        this.kaleng = kaleng;
+        this.rk = rk;
+        this.idKota = idKota;
+        this.idKecamatan = idKecamatan;
+        this.idKelurahan = idKelurahan;
+        this.kota = kota;
+        this.kecamatan = kecamatan;
+        this.kelurahan = kelurahan;
+        this.dikunjungi = dikunjungi;
+    }
+
     public String getId() {
         return id;
     }
@@ -157,5 +178,69 @@ public class DonaturModel {
 
     public List<String> getListUrlPhoto() {
         return listUrlPhoto;
+    }
+
+    public String getIdKota() {
+        return idKota;
+    }
+
+    public void setIdKota(String idKota) {
+        this.idKota = idKota;
+    }
+
+    public String getIdKecamatan() {
+        return idKecamatan;
+    }
+
+    public void setIdKecamatan(String idKecamatan) {
+        this.idKecamatan = idKecamatan;
+    }
+
+    public String getIdKelurahan() {
+        return idKelurahan;
+    }
+
+    public void setIdKelurahan(String idKelurahan) {
+        this.idKelurahan = idKelurahan;
+    }
+
+    public String getKota() {
+        return kota;
+    }
+
+    public void setKota(String kota) {
+        this.kota = kota;
+    }
+
+    public String getKecamatan() {
+        return kecamatan;
+    }
+
+    public void setKecamatan(String kecamatan) {
+        this.kecamatan = kecamatan;
+    }
+
+    public String getKelurahan() {
+        return kelurahan;
+    }
+
+    public void setKelurahan(String kelurahan) {
+        this.kelurahan = kelurahan;
+    }
+
+    public String getNominal() {
+        return nominal;
+    }
+
+    public void setNominal(String nominal) {
+        this.nominal = nominal;
+    }
+
+    public String getJenisDonatur() {
+        return jenisDonatur;
+    }
+
+    public void setJenisDonatur(String jenisDonatur) {
+        this.jenisDonatur = jenisDonatur;
     }
 }

@@ -66,7 +66,7 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
             holder.tvStatus.setTextColor(context.getResources().getColor(R.color.colorGreen1));
         }
 
-        holder.tvStatus.setText(item.getItem7());
+        holder.tvStatus.setText(item.getItem8());
 
         return convertView;
 

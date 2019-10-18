@@ -153,6 +153,8 @@ public class CollectorJadwalFragment extends Fragment {
         JSONBuilder body = new JSONBuilder();
         body.add("collector", new SessionManager(activity).getId());
         body.add("keyword", "");
+        body.add("data_dalam", "1");
+        body.add("data_luar", "0");
 
         new ApiVolley(activity, body.create(), "POST", ServerURL.getRencanaKerjaCollector,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
@@ -174,6 +176,12 @@ public class CollectorJadwalFragment extends Fragment {
                                         ,donatur.getString("long")
                                         ,donatur.getString("total_kaleng")
                                         ,donatur.getString("rk")
+                                        ,donatur.getString("id_kota")
+                                        ,donatur.getString("id_kecamatan")
+                                        ,donatur.getString("id_kelurahan")
+                                        ,donatur.getString("kota")
+                                        ,donatur.getString("kecamatan")
+                                        ,donatur.getString("kelurahan")
                                         ,donatur.getString("status").equals("0")
                                 ));
                             }

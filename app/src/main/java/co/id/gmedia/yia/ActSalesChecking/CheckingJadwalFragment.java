@@ -92,7 +92,7 @@ public class CheckingJadwalFragment extends Fragment {
         //body.add("tgl_awal", Converter.DToString(new Date()));
         //body.add("tgl_akhir", Converter.DToString(new Date()));
         body.add("keywoard", "");
-        body.add("status", "");
+        body.add("status", "1");
 
         new ApiVolley(activity, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {

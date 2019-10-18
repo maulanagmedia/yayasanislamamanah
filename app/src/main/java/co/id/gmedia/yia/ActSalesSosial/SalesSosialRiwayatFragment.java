@@ -166,6 +166,7 @@ public class SalesSosialRiwayatFragment extends Fragment {
                                         ,"tanggal"
                                         ,jadwal.getString("status").equals("0")?"1":"0"
                                         ,jadwal.getString("ket_status")
+                                        ,jadwal.getString("status_donasi")
                                         )
                                 );
                             }

@@ -214,7 +214,8 @@ public class CheckingRiwayatFragment extends Fragment {
                                         ,""
                                         ,"",
                                         new Date(),
-                                        ""));
+                                        "",
+                                        donatur.getString("status_donasi")));
                             }
 
                             //Update teks jumlah di Activity

@@ -275,6 +275,9 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
 
         JSONBuilder body = new JSONBuilder();
         body.add("id_rk", donatur.getItem1());
+        body.add("nama", edt_nama.getText().toString());
+        body.add("alamat", edt_alamat.getText().toString());
+        body.add("kontak", edt_kontak.getText().toString());
         body.add("id_sales", sessionManager.getId());
         body.add("donasi", rb_donasi_ya.isChecked() ? 1 : 0);
         body.add("lobi_kaleng", rb_kaleng_ya.isChecked()? "ya" : "tidak");
