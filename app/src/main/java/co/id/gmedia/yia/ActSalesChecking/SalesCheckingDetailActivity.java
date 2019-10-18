@@ -45,7 +45,6 @@ import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.PhotoModel;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
-import co.id.gmedia.yia.ActSalesBrosur.SalesBrosurDetailFragment;
 import co.id.gmedia.yia.ActSalesSosial.Adapter.ListPhotoAdapter;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;

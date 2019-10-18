@@ -187,8 +187,26 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
                             edt_kontak.requestFocus();
                             return;
                         }else{
-
                             edt_kontak.setError(null);
+                        }
+
+                        //Cek jumlah kaleng jika menggunakan lobi kaleng (jika rb_kaleng_ya check)
+                        if(rb_kaleng_ya.isChecked()){
+                            if(txt_jumlah_kaleng.getText().toString().isEmpty()){
+                                txt_jumlah_kaleng.setError("Harap diisi");
+                                txt_jumlah_kaleng.requestFocus();
+                                return;
+                            }
+                            else if(Integer.parseInt(txt_jumlah_kaleng.getText().toString()) < 1){
+                                txt_jumlah_kaleng.setError("Jumlah minimal 1");
+                                txt_jumlah_kaleng.requestFocus();
+                                return;
+                            }
+                            else{
+                                txt_jumlah_kaleng.setError(null);
+                            }
+                        }else{
+                            txt_jumlah_kaleng.setError(null);
                         }
 
                         AlertDialog dialog = new AlertDialog.Builder(context)

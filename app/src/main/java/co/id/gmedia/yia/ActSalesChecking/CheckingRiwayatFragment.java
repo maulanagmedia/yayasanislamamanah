@@ -42,7 +42,6 @@ import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.Model.SurveyRiwayatModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
-import co.id.gmedia.yia.Utils.Converter;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
@@ -217,6 +216,11 @@ public class CheckingRiwayatFragment extends Fragment {
                                         new Date(),
                                         ""));
                             }
+
+                            //Update teks jumlah di Activity
+                            if(activity instanceof SalesCheckingActivity){
+                                ((SalesCheckingActivity)activity).updateJumlahRiwayat(object.length());
+                            }
                         }
                         catch (JSONException e){
                             Log.e("json_log", e.getMessage());
@@ -239,6 +243,12 @@ public class CheckingRiwayatFragment extends Fragment {
                     public void onEmpty(String message) {
                         dialogBox.dismissDialog();
                         listDonatur.clear();
+
+                        //Update teks jumlah di Activity
+                        if(activity instanceof SalesCheckingActivity){
+                            ((SalesCheckingActivity)activity).updateJumlahRiwayat(0);
+                        }
+
                         adapter.notifyDataSetChanged();
                     }
 

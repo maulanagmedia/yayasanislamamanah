@@ -37,6 +37,7 @@ import co.id.gmedia.coremodul.FormatItem;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActSalesSosial.Adapter.ListRiwayatSSAdapter;
+import co.id.gmedia.yia.HomeSocialSalesActivity;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
@@ -50,7 +51,7 @@ public class SalesSosialRiwayatFragment extends Fragment {
     private Context context;
     private SessionManager session;
     private RelativeLayout rlDate1, rlDate2;
-    private String dateFrom = Converter.DToFirstDayOfMonthString(new Date()),
+    private String dateFrom = Converter.DToString(new Date()),
             dateTo = Converter.DToString(new Date());
     private TextView tvDate1, tvDate2;
     private DialogBox dialogBox;
@@ -169,6 +170,11 @@ public class SalesSosialRiwayatFragment extends Fragment {
                                 );
                             }
 
+                            //Update teks jumlah di Activity
+                            if(context instanceof HomeSocialSalesActivity){
+                                ((HomeSocialSalesActivity)context).updateJumlahRiwayat(obj.length());
+                            }
+
                             adapter.notifyDataSetChanged();
                         }
                         catch (JSONException e){
@@ -191,6 +197,11 @@ public class SalesSosialRiwayatFragment extends Fragment {
                     public void onEmpty(String message) {
                         listData.clear();
                         adapter.notifyDataSetChanged();
+
+                        //Update teks jumlah di Activity
+                        if(context instanceof HomeSocialSalesActivity){
+                            ((HomeSocialSalesActivity)context).updateJumlahRiwayat(0);
+                        }
 
                         dialogBox.dismissDialog();
                     }

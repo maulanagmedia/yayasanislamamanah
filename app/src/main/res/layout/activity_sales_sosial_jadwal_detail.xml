@@ -298,6 +298,7 @@
                     android:id="@+id/txt_jumlah_kaleng"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:text="1"
                     android:layout_marginStart="@dimen/dp5"
                     android:layout_marginEnd="@dimen/dp10"
                     android:layout_height="wrap_content"
