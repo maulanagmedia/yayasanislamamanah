@@ -104,6 +104,12 @@ public class CheckingJadwalFragment extends Fragment {
                             JSONArray object = new JSONArray(response);
                             for(int i = 0; i < object.length(); i++){
                                 JSONObject donatur = object.getJSONObject(i);
+                                JSONArray arrayFoto = donatur.getJSONArray("image");
+                                List<String> listUrlFoto = new ArrayList<>();
+                                for(int j = 0; j < arrayFoto.length(); j++){
+                                    listUrlFoto.add(arrayFoto.getJSONObject(j).getString("image"));
+                                }
+
                                 listDonatur.add(new DonaturModel(
                                         donatur.getString("id")
                                         ,donatur.getString("id_donatur")
@@ -113,7 +119,8 @@ public class CheckingJadwalFragment extends Fragment {
                                         ,donatur.getString("total_kaleng")
                                         ,donatur.getString("lat")
                                         ,donatur.getString("long")
-                                        ,donatur.getInt("status") == 0));
+                                        ,donatur.getInt("status") == 0
+                                        , listUrlFoto));
                             }
 
                             adapter.notifyDataSetChanged();

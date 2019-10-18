@@ -79,10 +79,12 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
     private final int PERMIOSSION_REQUEST_CODE = 1240;
 
     private RelativeLayout rlPhoto;
-    private RecyclerView rvPhoto;
+    private RecyclerView rvPhoto, rv_PhotoDetail;
     private int imageRequestCode = 100;
     private List<PhotoModel> listPhoto;
+    private List<PhotoModel> listPhotoDetail = new ArrayList<>();
     private ListPhotoAdapter adapterPhoto;
+    private ListPhotoAdapter adapterPhotoDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +125,10 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         edt_alamat.setText(donatur.getAlamat());
         edt_kontak.setText(donatur.getKontak());
         txt_jumlah_kaleng.setText(donatur.getKaleng());
+
+        for(String url : donatur.getListUrlPhoto()){
+            listPhotoDetail.add(new PhotoModel(url, ""));
+        }
     }
 
     private void initUI() {
@@ -139,12 +145,18 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
 
         rlPhoto = (RelativeLayout) findViewById(R.id.rl_photo);
         rvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
+        rv_PhotoDetail = findViewById(R.id.rv_foto_detail);
 
         listPhoto = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         adapterPhoto = new ListPhotoAdapter(context, listPhoto);
         rvPhoto.setLayoutManager(layoutManager);
         rvPhoto.setAdapter(adapterPhoto);
+
+        LinearLayoutManager layoutManagerDetail = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        adapterPhotoDetail = new ListPhotoAdapter(context, listPhotoDetail);
+        rv_PhotoDetail.setLayoutManager(layoutManagerDetail);
+        rv_PhotoDetail.setAdapter(adapterPhotoDetail);
 
         rb_kaleng_ya.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

@@ -1,5 +1,8 @@
 package co.id.gmedia.yia.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DonaturModel {
     private String id;
     private String id_donatur;
@@ -10,6 +13,7 @@ public class DonaturModel {
     private String latitude;
     private String lognitude;
 
+    private List<String> listUrlPhoto = new ArrayList<>();
     private boolean dikunjungi = false;
 
     public DonaturModel(String id, String id_donatur, String nama, String alamat, String kontak){
@@ -39,7 +43,8 @@ public class DonaturModel {
         this.dikunjungi = dikunjungi;
     }
 
-    public DonaturModel(String id,  String id_donatur, String nama, String alamat, String kontak, String kaleng, String latitude, String lognitude, boolean dikunjungi){
+    public DonaturModel(String id,  String id_donatur, String nama, String alamat, String kontak,
+                        String kaleng, String latitude, String lognitude, boolean dikunjungi){
         this.id = id;
         this.id_donatur = id_donatur;
         this.nama = nama;
@@ -49,6 +54,20 @@ public class DonaturModel {
         this.latitude = latitude;
         this.lognitude = lognitude;
         this.dikunjungi = dikunjungi;
+    }
+
+    public DonaturModel(String id,  String id_donatur, String nama, String alamat, String kontak,
+                        String kaleng, String latitude, String lognitude, boolean dikunjungi, List<String> listUrlPhoto){
+        this.id = id;
+        this.id_donatur = id_donatur;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.kontak = kontak;
+        this.kaleng = kaleng;
+        this.latitude = latitude;
+        this.lognitude = lognitude;
+        this.dikunjungi = dikunjungi;
+        this.listUrlPhoto = listUrlPhoto;
     }
 
     public DonaturModel(String id,  String id_donatur, String nama, String alamat, String kontak, String latitude, String longitude, boolean dikunjungi){
@@ -112,5 +131,9 @@ public class DonaturModel {
 
     public void setKaleng(String kaleng) {
         this.kaleng = kaleng;
+    }
+
+    public List<String> getListUrlPhoto() {
+        return listUrlPhoto;
     }
 }

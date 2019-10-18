@@ -15,14 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import co.id.gmedia.coremodul.ApiVolley;
@@ -32,7 +30,6 @@ import co.id.gmedia.yia.ActCollector.Adapter.JadwalKunjunganCollectorAdapter;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
-import co.id.gmedia.yia.Utils.Converter;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
