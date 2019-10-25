@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActSalesSosial.DonaturLSosialFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp20"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Informasi Donatur"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/color_black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size2"
+                    android:layout_height="@dimen/icon_size2"
+                    android:src="@drawable/ic_name"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp10"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/color_black"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/txt_nama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/bg_input"
+                android:padding="@dimen/dp10"
+                android:inputType="textPersonName"
+                android:layout_marginStart="@dimen/padding_super"
+                android:textColor="#4F4F4F"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size2"
+                    android:layout_height="@dimen/icon_size2"
+                    android:src="@drawable/ic_location"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp10"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kota"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/color_black"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_kota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/bg_input"
+                android:padding="@dimen/dp10"
+                android:layout_marginStart="@dimen/padding_super"
+                android:textColor="#4F4F4F"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kecamatan"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/padding_super"
+                android:textColor="@color/color_black"/>
+
+            <TextView
+                android:id="@+id/txt_kecamatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/bg_input"
+                android:padding="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/padding_super"
+                android:textColor="#4F4F4F"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kelurahan"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/padding_super"
+                android:textColor="@color/color_black"/>
+
+            <TextView
+                android:id="@+id/txt_kelurahan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/bg_input"
+                android:padding="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/padding_super"
+                android:textColor="#4F4F4F"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alamat"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/padding_super"
+                android:textColor="@color/color_black"/>
+
+            <EditText
+                android:id="@+id/txt_alamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/bg_input"
+                android:padding="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginStart="@dimen/padding_super"
+                android:textColor="#4F4F4F"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size2"
+                    android:layout_height="@dimen/icon_size2"
+                    android:src="@drawable/ic_kontak"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp10"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kontak"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/color_black"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/txt_kontak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:imeOptions="actionNext"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/bg_input"
+                android:padding="@dimen/dp10"
+                android:layout_marginStart="@dimen/padding_super"
+                android:textColor="#4F4F4F"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#F1F1F1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/padding_default"
+            android:id="@+id/ll_kaleng"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_big"
+                android:paddingRight="@dimen/padding_big">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Penggunaan Kaleng"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_big" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Apakah beliau bersedia menggunakan kaleng untuk donasi?"
+                    android:textSize="@dimen/text_small"/>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:id="@+id/rg_kaleng"
+                    android:weightSum="2">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Ya"
+                        android:id="@+id/rb_kaleng_ya"
+                        android:checked="true"
+                        android:textColor="@color/colorBlack"/>
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Tidak"
+                        android:id="@+id/rb_kaleng_tidak"
+                        android:textColor="@color/colorBlack"/>
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/layout_kaleng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jumlah Kaleng : "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small" />
+
+                    <EditText
+                        android:id="@+id/txt_jumlah_kaleng"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="1"
+                        android:layout_marginStart="@dimen/dp5"
+                        android:layout_marginEnd="@dimen/dp10"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp5"
+                android:layout_marginTop="@dimen/padding_default"
+                android:background="@color/colorGAP"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_big"
+            android:paddingRight="@dimen/padding_big">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lokasi"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_big" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:minHeight="100dp"
+                android:gravity="center"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_latitude"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Latitude"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_small"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_longitude"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Longitude"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_small"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/ll_buka_map"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:src="@drawable/ic_map"
+                        android:scaleType="centerInside"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Buka Map"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_small"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#F1F1F1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp20"
+            android:paddingBottom="@dimen/dp20"
+            android:paddingLeft="@dimen/padding_small"
+            android:paddingRight="@dimen/padding_small"
+            android:layout_marginStart="@dimen/padding_big"
+            android:layout_marginEnd="@dimen/padding_big">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Tambahkan foto lokasi atau donatur"
+                android:textSize="12sp"
+                android:layout_marginEnd="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10" />
+
+            <ImageView
+                android:id="@+id/img_gambar"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:background="@drawable/bg_button_green"
+                android:src="@drawable/ic_photo_camera"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_foto"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_size"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="Keterangan"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/padding_default"
+            android:layout_marginLeft="@dimen/padding_default"
+            android:layout_marginRight="@dimen/padding_default"
+            android:textSize="@dimen/text_big" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            android:background="@drawable/bg_input"
+            android:inputType="textPersonName"
+            android:imeOptions="actionDone"
+            android:text=""
+            android:id="@+id/edt_keterangan"
+            android:textSize="@dimen/text_small"
+            android:gravity="top"
+            android:layout_marginTop="@dimen/padding_default"
+            android:layout_marginLeft="@dimen/padding_default"
+            android:layout_marginRight="@dimen/padding_default"
+            android:padding="@dimen/padding_default"/>
+
+        <Button
+            android:id="@+id/btn_simpan"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Simpan Data"
+            android:layout_marginTop="@dimen/dp40"
+            android:layout_marginBottom="@dimen/dp20"
+            android:background="@drawable/bg_button_green"
+            android:textColor="@color/color_white"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+
+</ScrollView>

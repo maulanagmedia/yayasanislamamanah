@@ -159,7 +159,9 @@
                         android:layout_height="24dp"
                         android:background="@android:color/transparent"
                         android:textColor="@color/colorBlack"
-                        android:text="Kontak"
+                        android:text=""
+                        android:inputType="phone"
+                        android:imeOptions="actionNext"
                         android:id="@+id/edt_kontak"
                         android:textSize="@dimen/text_small"/>
 
@@ -236,82 +238,87 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="@dimen/padding_default"
-            android:paddingLeft="@dimen/padding_big"
-            android:paddingRight="@dimen/padding_big"
-            >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lobi Kaleng"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_big" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Apakah beliau bersedia menggunakan kaleng untuk donasi?"
-                android:textSize="@dimen/text_small"/>
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/padding_small"
-                android:id="@+id/rg_kaleng"
-                android:weightSum="2">
-
-                <RadioButton
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Ya"
-                    android:id="@+id/rb_kaleng_ya"
-                    android:checked="true"
-                    android:textColor="@color/colorBlack"/>
-
-                <RadioButton
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Tidak"
-                    android:id="@+id/rb_kaleng_tidak"
-                    android:textColor="@color/colorBlack"/>
-            </RadioGroup>
+            android:id="@+id/ll_kaleng">
 
             <LinearLayout
-                android:id="@+id/layout_kaleng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp10"
-                android:layout_marginBottom="@dimen/dp20"
-                android:visibility="visible">
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_big"
+                android:paddingRight="@dimen/padding_big">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Jumlah Kaleng : "
+                    android:text="Penggunaan Kaleng"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_small" />
+                    android:textSize="@dimen/text_big" />
 
-                <EditText
-                    android:id="@+id/txt_jumlah_kaleng"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="@dimen/dp5"
-                    android:layout_marginEnd="@dimen/dp10"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:text="Apakah beliau bersedia menggunakan kaleng untuk donasi?"
+                    android:textSize="@dimen/text_small"/>
 
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:id="@+id/rg_kaleng"
+                    android:weightSum="2">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Ya"
+                        android:id="@+id/rb_kaleng_ya"
+                        android:checked="true"
+                        android:textColor="@color/colorBlack"/>
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Tidak"
+                        android:id="@+id/rb_kaleng_tidak"
+                        android:textColor="@color/colorBlack"/>
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/layout_kaleng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jumlah Kaleng : "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/text_small" />
+
+                    <EditText
+                        android:id="@+id/txt_jumlah_kaleng"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/dp5"
+                        android:layout_marginEnd="@dimen/dp10"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"/>
+
+                </LinearLayout>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp5"
+                android:layout_marginTop="@dimen/padding_default"
+                android:background="@color/colorGAP"/>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp5"
-            android:layout_marginTop="@dimen/padding_default"
-            android:background="@color/colorGAP"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -492,6 +499,33 @@
             android:layout_height="@dimen/image_height"
             android:layout_marginTop="@dimen/padding_big"
             android:id="@+id/rv_photo"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="Keterangan"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/padding_default"
+            android:layout_marginRight="@dimen/padding_default"
+            android:layout_marginTop="@dimen/padding_default"
+            android:textSize="@dimen/text_big" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            android:background="@drawable/bg_input"
+            android:inputType="textPersonName"
+            android:imeOptions="actionDone"
+            android:text=""
+            android:layout_marginLeft="@dimen/padding_default"
+            android:layout_marginRight="@dimen/padding_default"
+            android:id="@+id/edt_keterangan"
+            android:textSize="@dimen/text_small"
+            android:gravity="top"
+            android:layout_marginTop="@dimen/padding_default"
+            android:padding="@dimen/padding_default"/>
 
         <Button
             android:layout_width="match_parent"

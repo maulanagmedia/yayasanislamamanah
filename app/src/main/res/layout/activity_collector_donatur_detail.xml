@@ -538,6 +538,49 @@
             android:layout_marginTop="@dimen/padding_default"
             android:background="@color/colorGAP"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="Keterangan"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/padding_default"
+            android:layout_marginRight="@dimen/padding_default"
+            android:layout_marginTop="@dimen/padding_default"
+            android:textSize="@dimen/text_big" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            android:background="@drawable/bg_input"
+            android:inputType="textPersonName"
+            android:imeOptions="actionDone"
+            android:text=""
+            android:layout_marginLeft="@dimen/padding_default"
+            android:layout_marginRight="@dimen/padding_default"
+            android:id="@+id/edt_keterangan"
+            android:textSize="@dimen/text_small"
+            android:gravity="top"
+            android:layout_marginTop="@dimen/padding_default"
+            android:padding="@dimen/padding_default"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp5"
+            android:layout_marginTop="@dimen/padding_default"
+            android:background="@color/colorGAP"/>
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_default"
+            android:layout_marginLeft="@dimen/padding_default"
+            android:layout_marginRight="@dimen/padding_default"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/cb_checking"
+            android:text="Tidak dapat dikunjungi / donatur tidak ada ditempat"/>
+
         <!--<RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

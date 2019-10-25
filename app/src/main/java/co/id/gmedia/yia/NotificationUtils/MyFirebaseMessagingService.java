@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import co.id.gmedia.coremodul.ItemValidation;
+import co.id.gmedia.yia.ActCollector.CollectorActivity;
+import co.id.gmedia.yia.ActSalesChecking.SalesCheckingActivity;
 import co.id.gmedia.yia.HomeActivity;
 import co.id.gmedia.yia.HomeSocialSalesActivity;
 import co.id.gmedia.yia.LoginActivity;
@@ -62,13 +64,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         int typeContent = 0;
         for(String key: extra.keySet()){
             if(key.trim().toUpperCase().equals("JENIS")){
-                if(extra.get(key).trim().toUpperCase().equals("PROMO")){
-                    typeContent = 1;
-                }else if(extra.get(key).trim().toUpperCase().equals("SOSIAL")){
-                    typeContent = 2;
-                }else if(extra.get(key).trim().toUpperCase().equals("SURVEY")){
-                    typeContent = 3;
-                }else if(extra.get(key).trim().toUpperCase().equals("COLLECTOR")){
+                if(extra.get(key).trim().toUpperCase().equals("REMINDER_COLLECTOR")){
                     typeContent = 4;
                 }
             }
@@ -81,6 +77,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     break;
                 case 2:
                     intent = new Intent(this, HomeSocialSalesActivity.class);
+                    break;
+                case 3:
+                    intent = new Intent(this, SalesCheckingActivity.class);
+                    break;
+                case 4:
+                    intent = new Intent(this, CollectorActivity.class);
                     break;
                 default:
                     intent = new Intent(this, HomeActivity.class);

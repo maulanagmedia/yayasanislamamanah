@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import co.id.gmedia.coremodul.FormatItem;
+import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.yia.Model.SurveyRiwayatModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.Converter;
@@ -19,6 +21,7 @@ public class CheckingRiwayatAdapter extends RecyclerView.Adapter<CheckingRiwayat
 
     private Context context;
     private List<SurveyRiwayatModel> listDonatur;
+    private ItemValidation iv = new ItemValidation();
 
     public CheckingRiwayatAdapter(Context context, List<SurveyRiwayatModel> listDonatur){
         this.context = context;
@@ -63,7 +66,7 @@ public class CheckingRiwayatAdapter extends RecyclerView.Adapter<CheckingRiwayat
             txt_nama_donatur.setText(b.getDonatur().getNama());
             txt_alamat_donatur.setText(b.getDonatur().getAlamat());
             txt_kontak_donatur.setText(b.getDonatur().getKontak());
-            txt_tanggal.setText(Converter.DToString(b.getTanggal()));
+            txt_tanggal.setText(iv.ChangeFormatDateString(b.getWaktu(), FormatItem.formatTimestamp, FormatItem.formatDateTimeDisplay1));
             txt_waktu_donasi.setText(b.getWaktu());
             txt_lobi_kaleng.setText(b.getLobi_kaleng());
 

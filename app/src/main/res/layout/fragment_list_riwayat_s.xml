@@ -118,6 +118,64 @@
             android:textColor="@color/colorWhite"
             android:text="Proses"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/padding_small"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:padding="@dimen/padding_small"
+                android:layout_marginRight="@dimen/padding_small"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bersedia Donasi"
+                    android:textColor="@color/colorBlack"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    android:id="@+id/tv_donasi_ya"
+                    android:textColor="@color/colorBlue2"
+                    android:textSize="@dimen/text_big"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:padding="@dimen/padding_small"
+                android:layout_marginLeft="@dimen/padding_small"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Belum Bersedia Donasi"
+                    android:textColor="@color/colorBlack"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    android:id="@+id/tv_donasi_tidak"
+                    android:textColor="@color/colorBlue2"
+                    android:textSize="@dimen/text_big"/>
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
     <co.id.gmedia.coremodul.CustomView.CustomListView

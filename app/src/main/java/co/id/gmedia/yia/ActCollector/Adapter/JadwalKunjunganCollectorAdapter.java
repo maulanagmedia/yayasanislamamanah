@@ -3,6 +3,7 @@ package co.id.gmedia.yia.ActCollector.Adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -234,8 +235,25 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
             @Override
             public void onClick(View v) {
                 if(!txt_kaleng_kembali.getText().toString().equals("")){
-                    berhentiDonasi(id_donatur, Integer.parseInt(txt_kaleng_kembali.getText().toString()), txt_keterangan.getText().toString());
-                    dialog_berhenti.dismiss();
+
+                    AlertDialog dialog = new AlertDialog.Builder(context)
+                            .setTitle("Konfirmasi")
+                            .setMessage("Apakah anda yakin ingin menyimpan data?")
+                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    berhentiDonasi(id_donatur, Integer.parseInt(txt_kaleng_kembali.getText().toString()), txt_keterangan.getText().toString());
+                                    dialog_berhenti.dismiss();
+                                }
+                            })
+                            .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
                 }
                 else{
                     Toast.makeText(context, "Jumlah kaleng kembali tidak boleh kosong", Toast.LENGTH_SHORT).show();

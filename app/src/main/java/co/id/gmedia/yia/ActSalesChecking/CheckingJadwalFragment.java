@@ -2,8 +2,10 @@ package co.id.gmedia.yia.ActSalesChecking;
 
 
 import android.app.Activity;
+import android.location.Location;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -31,6 +34,7 @@ import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
+import co.id.gmedia.yia.Utils.GoogleLocationManager;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
@@ -47,6 +51,12 @@ public class CheckingJadwalFragment extends Fragment {
     private DialogBox dialogBox;
 
     private TextView txt_tanggal;
+    private RecyclerView rv_jadwal;
+    private View root;
+    private ImageView ivSort;
+    private GoogleLocationManager locationManager;
+    private boolean isLocationReloaded;
+    private double lat = 0, lng = 0;
 
     public CheckingJadwalFragment() {
         // Required empty public constructor
@@ -57,11 +67,20 @@ public class CheckingJadwalFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         activity = getActivity();
-        View v = inflater.inflate(R.layout.fragment_checking_jadwal, container, false);
+        root = inflater.inflate(R.layout.fragment_checking_jadwal, container, false);
 
-        txt_tanggal = v.findViewById(R.id.txt_tanggal);
+        initUI();
 
-        RecyclerView rv_jadwal = v.findViewById(R.id.rv_jadwal);
+        return root;
+    }
+
+    private void initUI() {
+
+        txt_tanggal = (TextView) root.findViewById(R.id.txt_tanggal);
+        ivSort = (ImageView) root.findViewById(R.id.iv_sort);
+        isLocationReloaded = false;
+
+        rv_jadwal = (RecyclerView) root.findViewById(R.id.rv_jadwal);
         rv_jadwal.setItemAnimator(new DefaultItemAnimator());
         rv_jadwal.setLayoutManager(new LinearLayoutManager(activity));
         adapter = new JadwalKunjunganAdapter(activity, listDonatur);
@@ -70,13 +89,37 @@ public class CheckingJadwalFragment extends Fragment {
         session = new SessionManager(activity);
         dialogBox = new DialogBox(activity);
 
-        return v;
+        locationManager = new GoogleLocationManager((AppCompatActivity) activity, new GoogleLocationManager.LocationUpdateListener() {
+            @Override
+            public void onChange(Location location) {
+
+                if(isLocationReloaded){
+
+                    isLocationReloaded = false;
+                    lat = location.getLatitude();
+                    lng = location.getLongitude();
+                    loadJadwal(true);
+                }
+
+            }
+        });
+
+        locationManager.startLocationUpdates();
+
+        ivSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isLocationReloaded = true;
+                retryLocation();
+            }
+        });
     }
 
     @Override
     public void onResume() {
         loadData();
-        loadJadwal();
+        loadJadwal(false);
 
         super.onResume();
     }
@@ -85,14 +128,19 @@ public class CheckingJadwalFragment extends Fragment {
         txt_tanggal.setText(Converter.getDateString(new Date()));
     }
 
-    private void loadJadwal(){
+    private void loadJadwal(final boolean withLocation){
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
         //body.add("tgl_awal", Converter.DToString(new Date()));
         //body.add("tgl_akhir", Converter.DToString(new Date()));
-        body.add("keywoard", "");
+        body.add("keyword", "");
         body.add("status", "1");
+        if(withLocation){
+
+            body.add("lat", lat);
+            body.add("long", lng);
+        }
 
         new ApiVolley(activity, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
@@ -110,7 +158,7 @@ public class CheckingJadwalFragment extends Fragment {
                                     listUrlFoto.add(arrayFoto.getJSONObject(j).getString("image"));
                                 }
 
-                                listDonatur.add(new DonaturModel(
+                                DonaturModel donat = new DonaturModel(
                                         donatur.getString("id")
                                         ,donatur.getString("id_donatur")
                                         ,donatur.getString("nama")
@@ -120,7 +168,10 @@ public class CheckingJadwalFragment extends Fragment {
                                         ,donatur.getString("lat")
                                         ,donatur.getString("long")
                                         ,donatur.getInt("status") == 0
-                                        , listUrlFoto));
+                                        , listUrlFoto);
+
+                                donat.setKeterangan(donatur.getString("note"));
+                                listDonatur.add(donat);
                             }
 
                             //Update teks jumlah di Activity
@@ -136,7 +187,7 @@ public class CheckingJadwalFragment extends Fragment {
                                 @Override
                                 public void onClick(View view) {
                                     dialogBox.dismissDialog();
-                                    loadJadwal();
+                                    loadJadwal(withLocation);
                                 }
                             };
 
@@ -160,17 +211,25 @@ public class CheckingJadwalFragment extends Fragment {
 
                     @Override
                     public void onFail(String message) {
+
+                        listDonatur.clear();
+                        adapter.notifyDataSetChanged();
+
                         dialogBox.dismissDialog();
                         View.OnClickListener clickListener = new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 dialogBox.dismissDialog();
-                                loadJadwal();
+                                loadJadwal(withLocation);
                             }
                         };
 
                         dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
                     }
                 }));
+    }
+
+    public void retryLocation(){
+        locationManager.startLocationUpdates();
     }
 }

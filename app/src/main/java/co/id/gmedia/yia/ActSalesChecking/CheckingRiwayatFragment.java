@@ -60,6 +60,7 @@ public class CheckingRiwayatFragment extends Fragment {
     private EditText edtSearch;
     private String dateFrom = "", dateTo = "";
     private Button btnProcess;
+    private TextView tvDonasiYa, tvDonasiTidak;
 
     public CheckingRiwayatFragment() {
         // Required empty public constructor
@@ -80,6 +81,8 @@ public class CheckingRiwayatFragment extends Fragment {
         tvDate2 = (TextView) v.findViewById(R.id.tv_date2);
         edtSearch = (EditText) v.findViewById(R.id.edt_search);
         btnProcess = (Button) v.findViewById(R.id.btn_proses);
+        tvDonasiYa = (TextView) v.findViewById(R.id.tv_donasi_ya);
+        tvDonasiTidak = (TextView) v.findViewById(R.id.tv_donasi_tidak);
 
         rv_history.setItemAnimator(new DefaultItemAnimator());
         rv_history.setLayoutManager(new LinearLayoutManager(activity));
@@ -191,8 +194,11 @@ public class CheckingRiwayatFragment extends Fragment {
         body.add("id_sales", session.getId());
         body.add("tgl_awal", iv.ChangeFormatDateString(dateFrom, FormatItem.formatDateDisplay, FormatItem.formatDate));
         body.add("tgl_akhir", iv.ChangeFormatDateString(dateTo, FormatItem.formatDateDisplay, FormatItem.formatDate));
-        body.add("keywoard", edtSearch.getText().toString());
+        body.add("keyword", edtSearch.getText().toString());
         body.add("status", "0");
+
+        tvDonasiYa.setText("0");
+        tvDonasiTidak.setText("0");
 
         new ApiVolley(activity, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
@@ -201,27 +207,37 @@ public class CheckingRiwayatFragment extends Fragment {
                         dialogBox.dismissDialog();
                         try{
                             listDonatur.clear();
+                            int totalYa = 0, totalTidak = 0;
                             JSONArray object = new JSONArray(response);
                             for(int i = 0; i < object.length(); i++){
                                 JSONObject donatur = object.getJSONObject(i);
                                 listDonatur.add(new SurveyRiwayatModel(new DonaturModel(
                                         donatur.getString("id")
                                         ,donatur.getString("id_donatur")
-                                        ,donatur.getString("nama"),
-                                        donatur.getString("alamat")
+                                        ,donatur.getString("nama")
+                                        ,donatur.getString("alamat")
                                         ,donatur.getString("kontak")
                                         ,donatur.getInt("status") == 0)
-                                        ,""
+                                        ,donatur.getString("tgl")
                                         ,"",
                                         new Date(),
                                         "",
                                         donatur.getString("status_donasi")));
+
+                                if (donatur.getString("status_donasi").toUpperCase().equals("YA")) {
+                                    totalYa++;
+                                } else {
+                                    totalTidak++;
+                                }
                             }
 
                             //Update teks jumlah di Activity
                             if(activity instanceof SalesCheckingActivity){
                                 ((SalesCheckingActivity)activity).updateJumlahRiwayat(object.length());
                             }
+
+                            tvDonasiYa.setText(iv.ChangeToCurrencyFormat(totalYa));
+                            tvDonasiTidak.setText(iv.ChangeToCurrencyFormat(totalTidak));
                         }
                         catch (JSONException e){
                             Log.e("json_log", e.getMessage());
@@ -242,15 +258,15 @@ public class CheckingRiwayatFragment extends Fragment {
 
                     @Override
                     public void onEmpty(String message) {
+
                         dialogBox.dismissDialog();
                         listDonatur.clear();
+                        adapter.notifyDataSetChanged();
 
                         //Update teks jumlah di Activity
                         if(activity instanceof SalesCheckingActivity){
                             ((SalesCheckingActivity)activity).updateJumlahRiwayat(0);
                         }
-
-                        adapter.notifyDataSetChanged();
                     }
 
                     @Override

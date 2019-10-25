@@ -59,6 +59,8 @@ public class SalesSosialRiwayatFragment extends Fragment {
     private ListRiwayatSSAdapter adapter;
     private List<CustomModel> listData = new ArrayList<>();
     private EditText edtSearch;
+    private TextView tvDonasiYa, tvDonasiTidak;
+    private ItemValidation iv = new ItemValidation();
 
     public SalesSosialRiwayatFragment() {
         // Required empty public constructor
@@ -90,6 +92,8 @@ public class SalesSosialRiwayatFragment extends Fragment {
         tvDate2 = (TextView) root.findViewById(R.id.tv_date2);
         edtSearch = (EditText) root.findViewById(R.id.edt_search);
         lvRiwayat = (ListView) root.findViewById(R.id.lv_riwayat);
+        tvDonasiYa = (TextView) root.findViewById(R.id.tv_donasi_ya);
+        tvDonasiTidak = (TextView) root.findViewById(R.id.tv_donasi_tidak);
 
         adapter = new ListRiwayatSSAdapter((Activity) context, listData);
         lvRiwayat.setAdapter(adapter);
@@ -148,11 +152,16 @@ public class SalesSosialRiwayatFragment extends Fragment {
         body.add("keyword", edtSearch.getText().toString());
         body.add("status", "0");
 
+        tvDonasiYa.setText("0");
+        tvDonasiTidak.setText("0");
+
         new ApiVolley(context, body.create(), "POST", ServerURL.getRencanaKerjaSosial,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
                     @Override
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
+
+                        int totalYa = 0, totalTidak = 0;
                         try{
                             listData.clear();
                             JSONArray obj = new JSONArray(response);
@@ -163,12 +172,19 @@ public class SalesSosialRiwayatFragment extends Fragment {
                                         ,jadwal.getString("nama")
                                         ,jadwal.getString("alamat")
                                         ,jadwal.getString("kontak")
-                                        ,"tanggal"
+                                        ,jadwal.getString("tgl")
                                         ,jadwal.getString("status").equals("0")?"1":"0"
                                         ,jadwal.getString("ket_status")
                                         ,jadwal.getString("status_donasi")
+                                        ,jadwal.getString("note")
                                         )
                                 );
+
+                                if (jadwal.getString("status_donasi").toUpperCase().equals("YA")){
+                                    totalYa++;
+                                } else {
+                                    totalTidak++;
+                                }
                             }
 
                             //Update teks jumlah di Activity
@@ -177,6 +193,9 @@ public class SalesSosialRiwayatFragment extends Fragment {
                             }
 
                             adapter.notifyDataSetChanged();
+
+                            tvDonasiYa.setText(iv.ChangeToCurrencyFormat(totalYa));
+                            tvDonasiTidak.setText(iv.ChangeToCurrencyFormat(totalTidak));
                         }
                         catch (JSONException e){
                             dialogBox.dismissDialog();
@@ -196,6 +215,7 @@ public class SalesSosialRiwayatFragment extends Fragment {
 
                     @Override
                     public void onEmpty(String message) {
+
                         listData.clear();
                         adapter.notifyDataSetChanged();
 

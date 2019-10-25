@@ -80,7 +80,7 @@ public class DetailSetoranActivity extends AppCompatActivity {
         JSONObject jBody = new JSONObject();
         try {
             jBody.put("id_sales", session.getId());
-            jBody.put("tgl", iv.ChangeFormatDateString(tgl, FormatItem.formatDateDisplay, FormatItem.formatDate));
+            jBody.put("tgl", tgl);
             jBody.put("filter", filter);
         } catch (JSONException e) {
             e.printStackTrace();

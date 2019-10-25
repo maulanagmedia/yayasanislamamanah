@@ -24,6 +24,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,7 +61,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
 
     private TextView tv_latitude, tv_longitude;
     private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng;
-    private RadioButton rb_donasi_ya, rb_kaleng_ya;
+    private RadioButton rb_donasi_ya, rb_kaleng_ya, rb_kaleng_tidak;
 
     private SessionManager sessionManager;
     private DialogBox dialogBox;
@@ -84,6 +85,11 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
     private List<PhotoModel> listPhotoDetail = new ArrayList<>();
     private ListPhotoAdapter adapterPhoto;
     private ListPhotoAdapter adapterPhotoDetail;
+    private EditText edtKeterangan;
+    private RadioGroup rgDonasi;
+    private LinearLayout llKaleng;
+    private RadioGroup rgKaleng;
+    private LinearLayout llIsiKaleng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +130,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         edt_alamat.setText(donatur.getAlamat());
         edt_kontak.setText(donatur.getKontak());
         txt_jumlah_kaleng.setText(donatur.getKaleng());
+        edtKeterangan.setText(donatur.getKeterangan());
 
         for(String url : donatur.getListUrlPhoto()){
             listPhotoDetail.add(new PhotoModel("", url));
@@ -138,11 +145,17 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         edt_alamat = findViewById(R.id.edt_alamat);
         edt_kontak = findViewById(R.id.edt_kontak);
         rb_kaleng_ya = findViewById(R.id.rb_kaleng_ya);
+        rb_kaleng_tidak = findViewById(R.id.rb_kaleng_tidak);
         rb_donasi_ya = findViewById(R.id.rb_donasi_ya);
         tv_latitude = findViewById(R.id.tv_latitude);
         tv_longitude = findViewById(R.id.tv_longitude);
         txt_jumlah_kaleng = findViewById(R.id.txt_jumlah_kaleng);
         llBukaMap = (LinearLayout) findViewById(R.id.ll_buka_map);
+        rgDonasi = (RadioGroup) findViewById(R.id.rg_donasi);
+        llKaleng = (LinearLayout) findViewById(R.id.ll_kaleng);
+        rgKaleng = (RadioGroup) findViewById(R.id.rg_kaleng);
+        llIsiKaleng = (LinearLayout) findViewById(R.id.layout_kaleng);
+        edtKeterangan = (EditText) findViewById(R.id.edt_keterangan);
 
         rlPhoto = (RelativeLayout) findViewById(R.id.rl_photo);
         rvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
@@ -162,11 +175,26 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         rb_kaleng_ya.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 if(isChecked){
                     findViewById(R.id.layout_kaleng).setVisibility(View.VISIBLE);
                 }
                 else{
                     findViewById(R.id.layout_kaleng).setVisibility(View.GONE);
+                }
+            }
+        });
+
+        rgDonasi.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if(checkedId == rb_donasi_ya.getId()){
+
+                    llKaleng.setVisibility(View.VISIBLE);
+                }else{
+
+                    llKaleng.setVisibility(View.GONE);
                 }
             }
         });
@@ -232,6 +260,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
     }
 
     private void simpanSurvey(){
+
         dialogBox.showDialog(false);
 
         JSONArray jFoto = new JSONArray();
@@ -246,6 +275,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         body.add("nama", edt_nama.getText().toString());
         body.add("alamat", edt_alamat.getText().toString());
         body.add("kontak", edt_kontak.getText().toString());
+        body.add("note", edtKeterangan.getText().toString());
         body.add("id_sales", sessionManager.getId());
         body.add("id_donatur", donatur.getId_donatur());
         body.add("status_donasi", rb_donasi_ya.isChecked() ? 1 : 2);

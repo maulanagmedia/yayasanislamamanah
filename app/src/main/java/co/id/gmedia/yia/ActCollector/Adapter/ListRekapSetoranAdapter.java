@@ -29,7 +29,7 @@ public class ListRekapSetoranAdapter extends ArrayAdapter {
     }
 
     private static class ViewHolder {
-        private TextView tvItem1, tvItem2, tvItem3, tvItem4, tvItem5, tvItem6, tvItem7, tvBtn1, tvBtn2, tvBtn3;
+        private TextView tvItem1, tvItem2, tvItem3, tvItem4, tvItem5, tvItem6, tvItem7, tvBtn1, tvBtn2, tvBtn3, tvTotalDonatur;
     }
 
     @Override
@@ -55,6 +55,7 @@ public class ListRekapSetoranAdapter extends ArrayAdapter {
             holder.tvItem5 = convertView.findViewById(R.id.tv_item5);
             holder.tvItem6 = convertView.findViewById(R.id.tv_item6);
             holder.tvItem7 = convertView.findViewById(R.id.tv_item7);
+            holder.tvTotalDonatur = convertView.findViewById(R.id.tv_total_donatur);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -71,6 +72,7 @@ public class ListRekapSetoranAdapter extends ArrayAdapter {
         holder.tvItem5.setText(iv.ChangeToCurrencyFormat(item.getItem5()));
         holder.tvItem6.setText(iv.ChangeToCurrencyFormat(item.getItem6()));
         holder.tvItem7.setText(iv.ChangeToCurrencyFormat(item.getItem7()));
+        holder.tvTotalDonatur.setText(iv.ChangeToCurrencyFormat(iv.parseNullDouble(item.getItem3()) + iv.parseNullDouble(item.getItem5())));
 
         holder.tvBtn1.setOnClickListener(new View.OnClickListener() {
             @Override

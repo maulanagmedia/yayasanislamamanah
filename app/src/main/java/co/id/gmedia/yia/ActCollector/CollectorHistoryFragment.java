@@ -62,6 +62,7 @@ public class CollectorHistoryFragment extends Fragment {
     private String dateFrom = "", dateTo = "";
     private ItemValidation iv = new ItemValidation();
     private CheckBox cbDD, cbDL;
+    private TextView tvDonasiYa, tvDonasiTidak;
 
     public CollectorHistoryFragment() {
         // Required empty public constructor
@@ -82,6 +83,8 @@ public class CollectorHistoryFragment extends Fragment {
         btnProcess = (Button) v.findViewById(R.id.btn_proses);
         cbDD = (CheckBox) v.findViewById(R.id.cb_dd);
         cbDL = (CheckBox) v.findViewById(R.id.cb_dl);
+        tvDonasiYa = (TextView) v.findViewById(R.id.tv_donasi_ya);
+        tvDonasiTidak = (TextView) v.findViewById(R.id.tv_donasi_tidak);
 
         rv_history.setItemAnimator(new DefaultItemAnimator());
         rv_history.setLayoutManager(new LinearLayoutManager(activity));
@@ -182,6 +185,7 @@ public class CollectorHistoryFragment extends Fragment {
     }
 
     private void loadHistory(){
+
         dialogBox.showDialog(false);
 
         JSONBuilder body = new JSONBuilder();
@@ -213,6 +217,7 @@ public class CollectorHistoryFragment extends Fragment {
 
                                 dn.setNominal(donatur.getString("nominal"));
                                 dn.setJenisDonatur(donatur.getString("ket_status_data"));
+                                dn.setTanggal(donatur.getString("tgl_insert"));
                                 listDonatur.add(dn);
                             }
 
@@ -235,11 +240,15 @@ public class CollectorHistoryFragment extends Fragment {
 
                     @Override
                     public void onEmpty(String message) {
+                        listDonatur.clear();
+                        adapter.notifyDataSetChanged();
                         dialogBox.dismissDialog();
                     }
 
                     @Override
                     public void onFail(String message) {
+                        listDonatur.clear();
+                        adapter.notifyDataSetChanged();
                         dialogBox.dismissDialog();
                         View.OnClickListener clickListener = new View.OnClickListener() {
                             @Override

@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +23,7 @@ import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActCollector.CollectorActivity;
 import co.id.gmedia.yia.ActSalesChecking.SalesCheckingActivity;
+import co.id.gmedia.yia.NotificationUtils.InitFirebaseSetting;
 import co.id.gmedia.yia.Utils.ServerURL;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private ItemValidation iv = new ItemValidation();
     private DialogBox dialogBox;
     private SessionManager session;
+    private String refreshToken = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,10 @@ public class LoginActivity extends AppCompatActivity {
         session = new SessionManager(context);
 
         dialogBox = new DialogBox(context);
+
+        InitFirebaseSetting.getFirebaseSetting(LoginActivity.this);
+
+        refreshToken = FirebaseInstanceId.getInstance().getToken();
     }
 
     private void initEvent() {
@@ -105,14 +113,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void doLogin(){
 
-        /*session.createLoginSession(edtUsername.getText().toString()
-                , "100"
-                , "Maul Kalem"
-                , "2"
-                , "Brosur"
-        );
-
-        redirectToLogin();*/
         dialogBox.showDialog(false);
         JSONObject jBody = new JSONObject();
         try {
@@ -183,6 +183,67 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void updateFCM(final Intent intent){
+
+        dialogBox.showDialog(false);
+        JSONObject jBody = new JSONObject();
+        try {
+            jBody.put("id", session.getId());
+            jBody.put("fcm_id", refreshToken);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new ApiVolley(context, jBody, "POST", ServerURL.updateFCM, new ApiVolley.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+                dialogBox.dismissDialog();
+                try {
+                    JSONObject response = new JSONObject(result);
+                    String status = response.getJSONObject("metadata").getString("status");
+                    String message = response.getJSONObject("metadata").getString("message");
+
+                    //Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    if(iv.parseNullInteger(status) == 200){
+
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    View.OnClickListener clickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            dialogBox.dismissDialog();
+                            updateFCM(intent);
+
+                        }
+                    };
+
+                    dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                }
+            }
+
+            @Override
+            public void onError(String result) {
+                dialogBox.dismissDialog();
+                View.OnClickListener clickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialogBox.dismissDialog();
+                        updateFCM(intent);
+
+                    }
+                };
+
+                dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+            }
+        });
+    }
+
     private void redirectToLogin(){
 
         Intent intent;
@@ -205,9 +266,7 @@ public class LoginActivity extends AppCompatActivity {
                 break;
         }
 
-        startActivity(intent);
-        finish();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        updateFCM(intent);
     }
 
     private void initData() {

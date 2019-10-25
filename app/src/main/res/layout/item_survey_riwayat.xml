@@ -12,20 +12,18 @@
         android:padding="@dimen/dp20">
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/txt_tanggal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:textColor="@color/color_black"
-            android:textSize="14sp"
+            android:textColor="@color/colorBlue2"
+            android:textSize="@dimen/text_small"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp15"
             android:text="Donatur"
             android:textColor="@color/color_black"
             android:textSize="16sp"

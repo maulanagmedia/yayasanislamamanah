@@ -133,13 +133,29 @@
             android:layout_below="@id/ll_header"
             android:layout_margin="@dimen/padding_default">
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/text_20"
-                android:textStyle="bold"
-                android:text="Jadwal Kunjungan"/>
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:id="@+id/iv_sort"
+                    android:layout_margin="@dimen/padding_default"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/ic_sort_loc"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_20"
+                    android:textStyle="bold"
+                    android:layout_toLeftOf="@id/iv_sort"
+                    android:text="Jadwal Kunjungan"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"

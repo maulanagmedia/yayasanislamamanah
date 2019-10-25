@@ -74,6 +74,7 @@ public class CollectorTambahDonaturFragment extends Fragment {
 
     private GoogleLocationManager locationManager;
     private double lat = 0, lng = 0;
+    private EditText edtKetarangan;
 
     public CollectorTambahDonaturFragment() {
         // Required empty public constructor
@@ -92,6 +93,7 @@ public class CollectorTambahDonaturFragment extends Fragment {
         txt_kota = v.findViewById(R.id.txt_kota);
         txt_kecamatan = v.findViewById(R.id.txt_kecamatan);
         txt_kelurahan = v.findViewById(R.id.txt_kelurahan);
+        edtKetarangan = (EditText) v.findViewById(R.id.edt_keterangan);
 
         RecyclerView rv_foto = v.findViewById(R.id.rv_foto);
         rv_foto.setItemAnimator(new DefaultItemAnimator());
@@ -187,11 +189,13 @@ public class CollectorTambahDonaturFragment extends Fragment {
     }
 
     private void tambahDonatur(){
+
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("nama", txt_nama.getText().toString());
         body.add("alamat", txt_alamat.getText().toString());
         body.add("kontak", txt_kontak.getText().toString());
+        body.add("keterangan", edtKetarangan.getText().toString());
         body.add("lat", lat);
         body.add("long", lng);
         body.add("kota", selectedKota);
@@ -216,9 +220,10 @@ public class CollectorTambahDonaturFragment extends Fragment {
                 (new AppRequestCallback.ResponseListener() {
             @Override
             public void onSuccess(String response, String message) {
+
                 dialogBox.dismissDialog();
                 if(activity instanceof CollectorActivity){
-                    ((CollectorActivity)activity).loadFragment(new CollectorTambahDonaturFragment());
+                    ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
                 }
                 Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
             }

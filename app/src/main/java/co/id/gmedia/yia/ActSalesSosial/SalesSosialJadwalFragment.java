@@ -2,14 +2,17 @@ package co.id.gmedia.yia.ActSalesSosial;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +37,7 @@ import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
 import co.id.gmedia.yia.Utils.DateTimeChooser;
+import co.id.gmedia.yia.Utils.GoogleLocationManager;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
@@ -41,6 +45,7 @@ public class SalesSosialJadwalFragment extends Fragment {
 
     private View root;
     private Context context;
+    private Activity activity;
     private DialogBox dialogBox;
     private List<CustomModel> listData = new ArrayList<>();
     private ListJadwalSSAdapter adapter;
@@ -53,6 +58,10 @@ public class SalesSosialJadwalFragment extends Fragment {
     private SessionManager session;
     private String dateFrom = Converter.DToString(new Date());
     private String dateTo = Converter.DToString(new Date());
+    private ImageView ivSort;
+    private GoogleLocationManager locationManager;
+    private boolean isLocationReloaded;
+    private double lat = 0, lng = 0;
 
     public SalesSosialJadwalFragment() {
         // Required empty public constructor
@@ -69,8 +78,10 @@ public class SalesSosialJadwalFragment extends Fragment {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_sales_sosial_jadwal, container, false);
         context = root.getContext();
+        activity = getActivity();
         session = new SessionManager(context);
         initUI();
+        initEvent();
 
         return root;
     }
@@ -84,6 +95,13 @@ public class SalesSosialJadwalFragment extends Fragment {
         tvDate1 = (TextView) root.findViewById(R.id.tv_date1);
         tvDate2 = (TextView) root.findViewById(R.id.tv_date2);
         edtSearch = (EditText) root.findViewById(R.id.edt_search);
+        ivSort = (ImageView) root.findViewById(R.id.iv_sort);
+
+        isLocationReloaded = false;
+
+    }
+
+    private void initEvent() {
 
         rlDate1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +132,7 @@ public class SalesSosialJadwalFragment extends Fragment {
         root.findViewById(R.id.btn_proses).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initData();
+                initData(false);
             }
         });
 
@@ -128,25 +146,42 @@ public class SalesSosialJadwalFragment extends Fragment {
         adapter = new ListJadwalSSAdapter((Activity) context, listData);
         lvJadwal.setAdapter(adapter);
 
-        /*listData.add(new CustomModel("1", "Rokhim", "Jl. Mataram", "080989999", "2019-09-20 10:10:10", "1"));
-        listData.add(new CustomModel("2", "Victor", "Jl. Pandanaran", "080989999", "2019-09-20 10:10:10", "1"));
-        listData.add(new CustomModel("3", "Maul", "Jl. Pamularsih", "", "2019-09-20 10:10:10", "1"));
-        listData.add(new CustomModel("4", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10", "1"));
-        listData.add(new CustomModel("5", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10", "0"));
-        listData.add(new CustomModel("6", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10", "0"));
-        listData.add(new CustomModel("7", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10", "0"));
-        listData.add(new CustomModel("8", "Bayu", "Jl. Singosari", "", "2019-09-20 10:10:10", "0"));*/
-
         adapter.notifyDataSetChanged();
+
+        locationManager = new GoogleLocationManager((AppCompatActivity) activity, new GoogleLocationManager.LocationUpdateListener() {
+            @Override
+            public void onChange(Location location) {
+
+                if(isLocationReloaded){
+
+                    isLocationReloaded = false;
+                    lat = location.getLatitude();
+                    lng = location.getLongitude();
+                    initData(true);
+                }
+
+            }
+        });
+
+        locationManager.startLocationUpdates();
+
+        ivSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isLocationReloaded = true;
+                retryLocation();
+            }
+        });
     }
 
     @Override
     public void onResume() {
-        initData();
+        initData(false);
         super.onResume();
     }
 
-    private void initData() {
+    private void initData(final boolean withLocation) {
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
@@ -154,6 +189,12 @@ public class SalesSosialJadwalFragment extends Fragment {
         //body.add("tgl_akhir", dateTo);
         body.add("keyword", edtSearch.getText().toString());
         body.add("status", "1");
+
+        if(withLocation){
+
+            body.add("lat", lat);
+            body.add("long", lng);
+        }
 
         new ApiVolley(context, body.create(), "POST", ServerURL.getRencanaKerjaSosial,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
@@ -175,6 +216,7 @@ public class SalesSosialJadwalFragment extends Fragment {
                                         ,jadwal.getString("lat")
                                         ,jadwal.getString("long")
                                         ,jadwal.getString("image")
+                                        ,jadwal.getString("note")
                                 ));
                             }
 
@@ -192,7 +234,7 @@ public class SalesSosialJadwalFragment extends Fragment {
                                 public void onClick(View view) {
 
                                     dialogBox.dismissDialog();
-                                    initData();
+                                    initData(withLocation);
 
                                 }
                             };
@@ -203,6 +245,7 @@ public class SalesSosialJadwalFragment extends Fragment {
 
                     @Override
                     public void onEmpty(String message) {
+
                         listData.clear();
                         adapter.notifyDataSetChanged();
 
@@ -216,13 +259,17 @@ public class SalesSosialJadwalFragment extends Fragment {
 
                     @Override
                     public void onFail(String message) {
+
+                        listData.clear();
+                        adapter.notifyDataSetChanged();
+
                         dialogBox.dismissDialog();
                         View.OnClickListener clickListener = new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
                                 dialogBox.dismissDialog();
-                                initData();
+                                initData(withLocation);
 
                             }
                         };
@@ -230,5 +277,9 @@ public class SalesSosialJadwalFragment extends Fragment {
                         dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
                     }
                 }));
+    }
+
+    public void retryLocation(){
+        locationManager.startLocationUpdates();
     }
 }

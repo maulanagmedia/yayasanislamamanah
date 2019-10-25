@@ -1,6 +1,8 @@
 package co.id.gmedia.yia.ActCollector.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -76,8 +78,26 @@ public class FotoAdapter extends RecyclerView.Adapter
                 img_close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        listGambar.remove(getAdapterPosition());
-                        FotoAdapter.this.notifyItemRemoved(getAdapterPosition());
+
+                        AlertDialog dialogHapus = new AlertDialog.Builder(context)
+                                .setTitle("Konfirmasi")
+                                .setMessage("Apakah anda yakin ingin menghapus foto?")
+                                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        listGambar.remove(getAdapterPosition());
+                                        FotoAdapter.this.notifyItemRemoved(getAdapterPosition());
+                                    }
+                                })
+                                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .show();
+
                     }
                 });
             }

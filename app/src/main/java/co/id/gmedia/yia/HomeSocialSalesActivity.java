@@ -1,5 +1,6 @@
 package co.id.gmedia.yia;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,22 +24,27 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fxn.pix.Pix;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 
 import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
+import co.id.gmedia.yia.ActSalesSosial.DonaturLSosialFragment;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialJadwalFragment;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialRiwayatFragment;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
+import co.id.gmedia.yia.Utils.GoogleLocationManager;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 import co.id.gmedia.yia.Utils.TopCropCircularImageView;
@@ -47,11 +54,12 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private LinearLayout llInfo, llRiwayat;
     private Context context;
-    private TextView tvjadwalKunjungan, tvRiwayat, tvTitle1, tvTitle2;
-    private View vInfo, vRiwayat;
+    private TextView tvjadwalKunjungan, tvRiwayat, tvDonatur, tvTitle1, tvTitle2, tvTitle3;
+    private View vInfo, vRiwayat, vDonatur;
     private TopCropCircularImageView img_foto;
     private TextView tvAdmin;
     private SessionManager session;
+    private LinearLayout llDonatur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,12 +143,16 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
 
         llInfo = (LinearLayout) findViewById(R.id.ll_info);
         llRiwayat = (LinearLayout) findViewById(R.id.ll_riwayat);
+        llDonatur = (LinearLayout) findViewById(R.id.ll_donatur);
         tvjadwalKunjungan = (TextView) findViewById(R.id.tv_jadwal_kunjungan);
         tvRiwayat = (TextView) findViewById(R.id.tv_riwayat);
-        tvTitle1 = findViewById(R.id.tv_title1);
+        tvDonatur= (TextView) findViewById(R.id.tv_donatur);
+        tvTitle1 = (TextView) findViewById(R.id.tv_title1);
         tvTitle2 = (TextView) findViewById(R.id.tv_title2);
+        tvTitle3 = (TextView) findViewById(R.id.tv_title3);
         vInfo = (View) findViewById(R.id.v_info);
         vRiwayat = (View) findViewById(R.id.v_riwayat);
+        vDonatur = (View) findViewById(R.id.v_donatur);
         tvAdmin = (TextView) findViewById(R.id.tv_admin);
         img_foto = findViewById(R.id.img_foto);
 
@@ -167,9 +179,17 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
             }
         });
 
+        llDonatur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                changeState(3);
+            }
+        });
+
     }
 
-    private void changeState(int state){
+    public void changeState(int state){
 
         if(state == 1){
 
@@ -179,8 +199,10 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
             //UI
             tvjadwalKunjungan.setTextColor(getResources().getColor(R.color.colorTitle));
             tvRiwayat.setTextColor(getResources().getColor(R.color.colorWhite));
+            tvDonatur.setTextColor(getResources().getColor(R.color.colorWhite));
             vInfo.setVisibility(View.VISIBLE);
             vRiwayat.setVisibility(View.GONE);
+            vDonatur.setVisibility(View.GONE);
         }else if (state == 2){
 
             fragment = new SalesSosialRiwayatFragment();
@@ -189,8 +211,22 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
             //UI
             tvjadwalKunjungan.setTextColor(getResources().getColor(R.color.colorWhite));
             tvRiwayat.setTextColor(getResources().getColor(R.color.colorTitle));
+            tvDonatur.setTextColor(getResources().getColor(R.color.colorWhite));
             vInfo.setVisibility(View.GONE);
             vRiwayat.setVisibility(View.VISIBLE);
+            vDonatur.setVisibility(View.GONE);
+        }else if (state == 3){
+
+            fragment = new DonaturLSosialFragment();
+            callFragment(context, fragment);
+
+            //UI
+            tvjadwalKunjungan.setTextColor(getResources().getColor(R.color.colorWhite));
+            tvRiwayat.setTextColor(getResources().getColor(R.color.colorWhite));
+            tvDonatur.setTextColor(getResources().getColor(R.color.colorTitle));
+            vInfo.setVisibility(View.GONE);
+            vRiwayat.setVisibility(View.GONE);
+            vDonatur.setVisibility(View.VISIBLE);
         }
     }
 
@@ -213,6 +249,32 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
                 .replace(R.id.fl_container, fragment, fragment.getClass().getSimpleName())
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == ServerURL.PIX_REQUEST_CODE) {
+            if(data != null){
+                if(fragment instanceof DonaturLSosialFragment){
+                    ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
+                    ArrayList<String> listGambar = new ArrayList<>();
+                    for(String s : returnValue){
+                        listGambar.add(Uri.fromFile(new File(s)).getPath());
+                    }
+                    ((DonaturLSosialFragment)fragment).updateGambar(listGambar);
+                }
+            }
+        }
+        else if(requestCode == GoogleLocationManager.ACTIVATE_LOCATION){
+            if(fragment instanceof DonaturLSosialFragment){
+
+                ((DonaturLSosialFragment)fragment).retryLocation();
+            }else if (fragment instanceof SalesSosialJadwalFragment){
+
+                ((SalesSosialJadwalFragment)fragment).retryLocation();
+            }
+        }
     }
 
     @Override

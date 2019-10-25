@@ -28,6 +28,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +75,9 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
     private double lat = 0, lng = 0;
     private LinearLayout llBukaMap;
     private Context context;
+    private EditText edtKeterangan;
+    private RadioGroup rgDonasi;
+    private LinearLayout llKaleng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,9 +115,11 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
     }
 
     private void initDonatur(){
+
         edt_nama.setText(donatur.getItem2());
         edt_alamat.setText(donatur.getItem3());
         edt_kontak.setText(donatur.getItem4());
+        edtKeterangan.setText(donatur.getItem10());
 
         try{
             JSONArray array_gambar = new JSONArray(donatur.getItem9());
@@ -134,10 +140,13 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
         edt_kontak = findViewById(R.id.edt_kontak);
         rb_kaleng_ya = findViewById(R.id.rb_kaleng_ya);
         rb_donasi_ya = findViewById(R.id.rb_donasi_ya);
+        rgDonasi = (RadioGroup) findViewById(R.id.rg_donasi);
+        llKaleng = (LinearLayout) findViewById(R.id.ll_kaleng);
         tv_latitude = findViewById(R.id.tv_latitude);
         tv_longitude = findViewById(R.id.tv_longitude);
         txt_jumlah_kaleng = findViewById(R.id.txt_jumlah_kaleng);
         llBukaMap = (LinearLayout) findViewById(R.id.ll_buka_map);
+        edtKeterangan = (EditText) findViewById(R.id.edt_keterangan);
 
         rb_kaleng_ya.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -147,6 +156,20 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
                 }
                 else{
                     findViewById(R.id.layout_kaleng).setVisibility(View.GONE);
+                }
+            }
+        });
+
+        rgDonasi.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if(checkedId == rb_donasi_ya.getId()){
+
+                    llKaleng.setVisibility(View.VISIBLE);
+                }else{
+
+                    llKaleng.setVisibility(View.GONE);
                 }
             }
         });
@@ -211,7 +234,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
 
                         AlertDialog dialog = new AlertDialog.Builder(context)
                                 .setTitle("Konfirmasi")
-                                .setMessage("Apakah anda yakin ingin menyimpan dat?")
+                                .setMessage("Apakah anda yakin ingin menyimpan data?")
                                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -278,6 +301,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
         body.add("nama", edt_nama.getText().toString());
         body.add("alamat", edt_alamat.getText().toString());
         body.add("kontak", edt_kontak.getText().toString());
+        body.add("note", edtKeterangan.getText().toString());
         body.add("id_sales", sessionManager.getId());
         body.add("donasi", rb_donasi_ya.isChecked() ? 1 : 0);
         body.add("lobi_kaleng", rb_kaleng_ya.isChecked()? "ya" : "tidak");

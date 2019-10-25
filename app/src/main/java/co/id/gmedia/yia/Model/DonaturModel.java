@@ -14,7 +14,7 @@ public class DonaturModel {
     private String lognitude;
     private String rk;
     private String idKota, idKecamatan, idKelurahan, kota, kecamatan, kelurahan;
-    private String nominal, jenisDonatur;
+    private String nominal, jenisDonatur, tanggal, keterangan;
 
     private List<String> listUrlPhoto = new ArrayList<>();
     private boolean dikunjungi = false;
@@ -242,5 +242,21 @@ public class DonaturModel {
 
     public void setJenisDonatur(String jenisDonatur) {
         this.jenisDonatur = jenisDonatur;
+    }
+
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
     }
 }

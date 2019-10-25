@@ -158,6 +158,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
     private String selectedKota = "", selectedKecamatan = "", selectedKelurahan = "";
     private ImageView ivKota, ivKecamatan, ivKelurahan;
     private TextView tvKota, tvKecamatan, tvKelurahan;
+    private EditText edtKeterangan;
 
     public SalesBrosurDetailFragment() {
         // Required empty public constructor
@@ -204,6 +205,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
         spKelurahan = (Spinner) root.findViewById(R.id.sp_kelurahan);
         edtAlamat = (EditText) root.findViewById(R.id.edt_alamat);
         edtKontak = (EditText) root.findViewById(R.id.edt_kontak);
+        edtKeterangan = (EditText) root.findViewById(R.id.edt_keterangan);
         rlPhoto = (RelativeLayout) root.findViewById(R.id.rl_photo);
         rvPhoto = (RecyclerView) root.findViewById(R.id.rv_photo);
 
@@ -881,6 +883,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
             jBody.put("nama", edtNama.getText().toString());
             jBody.put("alamat", edtAlamat.getText().toString());
             jBody.put("kontak", edtKontak.getText().toString());
+            jBody.put("note", edtKeterangan.getText().toString());
             jBody.put("lat", tvLatitude.getText().toString());
             jBody.put("long", tvLongitude.getText().toString());
             jBody.put("kota", selectedKota);

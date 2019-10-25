@@ -195,7 +195,8 @@
                 android:id="@+id/txt_kontak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="phone"
+                android:imeOptions="actionNext"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:background="@drawable/bg_input"
@@ -289,6 +290,33 @@
             android:id="@+id/rv_foto"
             android:layout_width="match_parent"
             android:layout_height="@dimen/image_size"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="Keterangan"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/padding_default"
+            android:layout_marginLeft="@dimen/padding_default"
+            android:layout_marginRight="@dimen/padding_default"
+            android:textSize="@dimen/text_big" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            android:background="@drawable/bg_input"
+            android:inputType="textPersonName"
+            android:imeOptions="actionDone"
+            android:text=""
+            android:id="@+id/edt_keterangan"
+            android:textSize="@dimen/text_small"
+            android:gravity="top"
+            android:layout_marginTop="@dimen/padding_default"
+            android:layout_marginLeft="@dimen/padding_default"
+            android:layout_marginRight="@dimen/padding_default"
+            android:padding="@dimen/padding_default"/>
 
         <Button
             android:id="@+id/btn_simpan"

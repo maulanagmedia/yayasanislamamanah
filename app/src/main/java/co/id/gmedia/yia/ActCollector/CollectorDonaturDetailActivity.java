@@ -21,6 +21,7 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -77,6 +78,9 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
     private RelativeLayout rlLokasi;
     private LinearLayout llNominal;
     private boolean isEdit = false;
+    private EditText edtKeterangan;
+    private CheckBox cbCkecing;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +160,8 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         txt_jumlah_kaleng = findViewById(R.id.txt_jumlah_kaleng);
         txt_nominal = findViewById(R.id.txt_nominal);
         llBukaMap = (LinearLayout) findViewById(R.id.ll_buka_map);
+        edtKeterangan = (EditText) findViewById(R.id.edt_keterangan);
+        cbCkecing = (CheckBox) findViewById(R.id.cb_checking);
 
         rlLokasi = (RelativeLayout) findViewById(R.id.rl_lokasi);
         llNominal = (LinearLayout) findViewById(R.id.ll_nominal);
@@ -642,6 +648,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
             body.add("kota", selectedKota);
             body.add("kecamatan", selectedKecamatan);
             body.add("kelurahan", selectedKelurahan);
+            body.add("note", edtKeterangan.getText().toString());
         }else{
 
             body.add("id_sales", session.getId());
@@ -651,6 +658,8 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
             body.add("kaleng_kembali", txt_jumlah_kaleng.getText().toString());
             body.add("latitude", tv_latitude.getText().toString());
             body.add("longitude", tv_longitude.getText().toString());
+            body.add("note", edtKeterangan.getText().toString());
+            body.add("ceklist", cbCkecing.isChecked() ? "1" : "0");
         }
 
         new ApiVolley(context, body.create(), "POST", url,
