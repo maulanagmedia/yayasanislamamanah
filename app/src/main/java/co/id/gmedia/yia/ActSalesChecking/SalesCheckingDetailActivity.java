@@ -126,6 +126,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
     }
 
     private void initDonatur(){
+
         edt_nama.setText(donatur.getNama());
         edt_alamat.setText(donatur.getAlamat());
         edt_kontak.setText(donatur.getKontak());

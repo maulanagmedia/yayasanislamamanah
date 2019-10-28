@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,24 +27,17 @@ import com.fxn.pix.Pix;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 
-import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
+import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
 import co.id.gmedia.yia.ActSalesSosial.DonaturLSosialFragment;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialJadwalFragment;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialRiwayatFragment;
-import co.id.gmedia.yia.Utils.AppRequestCallback;
-import co.id.gmedia.yia.Utils.Converter;
 import co.id.gmedia.yia.Utils.GoogleLocationManager;
-import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 import co.id.gmedia.yia.Utils.TopCropCircularImageView;
 
@@ -288,19 +280,21 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.nav_akun) {
+        int id = item.getItemId();
+        if (id == R.id.option_profile) {
+
             Intent intent = new Intent(context, DetailAkunActivity.class);
             startActivity(intent);
             return true;
-        }
+        }else if(id == R.id.option_notif){
 
-        return super.onOptionsItemSelected(item);
+            Intent intent = new Intent(context, ListNotificationActivity.class);
+            startActivity(intent);
+            return true;
+        }else{
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

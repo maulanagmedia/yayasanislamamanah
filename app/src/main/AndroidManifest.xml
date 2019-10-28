@@ -11,40 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <!-- Service -->
-        <service android:name=".NotificationUtils.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_logo" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorGreen" />
-
-        <service android:name=".NotificationUtils.TokenGetter" />
-        <!-- Service -->
-
-        <activity android:name=".ActCollector.DetailSetoranActivity"></activity>
+        <activity android:name=".ActNotifikasi.DetailNotifikasiActivity"></activity>
+        <activity android:name=".ActNotifikasi.ListNotificationActivity" /> <!-- Service -->
+        <activity android:name=".ActCollector.DetailSetoranActivity" />
         <activity android:name=".ActCollector.ListRekapSetoranActivity" />
         <activity android:name=".ActCollector.CollectorDonaturDetailActivity" />
-        <activity android:name=".ActSalesChecking.SalesCheckingDetailActivity" />
+        <activity android:name=".ActSalesChecking.SalesCheckingDetailActivity" /> <!-- Service -->
         <activity
             android:name=".ActSalesBrosur.DetailCurrentPosActivity"
             android:label="@string/title_activity_detail_current_pos"
             android:screenOrientation="portrait" />
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
         <activity
             android:name=".ActSalesSosial.SalesSosialJadwalDetailActivity"
             android:screenOrientation="portrait" />
@@ -59,6 +35,14 @@
         <activity
             android:name=".ActAkun.DetailAkunActivity"
             android:screenOrientation="portrait" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
         <activity
             android:name=".ActCollector.CollectorActivity"
             android:screenOrientation="portrait"
@@ -91,16 +75,29 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_logo" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorGreen" />
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAPMiCnCbTXTDgASeh0XhJL5B1GBM1b_e0" />
+
+        <service android:name=".NotificationUtils.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".NotificationUtils.TokenGetter" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 </manifest>

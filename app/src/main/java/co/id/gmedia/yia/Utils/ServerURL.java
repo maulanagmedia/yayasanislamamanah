@@ -30,4 +30,5 @@ public class ServerURL {
     public static final String getRekapSetoranByJenis = baseURL + "Collector/Rencana_kerja/donatur_rekap_setoran/";
     public static final String updateDonatur = baseURL + "Collector/Rencana_kerja/Edit_donatur/";
     public static final String saveDataLuarSosial = baseURL + "Sales_sosial/Rencana_kerja/add_data_luar/";
+    public static final String getNotification = baseURL + "Collector/Rencana_kerja/notif_sales/";
 }

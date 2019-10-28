@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
+import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.GoogleLocationManager;
 import co.id.gmedia.yia.Utils.ServerURL;
@@ -172,13 +173,19 @@ public class CollectorActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         int id = item.getItemId();
-        if (id == R.id.nav_akun) {
-            Intent intent = new Intent(this, DetailAkunActivity.class);
+        if (id == R.id.option_profile) {
+
+            Intent intent = new Intent(context, DetailAkunActivity.class);
             startActivity(intent);
             return true;
-        }
-        else{
+        }else if(id == R.id.option_notif){
+
+            Intent intent = new Intent(context, ListNotificationActivity.class);
+            startActivity(intent);
+            return true;
+        }else{
             return super.onOptionsItemSelected(item);
         }
     }
