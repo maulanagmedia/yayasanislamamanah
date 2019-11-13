@@ -4,7 +4,8 @@ public class ServerURL {
     public static final int PIX_REQUEST_CODE = 99;
 
     //private static final String baseURL = "http://192.168.20.36/gmedia/yia/api/";
-    private static final String baseURL = "http://gmedia.bz/yia/v3/api/";
+    //private static final String baseURL = "http://gmedia.bz/yia/v3/api/";
+    private static final String baseURL = "http://yayasanislamamanah.com/beta/api/";
 
     public static final String login = baseURL + "Authentication/";
     public static final String updateFCM = baseURL + "Authentication/update_fcm";

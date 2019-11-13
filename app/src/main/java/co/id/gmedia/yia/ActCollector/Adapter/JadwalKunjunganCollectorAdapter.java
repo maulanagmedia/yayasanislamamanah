@@ -191,6 +191,7 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
 
                             Intent intent = new Intent(context, DetailCurrentPosActivity.class);
                             intent.putExtra("nama", b.getNama());
+                            intent.putExtra("alamat", b.getAlamat());
                             intent.putExtra("lat", b.getLatitude());
                             intent.putExtra("long", b.getLognitude());
                             context.startActivity(intent);

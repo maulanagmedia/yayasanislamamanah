@@ -55,7 +55,7 @@ public class ListNotifikasiAdapter extends ArrayAdapter {
         }
 
         CustomModel item = items.get(position);
-        holder.tvItem1.setText(iv.ChangeFormatDateString(item.getItem3(), FormatItem.formatTimestamp, FormatItem.formatDateTimeDisplay1));
+        holder.tvItem1.setText(iv.ChangeFormatDateString(item.getItem3(), FormatItem.formatTimestamp, FormatItem.formatDateTimeDisplay2));
         holder.tvItem2.setText(item.getItem2());
         final ViewHolder finalHolder = holder;
         holder.ivDown.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +64,7 @@ public class ListNotifikasiAdapter extends ArrayAdapter {
 
                 if(finalHolder.tvItem2.getMaxLines() == 1){
 
-                    finalHolder.tvItem2.setMaxLines(1000);
+                    finalHolder.tvItem2.setMaxLines(10000);
                     finalHolder.ivDown.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_up_arrow));
                 }else{
 

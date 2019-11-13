@@ -177,8 +177,8 @@ public class SalesSosialJadwalFragment extends Fragment {
 
     @Override
     public void onResume() {
-        initData(false);
         super.onResume();
+        initData(false);
     }
 
     private void initData(final boolean withLocation) {

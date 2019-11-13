@@ -108,7 +108,7 @@ public class DetailCurrentPosActivity extends AppCompatActivity implements OnMap
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private Boolean mRequestingLocationUpdates;
     private Location mCurrentLocation;
-    private String namaDonatur = "", latitudeString = "", longitudeString = "";
+    private String namaDonatur = "", alamatDonatur = "", latitudeString = "", longitudeString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +156,7 @@ public class DetailCurrentPosActivity extends AppCompatActivity implements OnMap
         if(bundle != null) {
 
             namaDonatur = bundle.getString("nama", "");
+            alamatDonatur = bundle.getString("alamat", "");
             latitudeString = bundle.getString("lat", "");
             longitudeString = bundle.getString("long", "");
         }
@@ -555,7 +556,7 @@ public class DetailCurrentPosActivity extends AppCompatActivity implements OnMap
                 if(!latitudeString.equals("")){
 
                     Marker donaturPoint = mMap.addMarker(new MarkerOptions().position(new LatLng(iv.parseNullDouble(latitudeString), iv.parseNullDouble(longitudeString)))
-                            .snippet(namaDonatur)
+                            .snippet(alamatDonatur)
                             .title(namaDonatur)
                             .icon(BitmapDescriptorFactory
                                     .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));

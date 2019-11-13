@@ -14,13 +14,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -178,6 +182,10 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, DetailCurrentPosActivity.class);
+                intent.putExtra("nama", donatur.getNama());
+                intent.putExtra("alamat", donatur.getAlamat());
+                intent.putExtra("lat", donatur.getLatitude());
+                intent.putExtra("long", donatur.getLognitude());
                 startActivity(intent);
             }
         });
@@ -226,24 +234,70 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
                     }
                     else{
 
-                        AlertDialog dialog = new AlertDialog.Builder(context)
-                                .setTitle("Konfirmasi")
-                                .setMessage("Apakah anda yakin ingin menyimpan data?")
-                                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        LayoutInflater inflater = (LayoutInflater) ((Activity)context).getSystemService(LAYOUT_INFLATER_SERVICE);
+                        View viewDialog = inflater.inflate(R.layout.dialog_simpan_donasi, null);
+                        builder.setView(viewDialog);
+                        //builder.setCancelable(true);
 
-                                        jemputInfaq();
+                        final Button btnSimpan = (Button) viewDialog.findViewById(R.id.btn_simpan);
+                        final Button btnBatal = (Button) viewDialog.findViewById(R.id.btn_batal);
+                        final TextView tvNama = (TextView) viewDialog.findViewById(R.id.tv_nama);
+                        final TextView tvDonasi = (TextView) viewDialog.findViewById(R.id.tv_donasi);
+                        final TextView tvKaleng = (TextView) viewDialog.findViewById(R.id.tv_kaleng);
+                        final TextView tvKeterangan = (TextView) viewDialog.findViewById(R.id.tv_keterangan);
+
+                        tvNama.setText(edt_nama.getText().toString());
+                        tvDonasi.setText(txt_nominal.getText().toString());
+                        tvKaleng.setText(txt_jumlah_kaleng.getText().toString());
+                        tvKeterangan.setText(tvKeterangan.getText().toString());
+
+                        AlertDialog alert = builder.create();
+                        alert.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+                        alert.getWindow().setGravity(Gravity.CENTER);
+
+                        final AlertDialog alertDialogs = alert;
+
+                        btnSimpan.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view2) {
+
+                                if(alertDialogs != null) {
+
+                                    try {
+                                        alertDialogs.dismiss();
+                                    }catch (Exception e){
+                                        e.printStackTrace();
                                     }
-                                })
-                                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
+                                }
 
+                                jemputInfaq();
+                            }
+                        });
+
+                        btnBatal.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view2) {
+
+                                if(alertDialogs != null) {
+
+                                    try {
+                                        alertDialogs.dismiss();
+                                    }catch (Exception e){
+                                        e.printStackTrace();
                                     }
-                                })
-                                .show();
+                                }
+                            }
+                        });
 
+                        try {
+
+                            alert.show();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

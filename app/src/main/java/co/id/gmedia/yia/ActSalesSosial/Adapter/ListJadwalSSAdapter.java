@@ -154,6 +154,7 @@ public class ListJadwalSSAdapter extends ArrayAdapter {
 
                             Intent intent = new Intent(context, DetailCurrentPosActivity.class);
                             intent.putExtra("nama", item.getItem2());
+                            intent.putExtra("alamat", item.getItem3());
                             intent.putExtra("lat", item.getItem7());
                             intent.putExtra("long", item.getItem8());
                             context.startActivity(intent);

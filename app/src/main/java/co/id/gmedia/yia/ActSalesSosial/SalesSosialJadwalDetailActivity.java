@@ -286,6 +286,10 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, DetailCurrentPosActivity.class);
+                intent.putExtra("nama", donatur.getItem2());
+                intent.putExtra("alamat", donatur.getItem3());
+                intent.putExtra("lat", donatur.getItem7());
+                intent.putExtra("long", donatur.getItem8());
                 startActivity(intent);
             }
         });

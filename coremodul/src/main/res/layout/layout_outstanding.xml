@@ -74,9 +74,6 @@
                     android:textColor="@color/color_orange_dialog"
                     android:textSize="19sp" />
             </LinearLayout>
-
         </LinearLayout>
-
-
     </LinearLayout>
 </RelativeLayout>

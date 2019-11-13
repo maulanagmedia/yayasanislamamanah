@@ -237,6 +237,10 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, DetailCurrentPosActivity.class);
+                intent.putExtra("nama", donatur.getNama());
+                intent.putExtra("alamat", donatur.getAlamat());
+                intent.putExtra("lat", donatur.getLatitude());
+                intent.putExtra("long", donatur.getLognitude());
                 startActivity(intent);
             }
         });

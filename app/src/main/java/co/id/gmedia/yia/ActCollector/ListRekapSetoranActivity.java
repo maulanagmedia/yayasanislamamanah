@@ -213,6 +213,7 @@ public class ListRekapSetoranActivity extends AppCompatActivity {
                                             ,jo.getString("donatur_lebih_dua")
                                             ,jo.getString("nominal_lebih_dua")
                                             ,jo.getString("total")
+                                            ,jo.getString("total")
                                     )
                             );
                         }
