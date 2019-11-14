@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fxn.pix.Pix;
@@ -28,10 +29,16 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 
+import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.ImageUtils;
+import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
@@ -48,6 +55,10 @@ public class CollectorActivity extends AppCompatActivity {
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private Fragment active_fragment;
+    private ImageUtils imageUtils = new ImageUtils();
+    private ItemValidation iv = new ItemValidation();
+    private DialogBox dialogBox;
+    private ImageView ivBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +66,7 @@ public class CollectorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_collector);
 
         context = this;
+        dialogBox = new DialogBox(context);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -69,6 +81,7 @@ public class CollectorActivity extends AppCompatActivity {
         txt_nama = findViewById(R.id.txt_nama);
         txt_jumlah = findViewById(R.id.txt_jumlah);
         img_foto = findViewById(R.id.img_foto);
+        ivBackground = (ImageView) findViewById(R.id.img_sampul);
 
         initToolbar();
         TabLayout tab_collector = findViewById(R.id.tab_collector);
@@ -93,6 +106,7 @@ public class CollectorActivity extends AppCompatActivity {
         });
 
         loadFragment(new CollectorJadwalFragment());
+        getDashboard();
     }
 
     @Override
@@ -260,5 +274,59 @@ public class CollectorActivity extends AppCompatActivity {
         });
 
         alert.show();
+    }
+
+    private void getDashboard() {
+
+        dialogBox.showDialog(false);
+        new ApiVolley(context, new JSONObject(), "GET", ServerURL.getBackgroundDashboard,
+                new ApiVolley.VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+
+                        dialogBox.dismissDialog();
+                        try {
+
+                            JSONObject response = new JSONObject(result);
+                            String status = response.getJSONObject("metadata").getString("status");
+                            String message = response.getJSONObject("metadata").getString("message");
+
+                            if(iv.parseNullInteger(status) == 200){
+
+                                String gambarBg = response.getJSONObject("response").getString("gambar");
+                                imageUtils.LoadRealImage(gambarBg, ivBackground);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            View.OnClickListener clickListener = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    dialogBox.dismissDialog();
+                                    getDashboard();
+
+                                }
+                            };
+
+                            dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                        }
+                    }
+
+                    @Override
+                    public void onError(String result) {
+
+                        View.OnClickListener clickListener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                dialogBox.dismissDialog();
+                                getDashboard();
+
+                            }
+                        };
+
+                        dialogBox.showDialog(clickListener, "Ulangi Proses", result);
+                    }
+                });
     }
 }

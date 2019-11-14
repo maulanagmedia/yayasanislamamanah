@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,17 +28,25 @@ import com.fxn.pix.Pix;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 
+import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.ImageUtils;
+import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
 import co.id.gmedia.yia.ActSalesSosial.DonaturLSosialFragment;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialJadwalFragment;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialRiwayatFragment;
+import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.GoogleLocationManager;
+import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 import co.id.gmedia.yia.Utils.TopCropCircularImageView;
 
@@ -52,6 +61,10 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
     private TextView tvAdmin;
     private SessionManager session;
     private LinearLayout llDonatur;
+    private DialogBox dialogBox;
+    private ItemValidation iv = new ItemValidation();
+    private ImageView ivBackground;
+    private ImageUtils iu = new ImageUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +79,7 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         context = this;
+        dialogBox = new DialogBox(context);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -147,10 +161,13 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
         vDonatur = (View) findViewById(R.id.v_donatur);
         tvAdmin = (TextView) findViewById(R.id.tv_admin);
         img_foto = findViewById(R.id.img_foto);
+        ivBackground = (ImageView) findViewById(R.id.iv_background);
 
         session = new SessionManager(context);
 
         changeState(1);
+
+        getDashboard();
     }
 
     private void initEvent() {
@@ -334,5 +351,59 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
         });
 
         alert.show();
+    }
+
+    private void getDashboard() {
+
+        dialogBox.showDialog(false);
+        new ApiVolley(context, new JSONObject(), "GET", ServerURL.getBackgroundDashboard,
+                new ApiVolley.VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+
+                        dialogBox.dismissDialog();
+                        try {
+
+                            JSONObject response = new JSONObject(result);
+                            String status = response.getJSONObject("metadata").getString("status");
+                            String message = response.getJSONObject("metadata").getString("message");
+
+                            if(iv.parseNullInteger(status) == 200){
+
+                                String gambarBg = response.getJSONObject("response").getString("gambar");
+                                iu.LoadRealImage(gambarBg, ivBackground);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            View.OnClickListener clickListener = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    dialogBox.dismissDialog();
+                                    getDashboard();
+
+                                }
+                            };
+
+                            dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                        }
+                    }
+
+                    @Override
+                    public void onError(String result) {
+
+                        View.OnClickListener clickListener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                dialogBox.dismissDialog();
+                                getDashboard();
+
+                            }
+                        };
+
+                        dialogBox.showDialog(clickListener, "Ulangi Proses", result);
+                    }
+                });
     }
 }

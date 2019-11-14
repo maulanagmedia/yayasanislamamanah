@@ -19,19 +19,26 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.ImageUtils;
+import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.GoogleLocationManager;
+import co.id.gmedia.yia.Utils.ServerURL;
 import co.id.gmedia.yia.Utils.TopCropCircularImageView;
 
 public class SalesCheckingActivity extends AppCompatActivity {
@@ -44,6 +51,10 @@ public class SalesCheckingActivity extends AppCompatActivity {
 
     private DialogBox dialogBox;
     private SessionManager sessionManager;
+
+    private ImageUtils imageUtils = new ImageUtils();
+    private ItemValidation iv = new ItemValidation();
+    private ImageView ivBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +77,7 @@ public class SalesCheckingActivity extends AppCompatActivity {
         txt_jumlah_jadwal = (TextView) findViewById(R.id.txt_jumlah_jadwal);
         txt_jumlah_riwayat = findViewById(R.id.txt_jumlah_riwayat);
         img_foto = findViewById(R.id.img_foto);
+        ivBackground = (ImageView) findViewById(R.id.img_sampul);
 
         initToolbar();
         TabLayout tab_collector = findViewById(R.id.tab_collector);
@@ -93,6 +105,7 @@ public class SalesCheckingActivity extends AppCompatActivity {
 
         active_fragment = new CheckingJadwalFragment();
         loadFragment(active_fragment);
+        getDashboard();
     }
 
     private void initAkun(){
@@ -244,5 +257,59 @@ public class SalesCheckingActivity extends AppCompatActivity {
                 ((CheckingJadwalFragment) active_fragment).retryLocation();
             }
         }
+    }
+
+    private void getDashboard() {
+
+        dialogBox.showDialog(false);
+        new ApiVolley(context, new JSONObject(), "GET", ServerURL.getBackgroundDashboard,
+                new ApiVolley.VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+
+                        dialogBox.dismissDialog();
+                        try {
+
+                            JSONObject response = new JSONObject(result);
+                            String status = response.getJSONObject("metadata").getString("status");
+                            String message = response.getJSONObject("metadata").getString("message");
+
+                            if(iv.parseNullInteger(status) == 200){
+
+                                String gambarBg = response.getJSONObject("response").getString("gambar");
+                                imageUtils.LoadRealImage(gambarBg, ivBackground);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            View.OnClickListener clickListener = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    dialogBox.dismissDialog();
+                                    getDashboard();
+
+                                }
+                            };
+
+                            dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                        }
+                    }
+
+                    @Override
+                    public void onError(String result) {
+
+                        View.OnClickListener clickListener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                dialogBox.dismissDialog();
+                                getDashboard();
+
+                            }
+                        };
+
+                        dialogBox.showDialog(clickListener, "Ulangi Proses", result);
+                    }
+                });
     }
 }

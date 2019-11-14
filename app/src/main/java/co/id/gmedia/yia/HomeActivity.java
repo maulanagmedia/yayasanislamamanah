@@ -25,12 +25,19 @@ import android.widget.TextView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.ImageUtils;
+import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
 import co.id.gmedia.yia.ActSalesBrosur.SalesBrosurDetailFragment;
 import co.id.gmedia.yia.ActSalesBrosur.SalesBrosurRiwayatFragment;
+import co.id.gmedia.yia.Utils.ServerURL;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -39,12 +46,14 @@ public class HomeActivity extends AppCompatActivity {
     private static Context context;
     public static TextView tvInfo, tvRiwayat, tvTitle2;
     private static View vInfo, vRiwayat;
-    private ImageView ivAkun;
+    private ImageView ivAkun, ivBackground;
     private LinearLayout llAkun;
     private TextView tvAdmin;
     private SessionManager session;
     private ImageView ivProfile;
     private ImageUtils imageUtils = new ImageUtils();
+    private ItemValidation iv = new ItemValidation();
+    private DialogBox dialogBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         context = this;
+        dialogBox = new DialogBox(context);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -113,10 +123,12 @@ public class HomeActivity extends AppCompatActivity {
         vRiwayat = (View) findViewById(R.id.v_riwayat);
         tvAdmin = (TextView) findViewById(R.id.tv_admin);
         ivProfile = (ImageView) findViewById(R.id.iv_profile);
+        ivBackground = (ImageView) findViewById(R.id.iv_background);
 
         session = new SessionManager(context);
 
         changeState(2);
+        getDashboard();
     }
 
     @Override
@@ -258,5 +270,59 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         alert.show();
+    }
+
+    private void getDashboard() {
+
+        dialogBox.showDialog(false);
+        new ApiVolley(context, new JSONObject(), "GET", ServerURL.getBackgroundDashboard,
+                new ApiVolley.VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+
+                        dialogBox.dismissDialog();
+                        try {
+
+                            JSONObject response = new JSONObject(result);
+                            String status = response.getJSONObject("metadata").getString("status");
+                            String message = response.getJSONObject("metadata").getString("message");
+
+                            if(iv.parseNullInteger(status) == 200){
+
+                                String gambarBg = response.getJSONObject("response").getString("gambar");
+                                imageUtils.LoadRealImage(gambarBg, ivBackground);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            View.OnClickListener clickListener = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    dialogBox.dismissDialog();
+                                    getDashboard();
+
+                                }
+                            };
+
+                            dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                        }
+                    }
+
+                    @Override
+                    public void onError(String result) {
+
+                        View.OnClickListener clickListener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                dialogBox.dismissDialog();
+                                getDashboard();
+
+                            }
+                        };
+
+                        dialogBox.showDialog(clickListener, "Ulangi Proses", result);
+                    }
+                });
     }
 }
