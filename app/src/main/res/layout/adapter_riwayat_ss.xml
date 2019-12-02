@@ -12,56 +12,142 @@
         android:layout_marginBottom="@dimen/padding_medium"
         android:orientation="vertical">
 
+        <View
+            android:layout_height="@dimen/line"
+            android:layout_width="match_parent"
+            android:background="@color/colorGrey"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:layout_marginBottom="@dimen/padding_tiny"
+            />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
             android:id="@+id/tv_tanggal"
             android:gravity="right"
-            android:textColor="@color/colorBlue2"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite"
+            android:paddingLeft="@dimen/padding_tiny"
+            android:paddingRight="@dimen/padding_tiny"
             android:textSize="@dimen/text_tiny"/>
 
-        <RelativeLayout
+        <View
+            android:layout_height="@dimen/line"
+            android:layout_width="match_parent"
+            android:background="@color/colorGrey"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:layout_marginBottom="@dimen/padding_tiny"
+            />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_small">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            <ImageView
-                android:layout_width="@dimen/icon_size2"
-                android:layout_height="@dimen/icon_size2"
-                android:src="@drawable/ic_name"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="@dimen/padding_mid"
-                android:id="@+id/ic_nama"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_toRightOf="@id/ic_nama"
-                android:layout_marginLeft="@dimen/padding_default">
+                android:layout_marginTop="@dimen/padding_small">
 
-                <TextView
+                <ImageView
+                    android:layout_width="@dimen/icon_size2"
+                    android:layout_height="@dimen/icon_size2"
+                    android:src="@drawable/ic_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_mid"
+                    android:id="@+id/ic_nama"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:text="Nama"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_big" />
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@id/ic_nama"
+                    android:layout_marginLeft="@dimen/padding_default">
 
-                <TextView
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Nama"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_big" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Nama"
+                        android:id="@+id/tv_nama"
+                        android:layout_marginTop="@dimen/padding_tiny"
+                        android:textSize="@dimen/text_small" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="@dimen/line"
+                android:layout_height="match_parent"
+                android:background="@color/colorGrey"
+                android:layout_marginLeft="@dimen/padding_tiny"
+                android:layout_marginRight="@dimen/padding_small"
+                />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size2"
+                    android:layout_height="@dimen/icon_size2"
+                    android:src="@drawable/ic_kontak"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_mid"
+                    android:id="@+id/ic_kontak"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:text="Nama"
-                    android:id="@+id/tv_nama"
-                    android:layout_marginTop="@dimen/padding_tiny"
-                    android:textSize="@dimen/text_small" />
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@id/ic_kontak"
+                    android:layout_marginLeft="@dimen/padding_default">
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Kontak"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_big" />
 
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Kontak"
+                        android:id="@+id/tv_kontak"
+                        android:layout_marginTop="@dimen/padding_tiny"
+                        android:textSize="@dimen/text_small" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_height="@dimen/line"
+            android:layout_width="match_parent"
+            android:background="@color/colorGrey"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:layout_marginBottom="@dimen/padding_tiny"
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -105,89 +191,145 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <View
+            android:layout_height="@dimen/line"
+            android:layout_width="match_parent"
+            android:background="@color/colorGrey"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:layout_marginBottom="@dimen/padding_tiny"
+            />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_small">
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-            <ImageView
-                android:layout_width="@dimen/icon_size2"
-                android:layout_height="@dimen/icon_size2"
-                android:src="@drawable/ic_kontak"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="@dimen/padding_mid"
-                android:id="@+id/ic_kontak"/>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_toRightOf="@id/ic_kontak"
-                android:layout_marginLeft="@dimen/padding_default">
-
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:text="Kontak"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_big" />
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/padding_default">
 
-                <TextView
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Status Donasi"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGreen1"
+                        android:text="Status"
+                        android:id="@+id/tv_status"
+                        android:layout_marginTop="@dimen/padding_tiny"
+                        android:textSize="@dimen/text_tiny" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="@dimen/line"
+                android:layout_height="match_parent"
+                android:background="@color/colorGrey"
+                android:layout_marginLeft="@dimen/padding_small"
+                android:layout_marginRight="@dimen/padding_small"
+                />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:text="Kontak"
-                    android:id="@+id/tv_kontak"
-                    android:layout_marginTop="@dimen/padding_tiny"
-                    android:textSize="@dimen/text_small" />
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Status Checking"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_small" />
 
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGreen1"
+                        android:text="Status"
+                        android:id="@+id/tv_status_checking"
+                        android:layout_marginTop="@dimen/padding_tiny"
+                        android:textSize="@dimen/text_tiny" />
 
-        <RelativeLayout
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="@dimen/line"
+                android:layout_height="match_parent"
+                android:background="@color/colorGrey"
+                android:layout_marginLeft="@dimen/padding_small"
+                android:layout_marginRight="@dimen/padding_small"
+                />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Checker"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:text="Checker"
+                        android:id="@+id/tv_checker"
+                        android:layout_marginTop="@dimen/padding_tiny"
+                        android:textSize="@dimen/text_tiny" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_height="@dimen/line"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_small">
-
-            <ImageView
-                android:layout_width="@dimen/icon_size2"
-                android:layout_height="@dimen/icon_size2"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="@dimen/padding_mid"
-                android:id="@+id/ic_status"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_toRightOf="@id/ic_status"
-                android:layout_marginLeft="@dimen/padding_default">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:text="Status Donasi"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_big" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorGreen1"
-                    android:text="Status"
-                    android:id="@+id/tv_status"
-                    android:layout_marginTop="@dimen/padding_tiny"
-                    android:textSize="@dimen/text_small" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
+            android:background="@color/colorGrey"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:layout_marginBottom="@dimen/padding_tiny"
+            />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#ECECEC"/>
 
 </LinearLayout>

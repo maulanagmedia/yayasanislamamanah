@@ -177,6 +177,8 @@ public class SalesSosialRiwayatFragment extends Fragment {
                                         ,jadwal.getString("ket_status")
                                         ,jadwal.getString("status_donasi")
                                         ,jadwal.getString("note")
+                                        ,jadwal.getString("status_donasi_checking")
+                                        ,jadwal.getString("user_checking")
                                         )
                                 );
 

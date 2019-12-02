@@ -196,7 +196,7 @@ public class SalesSosialJadwalFragment extends Fragment {
             body.add("long", lng);
         }
 
-        new ApiVolley(context, body.create(), "POST", ServerURL.getRencanaKerjaSosial,
+        new ApiVolley(context, body.create(), "POST", ServerURL.getJadwalSosial,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
                     @Override
                     public void onSuccess(String response, String message) {

@@ -2,10 +2,17 @@ package co.id.gmedia.yia;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
     private DialogBox dialogBox;
     private SessionManager session;
     private String refreshToken = "";
+    private String version = "";
+    private String link = "";
+    private Dialog dialogVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,6 +254,99 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void getApplicationVersion(final Intent intent){
+
+        PackageInfo pInfo = null;
+        version = "";
+
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("Versi", e.getMessage());
+        }
+
+        if(pInfo != null){
+            version = pInfo.versionName;
+        }
+
+        dialogBox.showDialog(false);
+        JSONObject jBody = new JSONObject();
+
+        new ApiVolley(context, jBody, "GET", ServerURL.getApplicationVersion, new ApiVolley.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+                dialogBox.dismissDialog();
+                try {
+
+                    JSONObject response = new JSONObject(result);
+                    String status = response.getJSONObject("metadata").getString("status");
+                    String message = response.getJSONObject("metadata").getString("message");
+
+                    //Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    if(iv.parseNullInteger(status) == 200){
+
+                        String latestVersion = response.getJSONObject("response").getString("version");
+                        link = response.getJSONObject("response").getString("link_update");
+
+                        if (!version.trim().equals(latestVersion.trim()) && link.length() > 0) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                            builder.setIcon(R.mipmap.ic_launcher)
+                                    .setTitle("Update")
+                                    .setMessage("Versi terbaru " + latestVersion +
+                                            " telah tersedia, mohon download versi terbaru.")
+                                    .setPositiveButton("Update Sekarang", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                                            startActivity(browserIntent);
+                                        }
+                                    });
+                            dialogVersion = builder.create();
+                            dialogVersion.setCancelable(false);
+
+                            if(!dialogVersion.isShowing()){
+
+                                dialogVersion.show();
+                            }
+                        }else{
+
+                            updateFCM(intent);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    View.OnClickListener clickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            dialogBox.dismissDialog();
+                            getApplicationVersion(intent);
+
+                        }
+                    };
+
+                    dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                }
+            }
+
+            @Override
+            public void onError(String result) {
+                dialogBox.dismissDialog();
+                View.OnClickListener clickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialogBox.dismissDialog();
+                        getApplicationVersion(intent);
+
+                    }
+                };
+
+                dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+            }
+        });
+    }
+
     private void redirectToLogin(){
 
         Intent intent;
@@ -266,7 +369,7 @@ public class LoginActivity extends AppCompatActivity {
                 break;
         }
 
-        updateFCM(intent);
+        getApplicationVersion(intent);
     }
 
     private void initData() {

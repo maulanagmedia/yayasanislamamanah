@@ -48,49 +48,125 @@
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="@+id/textView4" />
 
-        <TextView
-            android:id="@+id/txt_nama_donatur"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_black"
-            android:textSize="12sp"
-            android:layout_marginTop="@dimen/dp5"
-            app:layout_constraintEnd_toEndOf="@+id/textView4"
-            app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-        <TextView
-            android:id="@+id/txt_alamat_donatur"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_black"
-            android:textSize="12sp"
+            android:orientation="vertical"
+            android:id="@+id/ll_nama"
             android:layout_marginTop="@dimen/dp5"
             app:layout_constraintEnd_toEndOf="@+id/textView4"
             app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/txt_nama_donatur" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4" >
 
-        <TextView
-            android:id="@+id/txt_kontak_donatur"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_black"
-            android:textSize="12sp"
-            android:layout_marginTop="@dimen/dp5"
-            app:layout_constraintEnd_toEndOf="@+id/textView4"
-            app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/txt_alamat_donatur" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textSize="12sp"
+                android:text="Nama"
+                android:textStyle="bold"
+                />
 
-        <TextView
-            android:id="@+id/txt_donasi"
-            android:layout_width="0dp"
+            <TextView
+                android:id="@+id/txt_nama_donatur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textSize="12sp"
+                android:text="Nama"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_black"
-            android:textSize="12sp"
+            android:orientation="vertical"
+            android:id="@+id/ll_alamat"
             android:layout_marginTop="@dimen/dp5"
             app:layout_constraintEnd_toEndOf="@+id/textView4"
             app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/txt_kontak_donatur" />
+            app:layout_constraintTop_toBottomOf="@+id/ll_nama"  >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textSize="12sp"
+                android:text="Alamat"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/txt_alamat_donatur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textSize="12sp"
+                android:text="Alamat"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ll_kontak"
+            android:layout_marginTop="@dimen/dp5"
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/ll_alamat"   >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textSize="12sp"
+                android:text="Kontak"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/txt_kontak_donatur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textSize="12sp"
+                android:text="Kontak"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ll_donasi"
+            android:layout_marginTop="@dimen/dp5"
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/ll_kontak" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textSize="12sp"
+                android:text="Donasi"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/txt_donasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:textSize="12sp"
+                android:text="donasi"
+                />
+
+        </LinearLayout>
 
         <TextView
             android:visibility="gone"

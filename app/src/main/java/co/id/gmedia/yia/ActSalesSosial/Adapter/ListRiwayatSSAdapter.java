@@ -27,7 +27,7 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
     }
 
     private static class ViewHolder {
-        private TextView tvTanggal, tvNama, tvAlamat, tvKontak, tvStatus;
+        private TextView tvTanggal, tvNama, tvAlamat, tvKontak, tvStatus, tvStatusChecking, tvChecker;
     }
 
     @Override
@@ -48,6 +48,8 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
             holder.tvAlamat = convertView.findViewById(R.id.tv_alamat);
             holder.tvKontak = convertView.findViewById(R.id.tv_kontak);
             holder.tvStatus = convertView.findViewById(R.id.tv_status);
+            holder.tvStatusChecking = convertView.findViewById(R.id.tv_status_checking);
+            holder.tvChecker = convertView.findViewById(R.id.tv_checker);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -66,7 +68,16 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
             holder.tvStatus.setTextColor(context.getResources().getColor(R.color.colorGreen1));
         }
 
+        if(item.getItem11().equals("")){
+
+            holder.tvStatusChecking.setTextColor(context.getResources().getColor(R.color.colorRed));
+        }else{
+            holder.tvStatusChecking.setTextColor(context.getResources().getColor(R.color.colorGreen1));
+        }
+
         holder.tvStatus.setText(item.getItem8());
+        holder.tvStatusChecking.setText(item.getItem10());
+        holder.tvChecker.setText(item.getItem11());
 
         return convertView;
 

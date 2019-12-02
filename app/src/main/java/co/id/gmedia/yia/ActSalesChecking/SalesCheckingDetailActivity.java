@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -90,6 +91,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
     private LinearLayout llKaleng;
     private RadioGroup rgKaleng;
     private LinearLayout llIsiKaleng;
+    private CheckBox cbCkecing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +134,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         edt_kontak.setText(donatur.getKontak());
         txt_jumlah_kaleng.setText(donatur.getKaleng());
         edtKeterangan.setText(donatur.getKeterangan());
+        cbCkecing = (CheckBox) findViewById(R.id.cb_checking);
 
         for(String url : donatur.getListUrlPhoto()){
             listPhotoDetail.add(new PhotoModel("", url));
@@ -289,6 +292,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         body.add("latitude", lat);
         body.add("longitude", lng);
         body.add("foto", jFoto);
+        body.add("ceklist", cbCkecing.isChecked() ? "1" : "0");
 
         new ApiVolley(this, body.create(), "POST", ServerURL.saveSurvey,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {

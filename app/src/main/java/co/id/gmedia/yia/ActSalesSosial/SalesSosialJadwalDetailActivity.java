@@ -89,7 +89,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
 
-        setTitle("Detail Survey");
+        setTitle("Calon Donatur");
         context = this;
         sessionManager = new SessionManager(this);
         locationManager = new GoogleLocationManager(this, new GoogleLocationManager.LocationUpdateListener() {
@@ -104,7 +104,6 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
         });
         locationManager.startLocationUpdates();
 
-        setTitle("Detail Survey");
         initUI();
 
         if(getIntent().hasExtra("donatur")){
@@ -204,14 +203,14 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
                             edt_alamat.setError(null);
                         }
 
-                        if(edt_kontak.getText().toString().length() == 0){
+                        /*if(edt_kontak.getText().toString().length() == 0){
 
                             edt_kontak.setError("Harap diisi");
                             edt_kontak.requestFocus();
                             return;
                         }else{
                             edt_kontak.setError(null);
-                        }
+                        }*/
 
                         //Cek jumlah kaleng jika menggunakan lobi kaleng (jika rb_kaleng_ya check)
                         if(rb_kaleng_ya.isChecked()){

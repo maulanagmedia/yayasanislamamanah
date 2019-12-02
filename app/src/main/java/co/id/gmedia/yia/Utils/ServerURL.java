@@ -5,7 +5,7 @@ public class ServerURL {
 
     //private static final String baseURL = "http://192.168.20.36/gmedia/yia/api/";
     //private static final String baseURL = "http://gmedia.bz/yia/v3/api/";
-    private static final String baseURL = "http://yayasanislamamanah.com/beta/api/";
+    private static final String baseURL = "http://yayasanislamamanah.com/api/";
 
     public static final String login = baseURL + "Authentication/";
     public static final String updateFCM = baseURL + "Authentication/update_fcm";
@@ -17,6 +17,7 @@ public class ServerURL {
     public static final String saveCalonDonatur = baseURL + "Donatur/add_calon_donatur/";
     public static final String getCalonDonatur = baseURL + "Donatur/calon_donatur/";
 
+    public static final String getJadwalSosial = baseURL + "Sales_sosial/Rencana_kerja/jadwal_rk_sales_sosial";
     public static final String getRencanaKerjaSosial = baseURL + "Sales_sosial/Rencana_kerja/rk_petugas_sosial";
     public static final String saveSosial = baseURL + "Sales_sosial/Rencana_kerja/ActionTempDonatur";
     public static final String getRencanaKerjaCollector = baseURL + "Collector/Rencana_kerja/history_collector";
@@ -33,4 +34,5 @@ public class ServerURL {
     public static final String saveDataLuarSosial = baseURL + "Sales_sosial/Rencana_kerja/add_data_luar/";
     public static final String getNotification = baseURL + "Collector/Rencana_kerja/notif_sales/";
     public static final String getBackgroundDashboard = baseURL + "/Authentication/bg_sampul/";
+    public static final String getApplicationVersion = baseURL + "Master/application_version/";
 }

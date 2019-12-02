@@ -13,6 +13,7 @@
     <dimen name="padding_medium">12dp</dimen>
     <dimen name="padding_big">16dp</dimen>
     <dimen name="padding_super">24dp</dimen>
+    <dimen name="line">0.75dp</dimen>
     <dimen name="line_default">1dp</dimen>
     <dimen name="line_custom">4dp</dimen>
     <dimen name="menu_height">110dp</dimen>
@@ -21,6 +22,7 @@
     <dimen name="text_tiny">11sp</dimen>
     <dimen name="text_small">13sp</dimen>
     <dimen name="text_title">24sp</dimen>
+    <dimen name="text_normal">14sp</dimen>
     <dimen name="text_big">16sp</dimen>
     <dimen name="text_20">20sp</dimen>
     <dimen name="icon_size_big">30dp</dimen>
