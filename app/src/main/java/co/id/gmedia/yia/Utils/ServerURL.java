@@ -16,10 +16,13 @@ public class ServerURL {
     public static final String getKelurahan = baseURL + "Master/kelurahan/";
     public static final String saveCalonDonatur = baseURL + "Donatur/add_calon_donatur/";
     public static final String getCalonDonatur = baseURL + "Donatur/calon_donatur/";
+    public static final String editCalonDonatur = baseURL + "Donatur/edit_calon_donatur/";
 
     public static final String getJadwalSosial = baseURL + "Sales_sosial/Rencana_kerja/jadwal_rk_sales_sosial";
     public static final String getRencanaKerjaSosial = baseURL + "Sales_sosial/Rencana_kerja/rk_petugas_sosial";
     public static final String saveSosial = baseURL + "Sales_sosial/Rencana_kerja/ActionTempDonatur";
+    public static final String editDonaturSosial = baseURL + "Sales_sosial/Rencana_kerja/editDonaturSosial";
+
     public static final String getRencanaKerjaCollector = baseURL + "Collector/Rencana_kerja/history_collector";
     public static final String getJadwalCollector = baseURL + "Collector/Rencana_kerja/jadwal_collector";
     public static final String getRencanaKerjaSurvey = baseURL + "Sales_checking/Rencana_kerja/rk_petugas_checking";

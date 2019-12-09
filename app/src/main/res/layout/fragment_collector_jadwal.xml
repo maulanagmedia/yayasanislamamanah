@@ -55,6 +55,55 @@
             android:src="@mipmap/ic_sort_loc"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="@dimen/padding_big"
+        android:layout_marginRight="@dimen/padding_big"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            android:background="@drawable/bg_input">
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/padding_default"
+                android:src="@mipmap/ic_search1" />
+
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/iv_search"
+                android:background="@android:color/transparent"
+                android:foregroundGravity="center_vertical"
+                android:gravity="center_vertical"
+                android:hint="Keyword"
+                android:imeOptions="actionSearch"
+                android:focusable="false"
+                android:inputType="textPersonName"
+                android:padding="@dimen/padding_default"
+                android:text=""
+                android:textSize="@dimen/text_small" />
+
+        </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

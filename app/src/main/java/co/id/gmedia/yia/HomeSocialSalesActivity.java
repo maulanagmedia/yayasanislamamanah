@@ -273,6 +273,7 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
                     }
                     ((DonaturLSosialFragment)fragment).updateGambar(listGambar);
                 }
+
             }
         }
         else if(requestCode == GoogleLocationManager.ACTIVATE_LOCATION){
@@ -282,6 +283,10 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
             }else if (fragment instanceof SalesSosialJadwalFragment){
 
                 ((SalesSosialJadwalFragment)fragment).retryLocation();
+            }
+        }else if(requestCode == 1102){
+            if(data != null){
+                changeState(2);
             }
         }
     }

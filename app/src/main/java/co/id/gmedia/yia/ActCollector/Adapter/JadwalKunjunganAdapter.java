@@ -53,7 +53,7 @@ public class JadwalKunjunganAdapter extends RecyclerView.Adapter<JadwalKunjungan
     @Override
     public JadwalKunjunganViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new JadwalKunjunganViewHolder(LayoutInflater.from(context).
-                inflate(R.layout.item_collector_jadwal, parent, false));
+                inflate(R.layout.item_jadwal_checking, parent, false));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class JadwalKunjunganAdapter extends RecyclerView.Adapter<JadwalKunjungan
         void bind(final DonaturModel b){
 
             txt_nama.setText(b.getNama());
-            txt_kontak.setText(b.getKontak());
+            txt_kontak.setText(b.getKeterangan());
             txt_alamat.setText(b.getAlamat());
 
             if(b.isDikunjungi()){

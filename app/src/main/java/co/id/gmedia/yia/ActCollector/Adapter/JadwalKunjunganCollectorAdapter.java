@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -299,5 +300,15 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     }
                 }));
+    }
+    public void clearAdapter()
+    {
+        listDonatur.clear();
+        notifyDataSetChanged();
+    }
+
+    public void filterList(ArrayList<DonaturModel> filteredList) {
+        listDonatur = filteredList;
+        notifyDataSetChanged();
     }
 }

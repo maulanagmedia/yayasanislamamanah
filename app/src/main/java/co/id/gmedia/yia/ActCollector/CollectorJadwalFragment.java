@@ -1,7 +1,9 @@
 package co.id.gmedia.yia.ActCollector;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -12,15 +14,23 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,10 +71,17 @@ public class CollectorJadwalFragment extends Fragment {
     private boolean isLocationReloaded;
     private double lat = 0, lng = 0;
 
+    private EditText edtSearch;
+    private String search="";
+    private String rk1="1";
+    private String rk2="1";
+    private String rk3="1";
+    private Boolean location =false;
     public CollectorJadwalFragment() {
         // Required empty public constructor
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,6 +98,7 @@ public class CollectorJadwalFragment extends Fragment {
         tvKunjungi = (TextView) v.findViewById(R.id.tv_dikunjungi);
         tvBelumKunjungi = (TextView) v.findViewById(R.id.tv_belum_dikunjungi);
         ivSort = (ImageView) v.findViewById(R.id.iv_sort);
+        edtSearch = (EditText) v.findViewById(R.id.edt_search);
 
         rv_jadwal.setItemAnimator(new DefaultItemAnimator());
         rv_jadwal.setLayoutManager(new LinearLayoutManager(activity));
@@ -91,6 +109,28 @@ public class CollectorJadwalFragment extends Fragment {
         isLocationReloaded = false;
 
         initEvent();
+        edtSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtSearch.setFocusable(true);
+                edtSearch.setFocusableInTouchMode(true);
+            }
+        });
+
+        edtSearch.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    Toast.makeText(getContext(),edtSearch.getText().toString(),Toast.LENGTH_SHORT).show();
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    search = edtSearch.getText().toString();
+                    loadData(false);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         return v;
     }
@@ -99,6 +139,15 @@ public class CollectorJadwalFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadData(false);
+    }
+    private void filter(String text) {
+        ArrayList<DonaturModel> filteredList = new ArrayList<>();
+
+        for (DonaturModel item : listDonatur) {
+            if(item.getNama().toLowerCase().contains(text.toLowerCase()))
+                filteredList.add(item);
+        }
+        adapter.filterList(filteredList);
     }
 
     private void initEvent() {
@@ -115,24 +164,29 @@ public class CollectorJadwalFragment extends Fragment {
         cbk1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                filterData();
+                rk1 = String.valueOf(isChecked ? 1 : 0);
+//                Toast.makeText(getContext(),"rk1 "+rk1,Toast.LENGTH_SHORT).show();
+                loadData(false);
+//                filterData(search);
             }
         });
 
         cbk2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                filterData(search);
+                rk2 = String.valueOf(isChecked ? 1 : 0);
+                loadData(false);
 
-                filterData();
             }
         });
 
         cbk3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                filterData();
+                rk3 = String.valueOf(isChecked ? 1 : 0);
+                loadData(false);
+//                filterData(search);
             }
         });
 
@@ -163,56 +217,67 @@ public class CollectorJadwalFragment extends Fragment {
         });
     }
 
-    private void filterData(){
-
-        final List<DonaturModel> newFilteredDonatur = new ArrayList<>();
-
-        int terkunjungi = 0, tidakTerkunjungi = 0;
-
-        for(DonaturModel item : listDonatur){
-
-            if(item.getRk().equals("rk1") && cbk1.isChecked()){
-
-                newFilteredDonatur.add(item);
-                if(item.isDikunjungi()){
-                    terkunjungi++;
-                }else{
-                    tidakTerkunjungi++;
-                }
-            }else if(item.getRk().equals("rk2") && cbk2.isChecked()){
-
-                newFilteredDonatur.add(item);
-                if(item.isDikunjungi()){
-                    terkunjungi++;
-                }else{
-                    tidakTerkunjungi++;
-                }
-            }else if(item.getRk().equals("rk3") && cbk3.isChecked()){
-
-                newFilteredDonatur.add(item);
-                if(item.isDikunjungi()){
-                    terkunjungi++;
-                }else{
-                    tidakTerkunjungi++;
-                }
-            }
-        }
-
-        tvKunjungi.setText(iv.ChangeToCurrencyFormat(terkunjungi));
-        tvBelumKunjungi.setText(iv.ChangeToCurrencyFormat(tidakTerkunjungi));
-        if(activity instanceof CollectorActivity){
-            ((CollectorActivity)activity).updateJumlah(newFilteredDonatur.size());
-        }
-
-        adapter = new JadwalKunjunganCollectorAdapter(activity, newFilteredDonatur);
-        rv_jadwal.setAdapter(adapter);
-    }
+//    private void filterData(String s){
+//
+//        final List<DonaturModel> newFilteredDonatur = new ArrayList<>();
+//
+//        int terkunjungi = 0, tidakTerkunjungi = 0;
+//
+//        for(DonaturModel item : listDonatur){
+//
+//            if(item.getRk().equals("rk1") && cbk1.isChecked()){
+//                if(!s.equalsIgnoreCase("")){
+//                    if(item.getNama().toLowerCase().contains(s.toLowerCase()))
+//                        newFilteredDonatur.add(item);
+//                }
+//                newFilteredDonatur.add(item);
+//                if(item.isDikunjungi()){
+//                    terkunjungi++;
+//                }else{
+//                    tidakTerkunjungi++;
+//                }
+//            }else if(item.getRk().equals("rk2") && cbk2.isChecked()){
+//
+//                newFilteredDonatur.add(item);
+//                if(item.isDikunjungi()){
+//                    terkunjungi++;
+//                }else{
+//                    tidakTerkunjungi++;
+//                }
+//            }else if(item.getRk().equals("rk3") && cbk3.isChecked()){
+//
+//                newFilteredDonatur.add(item);
+//                if(item.isDikunjungi()){
+//                    terkunjungi++;
+//                }else{
+//                    tidakTerkunjungi++;
+//                }
+//            }
+//        }
+//
+//        tvKunjungi.setText(iv.ChangeToCurrencyFormat(terkunjungi));
+//        tvBelumKunjungi.setText(iv.ChangeToCurrencyFormat(tidakTerkunjungi));
+//        if(activity instanceof CollectorActivity){
+//            ((CollectorActivity)activity).updateJumlah(newFilteredDonatur.size());
+//        }
+//
+//        adapter = new JadwalKunjunganCollectorAdapter(activity, newFilteredDonatur);
+//        rv_jadwal.setAdapter(adapter);
+//    }
 
     private void loadData(final boolean withLocation){
+        adapter.clearAdapter();
         //txt_tanggal.setText(Converter.getDateString(new Date()));
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
+//        Toast.makeText(getContext(),"rk1 "+rk1,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),"rk2 "+rk2,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),"rk3 "+rk3,Toast.LENGTH_SHORT).show();
         body.add("collector", new SessionManager(activity).getId());
+        body.add("keyword",search);
+        body.add("rk1",rk1);
+        body.add("rk2",rk2);
+        body.add("rk3",rk3);
 
         tvKunjungi.setText("0");
         tvBelumKunjungi.setText("0");
@@ -229,9 +294,8 @@ public class CollectorJadwalFragment extends Fragment {
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
                         try{
-
-                            int terkunjungi = 0, tidakTerkunjungi = 0;
                             listDonatur.clear();
+                            int terkunjungi = 0, tidakTerkunjungi = 0;
                             JSONArray object = new JSONArray(response);
                             for(int i = 0; i < object.length(); i++){
                                 JSONObject donatur = object.getJSONObject(i);

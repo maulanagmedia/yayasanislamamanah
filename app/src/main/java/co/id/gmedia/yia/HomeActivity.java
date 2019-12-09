@@ -1,5 +1,6 @@
 package co.id.gmedia.yia;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -54,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageUtils imageUtils = new ImageUtils();
     private ItemValidation iv = new ItemValidation();
     private DialogBox dialogBox;
+    private String isRiwayat = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,11 +136,37 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+//        if(getIntent().getExtras()!=null){
+//            Bundle bundle = getIntent().getExtras();
+//            if(bundle.getString("riwayat").equalsIgnoreCase("main")){
+//                isRiwayat ="";
+//                changeState(2);
+//                Log.d("value riwayat", isRiwayat);
+//            }
+//        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("Requestcode",String.valueOf(requestCode));
+        if(requestCode == 1102){
+            if(data != null){
+                changeState(2);
+            }
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
         tvAdmin.setText(session.getNama());
         imageUtils.LoadCircleRealImage(session.getFoto(), ivProfile);
+
     }
 
     private void initEvent() {
@@ -152,7 +182,6 @@ public class HomeActivity extends AppCompatActivity {
         llRiwayat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 changeState(2);
             }
         });
@@ -182,6 +211,7 @@ public class HomeActivity extends AppCompatActivity {
             vInfo.setVisibility(View.GONE);
             vRiwayat.setVisibility(View.VISIBLE);
         }
+
     }
 
     private static Fragment fragment;

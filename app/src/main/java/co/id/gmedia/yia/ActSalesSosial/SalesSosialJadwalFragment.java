@@ -207,16 +207,16 @@ public class SalesSosialJadwalFragment extends Fragment {
                             for(int i = 0; i < obj.length(); i++){
                                 JSONObject jadwal = obj.getJSONObject(i);
                                 listData.add(new CustomModel(
-                                        jadwal.getString("id")
-                                        ,jadwal.getString("nama")
-                                        ,jadwal.getString("alamat")
-                                        ,jadwal.getString("kontak")
-                                        ,"tanggal"
-                                        ,jadwal.getString("status").equals("0")?"1":"0"
-                                        ,jadwal.getString("lat")
-                                        ,jadwal.getString("long")
-                                        ,jadwal.getString("image")
-                                        ,jadwal.getString("note")
+                                        jadwal.getString("id") //item 1
+                                        ,jadwal.getString("nama")//item 2
+                                        ,jadwal.getString("alamat")//item 3
+                                        ,jadwal.getString("kontak")//item 4
+                                        ,"tanggal"//item 5
+                                        ,jadwal.getString("status").equals("0")?"1":"0"//item 6
+                                        ,jadwal.getString("lat")//item 7
+                                        ,jadwal.getString("long")//item 8
+                                        ,jadwal.getString("image")//item 9
+                                        ,jadwal.getString("note")//item 10
                                 ));
                             }
 

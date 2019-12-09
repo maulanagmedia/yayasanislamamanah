@@ -74,7 +74,7 @@ public class ListJadwalSSAdapter extends ArrayAdapter {
         final CustomModel item = items.get(position);
         holder.tvItem1.setText(item.getItem2());
         holder.tvItem2.setText(item.getItem3());
-        holder.tvItem3.setText(item.getItem4());
+        holder.tvItem3.setText(item.getItem10());
 
         if(item.getItem6().equals("0")){
 

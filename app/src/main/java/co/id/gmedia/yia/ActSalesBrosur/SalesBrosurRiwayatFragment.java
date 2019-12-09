@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -185,6 +186,7 @@ public class SalesBrosurRiwayatFragment extends Fragment {
         });
     }
 
+
     private void initData() {
 
         HomeActivity.tvTitle2.setText("0");
@@ -221,11 +223,18 @@ public class SalesBrosurRiwayatFragment extends Fragment {
                             JSONObject jo = ja.getJSONObject(i);
                             listData.add(
                                     new CustomModel(
-                                            jo.getString("id")
-                                            ,jo.getString("nama")
-                                            ,jo.getString("alamat")
-                                            ,jo.getString("kontak")
-                                            ,jo.getString("insert_at")
+                                            jo.getString("id") // item1
+                                            ,jo.getString("nama") // item2
+                                            ,jo.getString("alamat") // item3
+                                            ,jo.getString("kontak") // item4
+                                            ,jo.getString("insert_at") // item5
+                                            ,jo.getString("id_kota") // item6
+                                            ,jo.getString("id_kec") // item7
+                                            ,jo.getString("id_kel") // item8
+                                            ,jo.getString("note") // item9
+                                            ,jo.getString("kota") // item10
+                                            ,jo.getString("kecamatan") // item11
+                                            ,jo.getString("kelurahan") // item12
                                     )
                             );
                         }
@@ -267,4 +276,10 @@ public class SalesBrosurRiwayatFragment extends Fragment {
             }
         });
     }
+
+//    @Override
+//    public void editDonatur(int position) {
+//        String nama = listData.get(position).getItem1();
+//        Toast.makeText((Activity)context,"Nama "+nama,Toast.LENGTH_SHORT).show();
+//    }
 }

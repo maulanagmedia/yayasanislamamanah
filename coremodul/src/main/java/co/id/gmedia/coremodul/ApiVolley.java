@@ -18,6 +18,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -193,7 +194,7 @@ public class ApiVolley {
 
     // interface for call callback from response API
     public interface VolleyCallback{
-        void onSuccess(String result);
+        void onSuccess(String result) throws JSONException;
         void onError(String result);
     }
 

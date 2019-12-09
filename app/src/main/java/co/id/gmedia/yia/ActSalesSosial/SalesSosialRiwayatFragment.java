@@ -169,16 +169,23 @@ public class SalesSosialRiwayatFragment extends Fragment {
                                 JSONObject jadwal = obj.getJSONObject(i);
                                 listData.add(new CustomModel(
                                         jadwal.getString("id")
-                                        ,jadwal.getString("nama")
-                                        ,jadwal.getString("alamat")
-                                        ,jadwal.getString("kontak")
-                                        ,jadwal.getString("tgl")
-                                        ,jadwal.getString("status").equals("0")?"1":"0"
-                                        ,jadwal.getString("ket_status")
-                                        ,jadwal.getString("status_donasi")
-                                        ,jadwal.getString("note")
-                                        ,jadwal.getString("status_donasi_checking")
-                                        ,jadwal.getString("user_checking")
+                                        ,jadwal.getString("id_donatur")
+                                        ,jadwal.getString("nama") // item3
+                                        ,jadwal.getString("alamat") // item4
+                                        ,jadwal.getString("kontak") // item5
+                                        ,jadwal.getString("tgl") // item6
+                                        ,jadwal.getString("status").equals("0")?"1":"0" // item7
+                                        ,jadwal.getString("ket_status") // item8
+                                        ,jadwal.getString("status_donasi") // item9
+                                        ,jadwal.getString("note") // item10
+                                        ,jadwal.getString("status_donasi_checking") // item11
+                                        ,jadwal.getString("user_checking") // item12
+                                        ,jadwal.getString("id_kota") // item13
+                                        ,jadwal.getString("id_kec") // item14
+                                        ,jadwal.getString("id_kel") // item15
+                                        ,jadwal.getString("kota") // item16
+                                        ,jadwal.getString("kecamatan") // item17
+                                        ,jadwal.getString("kelurahan") // item18
                                         )
                                 );
 
