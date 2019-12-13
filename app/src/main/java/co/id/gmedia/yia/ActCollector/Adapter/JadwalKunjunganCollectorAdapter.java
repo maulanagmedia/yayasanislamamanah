@@ -66,6 +66,11 @@ public class JadwalKunjunganCollectorAdapter extends ArrayAdapter<DonaturModel> 
         private RelativeLayout rlInput;
     }
 
+    public void updateData(List<DonaturModel> items) {
+        listDonatur.addAll(items);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return listDonatur.size();

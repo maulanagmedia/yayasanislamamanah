@@ -198,6 +198,7 @@ public class CollectorJadwalFragment extends Fragment {
                 rk1 = String.valueOf(isChecked ? 1 : 0);
                 loadData();
                 totalData();
+                listDonatur.clear();
             }
         });
 
@@ -205,8 +206,10 @@ public class CollectorJadwalFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 rk2 = String.valueOf(isChecked ? 1 : 0);
+                Toast.makeText(activity, "RK2 "+rk2, Toast.LENGTH_SHORT).show();
                 loadData();
                 totalData();
+                listDonatur.clear();
             }
         });
 
@@ -216,6 +219,7 @@ public class CollectorJadwalFragment extends Fragment {
                 rk3 = String.valueOf(isChecked ? 1 : 0);
                 loadData();
                 totalData();
+                listDonatur.clear();
             }
         });
 
@@ -249,7 +253,7 @@ public class CollectorJadwalFragment extends Fragment {
     }
 
     private void loadData(){
-        Toast.makeText(activity, "Start "+start, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(activity, "Start "+start, Toast.LENGTH_SHORT).show();
         totalData();
         isLoading = true;
 //        start = 0;
@@ -327,6 +331,7 @@ public class CollectorJadwalFragment extends Fragment {
 //                            tvKunjungi.setText(iv.ChangeToCurrencyFormat(terkunjungi));
 //                            tvBelumKunjungi.setText(iv.ChangeToCurrencyFormat(tidakTerkunjungi));
 //                            adapter.notifyDataSetChanged();
+//                            adapter.updateData(listDonatur);
 
                         }
                         catch (JSONException e){
@@ -350,9 +355,9 @@ public class CollectorJadwalFragment extends Fragment {
                         dialogBox.dismissDialog();
                         isLoading=false;
 //                        adapter.notifyDataSetChanged();
-//                        if (rk1.equalsIgnoreCase("0") && rk2.equalsIgnoreCase("0")  && rk3.equalsIgnoreCase("0") ) {
-//                            adapter.clearAdapter();
-//                        }
+                        if (rk1.equals("0") && rk2.equals("0")  && rk3.equals("0") ) {
+                            adapter.clearAdapter();
+                        }
                         rv_jadwal.removeFooterView(footerList);
                         if(activity instanceof CollectorActivity){
                             ((CollectorActivity)activity).updateJumlah(total_data);
