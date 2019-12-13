@@ -8,12 +8,14 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,13 +26,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,12 +56,15 @@ import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.GoogleLocationManager;
+import co.id.gmedia.yia.Utils.IsLoading;
 import co.id.gmedia.yia.Utils.JSONBuilder;
 import co.id.gmedia.yia.Utils.ServerURL;
 
 public class CollectorJadwalFragment extends Fragment {
+    private static final String TAG = "MainActivity";
 
     private Activity activity;
+    Context context;
     private JadwalKunjunganCollectorAdapter adapter;
     private List<DonaturModel> listDonatur = new ArrayList<>();
     private ItemValidation iv = new ItemValidation();
@@ -64,8 +74,9 @@ public class CollectorJadwalFragment extends Fragment {
     private DialogBox dialogBox;
     private Button btnRekapSetoran;
     private CheckBox cbk1, cbk2, cbk3;
-    private RecyclerView rv_jadwal;
-    private TextView tvKunjungi, tvBelumKunjungi;
+    private ListView rv_jadwal;
+    private LinearLayoutManager linearLayoutManager;
+//    private TextView tvKunjungi, tvBelumKunjungi;
     private ImageView ivSort;
     private GoogleLocationManager locationManager;
     private boolean isLocationReloaded;
@@ -77,34 +88,64 @@ public class CollectorJadwalFragment extends Fragment {
     private String rk2="1";
     private String rk3="1";
     private Boolean location =false;
+    private int start = 0, count = 10;
+    private View footerList;
+    private boolean isLoading = false;
+    private int total_data=0;
+    private boolean filterlocation=false;
+
     public CollectorJadwalFragment() {
         // Required empty public constructor
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "InflateParams"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         activity = getActivity();
+        context = getContext();
         View v = inflater.inflate(R.layout.fragment_collector_jadwal, container, false);
 
         dialogBox = new DialogBox(activity);
-        //txt_tanggal = v.findViewById(R.id.txt_tanggal);
 
         rv_jadwal = v.findViewById(R.id.rv_jadwal);
         cbk1 = (CheckBox) v.findViewById(R.id.cb_k1);
         cbk2 = (CheckBox) v.findViewById(R.id.cb_k2);
         cbk3 = (CheckBox) v.findViewById(R.id.cb_k3);
-        tvKunjungi = (TextView) v.findViewById(R.id.tv_dikunjungi);
-        tvBelumKunjungi = (TextView) v.findViewById(R.id.tv_belum_dikunjungi);
+//        tvKunjungi = (TextView) v.findViewById(R.id.tv_dikunjungi);
+//        tvBelumKunjungi = (TextView) v.findViewById(R.id.tv_belum_dikunjungi);
         ivSort = (ImageView) v.findViewById(R.id.iv_sort);
         edtSearch = (EditText) v.findViewById(R.id.edt_search);
 
-        rv_jadwal.setItemAnimator(new DefaultItemAnimator());
-        rv_jadwal.setLayoutManager(new LinearLayoutManager(activity));
         btnRekapSetoran = (Button) v.findViewById(R.id.btn_rekap_setoran);
-        adapter = new JadwalKunjunganCollectorAdapter(activity, listDonatur);
+
+        LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        footerList = li.inflate(R.layout.footer_list, null);
+        adapter = new JadwalKunjunganCollectorAdapter(context, listDonatur);
+        rv_jadwal.addFooterView(footerList);
         rv_jadwal.setAdapter(adapter);
+        rv_jadwal.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+                int threshold = 1;
+                int countMerchant = rv_jadwal.getCount();
+                int visiblePosition =rv_jadwal.getLastVisiblePosition();
+
+                if (i == SCROLL_STATE_IDLE) {
+                    if ( visiblePosition >= countMerchant - threshold && !isLoading) {
+                        isLoading = true;
+                        rv_jadwal.addFooterView(footerList);
+                        start += count;
+                        loadData();
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+            }
+        });
 
         isLocationReloaded = false;
 
@@ -121,11 +162,10 @@ public class CollectorJadwalFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    Toast.makeText(getContext(),edtSearch.getText().toString(),Toast.LENGTH_SHORT).show();
                     InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     search = edtSearch.getText().toString();
-                    loadData(false);
+                    loadData();
                     return true;
                 }
                 return false;
@@ -138,16 +178,7 @@ public class CollectorJadwalFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadData(false);
-    }
-    private void filter(String text) {
-        ArrayList<DonaturModel> filteredList = new ArrayList<>();
-
-        for (DonaturModel item : listDonatur) {
-            if(item.getNama().toLowerCase().contains(text.toLowerCase()))
-                filteredList.add(item);
-        }
-        adapter.filterList(filteredList);
+        loadData();
     }
 
     private void initEvent() {
@@ -156,7 +187,7 @@ public class CollectorJadwalFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(activity, ListRekapSetoranActivity.class);
+                Intent intent = new Intent(context, ListRekapSetoranActivity.class);
                 startActivity(intent);
             }
         });
@@ -165,19 +196,17 @@ public class CollectorJadwalFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 rk1 = String.valueOf(isChecked ? 1 : 0);
-//                Toast.makeText(getContext(),"rk1 "+rk1,Toast.LENGTH_SHORT).show();
-                loadData(false);
-//                filterData(search);
+                loadData();
+                totalData();
             }
         });
 
         cbk2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                filterData(search);
                 rk2 = String.valueOf(isChecked ? 1 : 0);
-                loadData(false);
-
+                loadData();
+                totalData();
             }
         });
 
@@ -185,12 +214,12 @@ public class CollectorJadwalFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 rk3 = String.valueOf(isChecked ? 1 : 0);
-                loadData(false);
-//                filterData(search);
+                loadData();
+                totalData();
             }
         });
 
-        locationManager = new GoogleLocationManager((AppCompatActivity) activity, new GoogleLocationManager.LocationUpdateListener() {
+        locationManager = new GoogleLocationManager((AppCompatActivity) context, new GoogleLocationManager.LocationUpdateListener() {
             @Override
             public void onChange(Location location) {
 
@@ -199,7 +228,9 @@ public class CollectorJadwalFragment extends Fragment {
                     isLocationReloaded = false;
                     lat = location.getLatitude();
                     lng = location.getLongitude();
-                    loadData(true);
+                    filterlocation = true;
+                    loadData();
+                    totalData();
                 }
 
             }
@@ -217,92 +248,54 @@ public class CollectorJadwalFragment extends Fragment {
         });
     }
 
-//    private void filterData(String s){
-//
-//        final List<DonaturModel> newFilteredDonatur = new ArrayList<>();
-//
-//        int terkunjungi = 0, tidakTerkunjungi = 0;
-//
-//        for(DonaturModel item : listDonatur){
-//
-//            if(item.getRk().equals("rk1") && cbk1.isChecked()){
-//                if(!s.equalsIgnoreCase("")){
-//                    if(item.getNama().toLowerCase().contains(s.toLowerCase()))
-//                        newFilteredDonatur.add(item);
-//                }
-//                newFilteredDonatur.add(item);
-//                if(item.isDikunjungi()){
-//                    terkunjungi++;
-//                }else{
-//                    tidakTerkunjungi++;
-//                }
-//            }else if(item.getRk().equals("rk2") && cbk2.isChecked()){
-//
-//                newFilteredDonatur.add(item);
-//                if(item.isDikunjungi()){
-//                    terkunjungi++;
-//                }else{
-//                    tidakTerkunjungi++;
-//                }
-//            }else if(item.getRk().equals("rk3") && cbk3.isChecked()){
-//
-//                newFilteredDonatur.add(item);
-//                if(item.isDikunjungi()){
-//                    terkunjungi++;
-//                }else{
-//                    tidakTerkunjungi++;
-//                }
-//            }
-//        }
-//
-//        tvKunjungi.setText(iv.ChangeToCurrencyFormat(terkunjungi));
-//        tvBelumKunjungi.setText(iv.ChangeToCurrencyFormat(tidakTerkunjungi));
-//        if(activity instanceof CollectorActivity){
-//            ((CollectorActivity)activity).updateJumlah(newFilteredDonatur.size());
-//        }
-//
-//        adapter = new JadwalKunjunganCollectorAdapter(activity, newFilteredDonatur);
-//        rv_jadwal.setAdapter(adapter);
-//    }
+    private void loadData(){
+        Toast.makeText(activity, "Start "+start, Toast.LENGTH_SHORT).show();
+        totalData();
+        isLoading = true;
+//        start = 0;
 
-    private void loadData(final boolean withLocation){
-        adapter.clearAdapter();
-        //txt_tanggal.setText(Converter.getDateString(new Date()));
+        if(start == 0){
+            dialogBox.showDialog(false);
+        }
+
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
-//        Toast.makeText(getContext(),"rk1 "+rk1,Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getContext(),"rk2 "+rk2,Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getContext(),"rk3 "+rk3,Toast.LENGTH_SHORT).show();
         body.add("collector", new SessionManager(activity).getId());
         body.add("keyword",search);
         body.add("rk1",rk1);
         body.add("rk2",rk2);
         body.add("rk3",rk3);
+        body.add("start", String.valueOf(start));
+        body.add("count", String.valueOf(count));
 
-        tvKunjungi.setText("0");
-        tvBelumKunjungi.setText("0");
+//        tvKunjungi.setText("0");
+//        tvBelumKunjungi.setText("0");
 
-        if(withLocation){
-
+        if(filterlocation){
             body.add("latitude", lat);
             body.add("longitude", lng);
         }
-
-        new ApiVolley(activity, body.create(), "POST", ServerURL.getJadwalCollector,
+        new ApiVolley(activity, body.create(), "POST", ServerURL.getJadwalCollector2,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
                     @Override
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
-                        try{
+                        rv_jadwal.removeFooterView(footerList);
+                        isLoading=false;
+                        if(start == 0){
                             listDonatur.clear();
-                            int terkunjungi = 0, tidakTerkunjungi = 0;
+                        }
+                        try{
+
+//                            int terkunjungi = 0, tidakTerkunjungi = 0;
                             JSONArray object = new JSONArray(response);
+
                             for(int i = 0; i < object.length(); i++){
                                 JSONObject donatur = object.getJSONObject(i);
                                 listDonatur.add(new DonaturModel(
-                                        donatur.getString("id")
-                                        ,donatur.getString("id_donatur")
-                                        ,donatur.getString("nama")
+                                        object.getJSONObject(i).getString("id")
+                                        ,object.getJSONObject(i).getString("id_donatur")
+                                        ,object.getJSONObject(i).getString("nama")
                                         ,donatur.getString("alamat")
                                         ,donatur.getString("kontak")
                                         ,donatur.getString("lat")
@@ -318,23 +311,23 @@ public class CollectorJadwalFragment extends Fragment {
                                         ,donatur.getString("status").equals("0")
                                 ));
 
-                                if(donatur.getString("status").equals("0")){
-
-                                    terkunjungi++;
-                                }else{
-
-                                    tidakTerkunjungi++;
-                                }
+//                                if(donatur.getString("status").equals("0")){
+//
+//                                    terkunjungi++;
+//                                }else{
+//
+//                                    tidakTerkunjungi++;
+//                                }
                             }
-
-                            adapter.notifyDataSetChanged();
 
                             if(activity instanceof CollectorActivity){
-                                ((CollectorActivity)activity).updateJumlah(object.length());
+                                ((CollectorActivity)activity).updateJumlah(total_data);
                             }
 
-                            tvKunjungi.setText(iv.ChangeToCurrencyFormat(terkunjungi));
-                            tvBelumKunjungi.setText(iv.ChangeToCurrencyFormat(tidakTerkunjungi));
+//                            tvKunjungi.setText(iv.ChangeToCurrencyFormat(terkunjungi));
+//                            tvBelumKunjungi.setText(iv.ChangeToCurrencyFormat(tidakTerkunjungi));
+//                            adapter.notifyDataSetChanged();
+
                         }
                         catch (JSONException e){
                             Log.e("json_log", e.getMessage());
@@ -342,37 +335,86 @@ public class CollectorJadwalFragment extends Fragment {
                                 @Override
                                 public void onClick(View view) {
                                     dialogBox.dismissDialog();
-                                    loadData(withLocation);
+                                    loadData();
                                 }
                             };
 
                             dialogBox.showDialog(clickListener, "Ulangi Proses",
                                     "Terjadi kesalahan saat mengambil data");
                         }
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onEmpty(String message) {
                         dialogBox.dismissDialog();
+                        isLoading=false;
+//                        adapter.notifyDataSetChanged();
+//                        if (rk1.equalsIgnoreCase("0") && rk2.equalsIgnoreCase("0")  && rk3.equalsIgnoreCase("0") ) {
+//                            adapter.clearAdapter();
+//                        }
+                        rv_jadwal.removeFooterView(footerList);
                         if(activity instanceof CollectorActivity){
-                            ((CollectorActivity)activity).updateJumlah(0);
+                            ((CollectorActivity)activity).updateJumlah(total_data);
                         }
                     }
 
                     @Override
                     public void onFail(String message) {
+                        isLoading=false;
                         dialogBox.dismissDialog();
+                        rv_jadwal.removeFooterView(footerList);
                         View.OnClickListener clickListener = new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 dialogBox.dismissDialog();
-                                loadData(withLocation);
+                                loadData();
 
                             }
                         };
 
                         dialogBox.showDialog(clickListener, "Ulangi Proses",
                                 "Terjadi kesalahan saat mengambil data");
+                    }
+                }));
+    }
+
+    private void totalData(){
+        dialogBox.showDialog(false);
+        JSONBuilder body = new JSONBuilder();
+        body.add("collector", new SessionManager(activity).getId());
+        body.add("keyword",search);
+        body.add("rk1",rk1);
+        body.add("rk2",rk2);
+        body.add("rk3",rk3);
+
+        if(filterlocation){
+            body.add("latitude", lat);
+            body.add("longitude", lng);
+        }
+
+        new ApiVolley(activity, body.create(), "POST", ServerURL.getTotalKunjungan,
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
+                    @Override
+                    public void onSuccess(String response, String message) {
+                        dialogBox.dismissDialog();
+                        try{
+                            Log.d("response>>",String.valueOf(response));
+                            JSONObject obj = new JSONObject(response);
+                            total_data = obj.getInt("total");
+
+                        }
+                        catch (JSONException e){
+                            Log.e("json_log", e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onEmpty(String message) {
+                    }
+
+                    @Override
+                    public void onFail(String message) {
                     }
                 }));
     }

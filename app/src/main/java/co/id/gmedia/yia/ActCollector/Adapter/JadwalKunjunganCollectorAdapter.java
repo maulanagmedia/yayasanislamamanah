@@ -7,11 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,9 +32,12 @@ import java.util.Date;
 import java.util.List;
 
 import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.CustomModel;
 import co.id.gmedia.coremodul.DialogBox;
+import co.id.gmedia.coremodul.FormatItem;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActCollector.CollectorDonaturDetailActivity;
+import co.id.gmedia.yia.ActNotifikasi.Adapter.ListNotifikasiAdapter;
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
@@ -44,185 +49,182 @@ import co.id.gmedia.yia.Utils.ServerURL;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<JadwalKunjunganCollectorAdapter.JadwalKunjunganViewHolder> {
+public class JadwalKunjunganCollectorAdapter extends ArrayAdapter<DonaturModel> {
 
     private Context context;
     private List<DonaturModel> listDonatur;
 
     public JadwalKunjunganCollectorAdapter(Context context, List<DonaturModel> listDonatur){
+        super(context,R.layout.item_collector_jadwal);
         this.context = context;
         this.listDonatur = listDonatur;
     }
 
-    @NonNull
-    @Override
-    public JadwalKunjunganViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new JadwalKunjunganViewHolder(LayoutInflater.from(context).
-                inflate(R.layout.item_collector_jadwal, parent, false));
+    private static class ViewHolder {
+        private TextView txt_nama, txt_alamat, txt_kontak, txt_rk;
+        private ImageView img_plus, img_cek;
+        private RelativeLayout rlInput;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull JadwalKunjunganViewHolder holder, int position) {
-        holder.bind(listDonatur.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return listDonatur.size();
     }
 
-    class JadwalKunjunganViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
-        TextView txt_nama, txt_alamat, txt_kontak, txt_rk;
-        ImageView img_plus, img_cek;
-        RelativeLayout rlInput;
+        ViewHolder holder = new ViewHolder();
 
-        JadwalKunjunganViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            txt_nama = itemView.findViewById(R.id.txt_nama);
-            txt_alamat = itemView.findViewById(R.id.txt_alamat);
-            txt_kontak = itemView.findViewById(R.id.txt_kontak);
-            txt_rk = itemView.findViewById(R.id.txt_rk);
-            img_cek = itemView.findViewById(R.id.img_cek);
-            img_plus = itemView.findViewById(R.id.img_plus);
-            rlInput = itemView.findViewById(R.id.rl_input);
+        if(convertView == null){
+//            LayoutInflater inflater = context.getLayoutInflater();
+            convertView = LayoutInflater.from(getContext()).
+                    inflate(R.layout.item_collector_jadwal, parent, false);
+            holder.txt_nama = convertView.findViewById(R.id.txt_nama);
+            holder.txt_alamat = convertView.findViewById(R.id.txt_alamat);
+            holder.txt_kontak = convertView.findViewById(R.id.txt_kontak);
+            holder.txt_rk = convertView.findViewById(R.id.txt_rk);
+            holder.img_cek = convertView.findViewById(R.id.img_cek);
+            holder.img_plus = convertView.findViewById(R.id.img_plus);
+            holder.rlInput = convertView.findViewById(R.id.rl_input);
+            convertView.setTag(holder);
+        }else{
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        void bind(final DonaturModel b){
+//        DonaturModel b = listDonatur.get(position);
+        holder.txt_nama.setText(listDonatur.get(position).getNama());
+        holder.txt_kontak.setText(listDonatur.get(position).getKontak());
+        holder.txt_alamat.setText(listDonatur.get(position).getAlamat());
+        holder.txt_rk.setText(listDonatur.get(position).getRk().toUpperCase());
+        if(listDonatur.get(position).isDikunjungi()){
+            holder.img_cek.setVisibility(View.VISIBLE);
+            holder.rlInput.setVisibility(View.GONE);
+        }else{
+            holder.img_cek.setVisibility(View.GONE);
+            holder.rlInput.setVisibility(View.VISIBLE);
+        }
 
-            txt_nama.setText(b.getNama());
-            txt_kontak.setText(b.getKontak());
-            txt_alamat.setText(b.getAlamat());
-            txt_rk.setText(b.getRk().toUpperCase());
-
-            if(b.isDikunjungi()){
-                img_cek.setVisibility(View.VISIBLE);
-                rlInput.setVisibility(View.GONE);
-            }else{
-                img_cek.setVisibility(View.GONE);
-                rlInput.setVisibility(View.VISIBLE);
+        holder.rlInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                Intent intent = new Intent(context, CollectorDonaturDetailActivity.class);
+                intent.putExtra("donatur", gson.toJson(listDonatur.get(position)));
+                context.startActivity(intent);
             }
+        });
 
-            rlInput.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Gson gson = new Gson();
-                    Intent intent = new Intent(context, CollectorDonaturDetailActivity.class);
-                    intent.putExtra("donatur", gson.toJson(b));
-                    context.startActivity(intent);
-                }
-            });
+        holder.img_plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                LayoutInflater inflater = (LayoutInflater) ((Activity)context).getSystemService(LAYOUT_INFLATER_SERVICE);
+                View viewDialog = inflater.inflate(R.layout.dialog_choser_collection, null);
+                builder.setView(viewDialog);
+                //builder.setCancelable(true);
 
-            img_plus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    LayoutInflater inflater = (LayoutInflater) ((Activity)context).getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View viewDialog = inflater.inflate(R.layout.dialog_choser_collection, null);
-                    builder.setView(viewDialog);
-                    //builder.setCancelable(true);
+                final Button btn0 = (Button) viewDialog.findViewById(R.id.btn_0);
+                final Button btn1 = (Button) viewDialog.findViewById(R.id.btn_1);
+                final Button btn2 = (Button) viewDialog.findViewById(R.id.btn_2);
+                final ImageView ivClose = (ImageView) viewDialog.findViewById(R.id.iv_close);
 
-                    final Button btn0 = (Button) viewDialog.findViewById(R.id.btn_0);
-                    final Button btn1 = (Button) viewDialog.findViewById(R.id.btn_1);
-                    final Button btn2 = (Button) viewDialog.findViewById(R.id.btn_2);
-                    final ImageView ivClose = (ImageView) viewDialog.findViewById(R.id.iv_close);
+                final AlertDialog alert = builder.create();
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-                    final AlertDialog alert = builder.create();
-                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                    alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                alert.getWindow().setGravity(Gravity.BOTTOM);
 
-                    alert.getWindow().setGravity(Gravity.BOTTOM);
+                final AlertDialog alertDialogs = alert;
 
-                    final AlertDialog alertDialogs = alert;
-
-                    viewDialog.findViewById(R.id.btn_berhenti).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                            showBerhentiDialog(b.getId_donatur(), b.getKaleng());
-                        }
-                    });
-
-                    btn0.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            Gson gson = new Gson();
-                            Intent intent = new Intent(context, CollectorDonaturDetailActivity.class);
-                            intent.putExtra("donatur", gson.toJson(b));
-                            intent.putExtra("edit", true);
-                            context.startActivity(intent);
-                        }
-                    });
-
-                    btn1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view2) {
-
-                            if(alertDialogs != null) {
-
-                                try {
-                                    alertDialogs.dismiss();
-                                }catch (Exception e){
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            Intent intent = new Intent(Intent.ACTION_DIAL);
-                            intent.setData(Uri.parse("tel:" + b.getKontak()));
-                            if (intent.resolveActivity(context.getPackageManager()) != null) {
-                                context.startActivity(intent);
-                            }
-                        }
-                    });
-
-                    btn2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view2) {
-
-                            if(alertDialogs != null) {
-
-                                try {
-                                    alertDialogs.dismiss();
-                                }catch (Exception e){
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            Intent intent = new Intent(context, DetailCurrentPosActivity.class);
-                            intent.putExtra("nama", b.getNama());
-                            intent.putExtra("alamat", b.getAlamat());
-                            intent.putExtra("lat", b.getLatitude());
-                            intent.putExtra("long", b.getLognitude());
-                            context.startActivity(intent);
-                        }
-                    });
-
-                    ivClose.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if(alertDialogs != null) {
-
-                                try {
-                                    alertDialogs.dismiss();
-                                }catch (Exception e){
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    });
-
-                    try {
-
-                        alert.show();
-                    }catch (Exception e){
-                        e.printStackTrace();
+                viewDialog.findViewById(R.id.btn_berhenti).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alert.dismiss();
+                        showBerhentiDialog(listDonatur.get(position).getId_donatur(), listDonatur.get(position).getKaleng());
                     }
+                });
+
+                btn0.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Gson gson = new Gson();
+                        Intent intent = new Intent(context, CollectorDonaturDetailActivity.class);
+                        intent.putExtra("donatur", gson.toJson(listDonatur.get(position)));
+                        intent.putExtra("edit", true);
+                        context.startActivity(intent);
+                    }
+                });
+
+                btn1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view2) {
+
+                        if(alertDialogs != null) {
+
+                            try {
+                                alertDialogs.dismiss();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:" + listDonatur.get(position).getKontak()));
+                        if (intent.resolveActivity(context.getPackageManager()) != null) {
+                            context.startActivity(intent);
+                        }
+                    }
+                });
+
+                btn2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view2) {
+
+                        if(alertDialogs != null) {
+
+                            try {
+                                alertDialogs.dismiss();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+
+                        Intent intent = new Intent(context, DetailCurrentPosActivity.class);
+                        intent.putExtra("nama", listDonatur.get(position).getNama());
+                        intent.putExtra("alamat", listDonatur.get(position).getAlamat());
+                        intent.putExtra("lat", listDonatur.get(position).getLatitude());
+                        intent.putExtra("long", listDonatur.get(position).getLognitude());
+                        context.startActivity(intent);
+                    }
+                });
+
+                ivClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if(alertDialogs != null) {
+
+                            try {
+                                alertDialogs.dismiss();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+                try {
+
+                    alert.show();
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
-            });
-        }
+            }
+        });
+        return convertView;
+
     }
 
     private void showBerhentiDialog(final String id_donatur, final String kaleng){
@@ -307,8 +309,4 @@ public class JadwalKunjunganCollectorAdapter extends RecyclerView.Adapter<Jadwal
         notifyDataSetChanged();
     }
 
-    public void filterList(ArrayList<DonaturModel> filteredList) {
-        listDonatur = filteredList;
-        notifyDataSetChanged();
-    }
 }

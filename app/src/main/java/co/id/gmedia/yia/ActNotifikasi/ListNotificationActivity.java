@@ -99,7 +99,7 @@ public class ListNotificationActivity extends AppCompatActivity {
     private void initData() {
 
         isLoading = true;
-        start = 0;
+//        start = 0;
 
         if(start == 0){
             dialogBox.showDialog(false);

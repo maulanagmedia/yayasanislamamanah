@@ -1,210 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".ActCollector.CollectorJadwalFragment">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/padding_big"
-        android:layout_marginLeft="@dimen/padding_big"
-        android:layout_marginRight="@dimen/padding_big"
-        android:gravity="center"
-        android:weightSum="2">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Jadwal Kunjungan"
-            android:textSize="@dimen/text_medium"
-            android:textColor="@color/color_black"
-            />
-
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:id="@+id/ll_parent"
+            android:layout_alignParentTop="true"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingRight="@dimen/padding_default"
-            android:paddingLeft="@dimen/padding_default"
-            >
+            android:orientation="vertical">
 
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:id="@+id/btn_rekap_setoran"
-                android:background="@drawable/bg_button_white"
-                android:textColor="@color/colorGreen3"
-                android:textSize="11sp"
-                android:text="Lihat Rekap Setoran"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/ll_data"
+                android:layout_marginTop="@dimen/padding_big"
+                android:layout_marginLeft="@dimen/padding_big"
+                android:layout_marginRight="@dimen/padding_big"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Jadwal Kunjungan"
+                    android:textSize="@dimen/text_medium"
+                    android:textColor="@color/color_black"
+                    />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="@dimen/padding_default"
+                    android:paddingLeft="@dimen/padding_default"
+                    >
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:id="@+id/btn_rekap_setoran"
+                        android:background="@drawable/bg_button_white"
+                        android:textColor="@color/colorGreen3"
+                        android:textSize="11sp"
+                        android:text="Lihat Rekap Setoran"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:id="@+id/iv_sort"
+                    android:layout_margin="@dimen/padding_default"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/ic_sort_loc"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="@dimen/padding_big"
+                android:layout_marginRight="@dimen/padding_big"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:descendantFocusability="beforeDescendants"
+                    android:focusableInTouchMode="true"
+                    android:background="@drawable/bg_input">
+
+                    <ImageView
+                        android:id="@+id/iv_search"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/padding_default"
+                        android:src="@mipmap/ic_search1" />
+
+
+                    <EditText
+                        android:id="@+id/edt_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_toRightOf="@id/iv_search"
+                        android:background="@android:color/transparent"
+                        android:foregroundGravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:hint="Keyword"
+                        android:imeOptions="actionSearch"
+                        android:focusable="false"
+                        android:inputType="textPersonName"
+                        android:padding="@dimen/padding_default"
+                        android:text=""
+                        android:textSize="@dimen/text_small" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/padding_big"
+                android:layout_marginRight="@dimen/padding_big"
+                android:layout_marginTop="@dimen/padding_default"
+                android:weightSum="3">
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cb_k1"
+                    android:checked="true"
+                    android:text="K1 (1-10)"/>
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cb_k2"
+                    android:checked="true"
+                    android:text="K2 (11-20)"/>
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cb_k3"
+                    android:checked="true"
+                    android:text="K3 (21-30)"/>
+
+            </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_marginTop="@dimen/padding_default"-->
+<!--                android:weightSum="2">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/bg_input"-->
+<!--                    android:padding="@dimen/padding_small"-->
+<!--                    android:layout_marginLeft="@dimen/padding_default"-->
+<!--                    android:layout_marginRight="@dimen/padding_small"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Sudah Dikunjungi"-->
+<!--                        android:textColor="@color/colorBlack"/>-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="0"-->
+<!--                        android:id="@+id/tv_dikunjungi"-->
+<!--                        android:textColor="@color/colorBlue2"-->
+<!--                        android:textSize="@dimen/text_big"/>-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/bg_input"-->
+<!--                    android:padding="@dimen/padding_small"-->
+<!--                    android:layout_marginLeft="@dimen/padding_small"-->
+<!--                    android:layout_marginRight="@dimen/padding_default"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Belum Dikunjungi"-->
+<!--                        android:textColor="@color/colorBlack"/>-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="0"-->
+<!--                        android:id="@+id/tv_belum_dikunjungi"-->
+<!--                        android:textColor="@color/colorBlue2"-->
+<!--                        android:textSize="@dimen/text_big"/>-->
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
 
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
-            android:id="@+id/iv_sort"
-            android:layout_margin="@dimen/padding_default"
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/ic_sort_loc"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="@dimen/padding_big"
-        android:layout_marginRight="@dimen/padding_big"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="center">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true"
-            android:background="@drawable/bg_input">
-
-            <ImageView
-                android:id="@+id/iv_search"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/padding_default"
-                android:src="@mipmap/ic_search1" />
-
-
-            <EditText
-                android:id="@+id/edt_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="3dp"
-                android:layout_toRightOf="@id/iv_search"
-                android:background="@android:color/transparent"
-                android:foregroundGravity="center_vertical"
-                android:gravity="center_vertical"
-                android:hint="Keyword"
-                android:imeOptions="actionSearch"
-                android:focusable="false"
-                android:inputType="textPersonName"
-                android:padding="@dimen/padding_default"
-                android:text=""
-                android:textSize="@dimen/text_small" />
-
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/padding_big"
-        android:layout_marginRight="@dimen/padding_big"
-        android:layout_marginTop="@dimen/padding_default"
-        android:weightSum="3">
-
-        <CheckBox
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/cb_k1"
-            android:checked="true"
-            android:text="K1 (1-10)"/>
-
-        <CheckBox
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/cb_k2"
-            android:checked="true"
-            android:text="K2 (11-20)"/>
-
-        <CheckBox
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/cb_k3"
-            android:checked="true"
-            android:text="K3 (21-30)"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/padding_default"
-        android:weightSum="2">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_input"
-            android:padding="@dimen/padding_small"
-            android:layout_marginLeft="@dimen/padding_default"
-            android:layout_marginRight="@dimen/padding_small"
+            android:layout_below="@+id/ll_parent"
             android:orientation="vertical">
-
-            <TextView
+            <ListView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sudah Dikunjungi"
-                android:textColor="@color/colorBlack"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="0"
-                android:id="@+id/tv_dikunjungi"
-                android:textColor="@color/colorBlue2"
-                android:textSize="@dimen/text_big"/>
+                android:layout_height="400dp"
+                android:nestedScrollingEnabled="true"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/padding_default"
+                android:layout_marginBottom="@dimen/padding_default"
+                android:id="@+id/rv_jadwal"
+                android:divider="@null"/>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_input"
-            android:padding="@dimen/padding_small"
-            android:layout_marginLeft="@dimen/padding_small"
-            android:layout_marginRight="@dimen/padding_default"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Belum Dikunjungi"
-                android:textColor="@color/colorBlack"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="0"
-                android:id="@+id/tv_belum_dikunjungi"
-                android:textColor="@color/colorBlue2"
-                android:textSize="@dimen/text_big"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_jadwal"
-        android:layout_marginTop="@dimen/padding_default"
-        android:layout_marginBottom="@dimen/padding_default"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-</LinearLayout>
+</RelativeLayout>
