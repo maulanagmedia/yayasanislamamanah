@@ -166,6 +166,7 @@ public class CollectorJadwalFragment extends Fragment {
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     search = edtSearch.getText().toString();
                     loadData();
+                    start =0;
                     return true;
                 }
                 return false;
@@ -206,7 +207,6 @@ public class CollectorJadwalFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 rk2 = String.valueOf(isChecked ? 1 : 0);
-                Toast.makeText(activity, "RK2 "+rk2, Toast.LENGTH_SHORT).show();
                 loadData();
                 totalData();
                 listDonatur.clear();
@@ -253,10 +253,9 @@ public class CollectorJadwalFragment extends Fragment {
     }
 
     private void loadData(){
-//        Toast.makeText(activity, "Start "+start, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(activity, "keyword "+search, Toast.LENGTH_SHORT).show();
         totalData();
         isLoading = true;
-//        start = 0;
 
         if(start == 0){
             dialogBox.showDialog(false);
@@ -271,9 +270,6 @@ public class CollectorJadwalFragment extends Fragment {
         body.add("rk3",rk3);
         body.add("start", String.valueOf(start));
         body.add("count", String.valueOf(count));
-
-//        tvKunjungi.setText("0");
-//        tvBelumKunjungi.setText("0");
 
         if(filterlocation){
             body.add("latitude", lat);
@@ -314,14 +310,6 @@ public class CollectorJadwalFragment extends Fragment {
                                         ,donatur.getString("kelurahan")
                                         ,donatur.getString("status").equals("0")
                                 ));
-
-//                                if(donatur.getString("status").equals("0")){
-//
-//                                    terkunjungi++;
-//                                }else{
-//
-//                                    tidakTerkunjungi++;
-//                                }
                             }
 
                             if(activity instanceof CollectorActivity){
