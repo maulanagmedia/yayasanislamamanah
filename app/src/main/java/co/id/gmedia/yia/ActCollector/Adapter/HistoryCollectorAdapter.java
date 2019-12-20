@@ -74,7 +74,7 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
             txt_kontak_donatur.setText(b.getKontak());
             txt_nominal.setText(iv.ChangeToRupiahFormat(b.getNominal()));
             txt_jenis.setText(b.getJenisDonatur());
-            tvTanggal.setText(iv.ChangeFormatDateString(b.getTanggal(), FormatItem.formatTimestamp, FormatItem.formatDate1));
+            tvTanggal.setText(iv.ChangeFormatDateString(b.getTanggal(), FormatItem.formatTimestamp, FormatItem.formatDateTimeStamp));
 
             /*txt_tanggal.setText(Converter.DToString(b.getTanggal()));
             txt_jenis_donasi.setText(b.getJenis());

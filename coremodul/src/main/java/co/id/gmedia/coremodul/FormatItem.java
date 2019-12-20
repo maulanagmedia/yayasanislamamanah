@@ -16,4 +16,5 @@ public class FormatItem {
     public static final String formatDateTimeDisplay1 = "dd MMM yyyy HH:mm:ss";
     public static final String formatDateTimeDisplay2 = "dd MMM yyyy HH:mm";
     public static final String formatDate1 = "dd MMM yyyy";
+    public static final String formatDateTimeStamp = "dd MMM yyyy HH:mm:ss";
 }
