@@ -1,4 +1,4 @@
-package co.id.gmedia.yia.ActSalesSosial;
+package co.id.gmedia.yia.ActCollector;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,13 +39,14 @@ import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.OptionItem;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActSalesBrosur.Adapter.SearchableSpinnerDialogOptionAdapter;
+import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.DialogFactory;
 import co.id.gmedia.yia.Utils.ServerURL;
 
-public class EditDonaturSosialActivity extends AppCompatActivity {
+public class EditDonaturCollectorActivity extends AppCompatActivity {
 
-    private CustomModel customModel;
+    private DonaturModel customModel;
     private DialogBox dialogBox;
     private Context context;
     private List<OptionItem> listKota = new ArrayList<>(), listKecamatan = new ArrayList<>(), listKeluarahan = new ArrayList<>();
@@ -61,7 +62,8 @@ public class EditDonaturSosialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_donatur_sosial);
+        setContentView(R.layout.activity_edit_donatur_collector);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getWindow().setSoftInputMode(
@@ -87,39 +89,24 @@ public class EditDonaturSosialActivity extends AppCompatActivity {
 
         if(getIntent().hasExtra("donatur")){
             Gson gson = new Gson();
-            customModel = gson.fromJson(getIntent().getStringExtra("donatur"), CustomModel.class);
+            customModel = gson.fromJson(getIntent().getStringExtra("donatur"), DonaturModel.class);
         }
 
         initDonatur();
         initEvent();
         getDataKota();
-        getDataKecamatan(customModel.getItem13());
-        getDataKelurahan(customModel.getItem14());
+        getDataKecamatan(customModel.getIdKota());
+        getDataKelurahan(customModel.getIdKecamatan());
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
+            selectedKota = customModel.getIdKota();
+            selectedKecamatan = customModel.getIdKecamatan();
+            selectedKelurahan = customModel.getIdKelurahan();
 
-            isEdit = bundle.getBoolean("edit", false);
-            if(isEdit){
-                selectedKota = customModel.getItem13();
-                selectedKecamatan = customModel.getItem14();
-                selectedKelurahan = customModel.getItem15();
-
-                tvKota.setText(customModel.getItem16());
-                tvKecamatan.setText(customModel.getItem17());
-                tvKelurahan.setText(customModel.getItem18());
-            }
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+            tvKota.setText(customModel.getKota());
+            tvKecamatan.setText(customModel.getKecamatan());
+            tvKelurahan.setText(customModel.getKelurahan());
         }
     }
 
@@ -129,34 +116,33 @@ public class EditDonaturSosialActivity extends AppCompatActivity {
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(customModel != null){
-                    AlertDialog dialog = new AlertDialog.Builder(context)
-                            .setTitle("Konfirmasi")
-                            .setMessage("Anda yakin ingin mengubah data donatur")
-                            .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    editDonatur();
+                AlertDialog dialog = new AlertDialog.Builder(context)
+                        .setTitle("Konfirmasi")
+                        .setMessage("Anda yakin ingin mengubah data donatur")
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                udpateData();
 //                                    Toast.makeText(context,customModel.getItem2(),Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .show();
-                }
+                            }
+                        })
+                        .show();
+
             }
         });
     }
 
-    private void editDonatur(){
+    private void udpateData(){
 
         JSONObject object = new JSONObject();
         try {
-            object.put("id_donatur",customModel.getItem2());
+            object.put("id",customModel.getId_donatur());
             object.put("nama",edtNama.getText().toString());
             object.put("alamat",edtAlamat.getText().toString());
             object.put("kontak",edtKontak.getText().toString());
@@ -167,7 +153,7 @@ public class EditDonaturSosialActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        new ApiVolley(context, object, "POST", ServerURL.editDonaturSosial, new ApiVolley.VolleyCallback() {
+        new ApiVolley(context, object, "POST", ServerURL.updateDonatur, new ApiVolley.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
 
@@ -192,7 +178,7 @@ public class EditDonaturSosialActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             dialogBox.dismissDialog();
-                            editDonatur();
+                            udpateData();
                         }
                     };
 
@@ -207,7 +193,7 @@ public class EditDonaturSosialActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         dialogBox.dismissDialog();
-                        editDonatur();
+                        udpateData();
                     }
                 };
 
@@ -216,11 +202,22 @@ public class EditDonaturSosialActivity extends AppCompatActivity {
         });
     }
 
-    private  void initDonatur(){
-        edtNama.setText(customModel.getItem3());
-        edtKontak.setText(customModel.getItem5());
-        edtAlamat.setText(customModel.getItem4());
-        edtKeterangan.setText(customModel.getItem10());
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void initDonatur(){
+        edtNama.setText(customModel.getNama());
+        edtKontak.setText(customModel.getKontak());
+        edtAlamat.setText(customModel.getAlamat());
+        edtKeterangan.setText(customModel.getKeterangan());
     }
 
     private void initEvent() {

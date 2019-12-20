@@ -81,6 +81,16 @@
                             android:gravity="center"
                             android:layout_weight="0.3"
                             android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tv_jumlah_history"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/text_20"
+                            android:textColor="@color/color_white"
+                            android:gravity="center"
+                            android:layout_weight="0.3"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 

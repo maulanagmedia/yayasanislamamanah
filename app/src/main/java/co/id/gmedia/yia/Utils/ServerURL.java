@@ -24,6 +24,7 @@ public class ServerURL {
     public static final String editDonaturSosial = baseURL + "Sales_sosial/Rencana_kerja/editDonaturSosial";
 
     public static final String getRencanaKerjaCollector = baseURL + "Collector/Rencana_kerja/history_collector";
+    public static final String getTotalHistoryCollector = baseURL + "Collector/Rencana_kerja/total_history_collector";
     public static final String getJadwalCollector = baseURL + "Collector/Rencana_kerja/jadwal_collector";
     public static final String getJadwalCollector2 = baseURL + "Collector/Rencana_kerja/jadwal_kunjungan_collector";
     public static final String getTotalKunjungan = baseURL + "Collector/Rencana_kerja/total_kunjungan_collector";
