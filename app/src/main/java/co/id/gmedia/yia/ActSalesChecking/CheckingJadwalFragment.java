@@ -142,7 +142,7 @@ public class CheckingJadwalFragment extends Fragment {
             body.add("long", lng);
         }
 
-        new ApiVolley(activity, body.create(), "POST", ServerURL.getRencanaKerjaSurvey,
+        new ApiVolley(activity, body.create(), "POST", ServerURL.getJadwalKerjaSurvey,
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
                     @Override
                     public void onSuccess(String response, String message) {
