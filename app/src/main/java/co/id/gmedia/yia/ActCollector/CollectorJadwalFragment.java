@@ -91,7 +91,7 @@ public class CollectorJadwalFragment extends Fragment {
     private int start = 0, count = 10;
     private View footerList;
     private boolean isLoading = false;
-    private int total_data=0;
+    private String total_data="0";
     private boolean filterlocation=false;
 
     public CollectorJadwalFragment() {
@@ -180,6 +180,7 @@ public class CollectorJadwalFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadData();
+//        start=0;
     }
 
     private void initEvent() {
@@ -197,9 +198,9 @@ public class CollectorJadwalFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 rk1 = String.valueOf(isChecked ? 1 : 0);
+                listDonatur.clear();
                 loadData();
                 totalData();
-                listDonatur.clear();
             }
         });
 
@@ -207,9 +208,9 @@ public class CollectorJadwalFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 rk2 = String.valueOf(isChecked ? 1 : 0);
+                listDonatur.clear();
                 loadData();
                 totalData();
-                listDonatur.clear();
             }
         });
 
@@ -217,9 +218,9 @@ public class CollectorJadwalFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 rk3 = String.valueOf(isChecked ? 1 : 0);
+                listDonatur.clear();
                 loadData();
                 totalData();
-                listDonatur.clear();
             }
         });
 
@@ -253,7 +254,6 @@ public class CollectorJadwalFragment extends Fragment {
     }
 
     private void loadData(){
-//        Toast.makeText(activity, "keyword "+search, Toast.LENGTH_SHORT).show();
         totalData();
         isLoading = true;
 
@@ -312,9 +312,9 @@ public class CollectorJadwalFragment extends Fragment {
                                 ));
                             }
 
-                            if(activity instanceof CollectorActivity){
-                                ((CollectorActivity)activity).updateJumlah(total_data);
-                            }
+//                            if(activity instanceof CollectorActivity){
+//                                ((CollectorActivity)activity).updateJumlah(total_data);
+//                            }
 
 //                            tvKunjungi.setText(iv.ChangeToCurrencyFormat(terkunjungi));
 //                            tvBelumKunjungi.setText(iv.ChangeToCurrencyFormat(tidakTerkunjungi));
@@ -347,9 +347,6 @@ public class CollectorJadwalFragment extends Fragment {
                             adapter.clearAdapter();
                         }
                         rv_jadwal.removeFooterView(footerList);
-                        if(activity instanceof CollectorActivity){
-                            ((CollectorActivity)activity).updateJumlah(total_data);
-                        }
                     }
 
                     @Override
@@ -394,7 +391,8 @@ public class CollectorJadwalFragment extends Fragment {
                         try{
                             Log.d("response>>",String.valueOf(response));
                             JSONObject obj = new JSONObject(response);
-                            total_data = obj.getInt("total");
+                            total_data = obj.getString("total");
+                            ((CollectorActivity)activity).updateJumlah(total_data);
 
                         }
                         catch (JSONException e){

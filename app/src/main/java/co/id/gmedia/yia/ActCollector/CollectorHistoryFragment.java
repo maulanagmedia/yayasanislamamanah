@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,7 +63,8 @@ public class CollectorHistoryFragment extends Fragment {
     private String dateFrom = "", dateTo = "";
     private ItemValidation iv = new ItemValidation();
     private CheckBox cbDD, cbDL;
-    private TextView tvDonasiYa, tvDonasiTidak;
+    String total_data="0";
+    private TextView tvDonasiYa, tvDonasiTidak, tvTotalHistory;
 
     public CollectorHistoryFragment() {
         // Required empty public constructor
@@ -85,6 +87,7 @@ public class CollectorHistoryFragment extends Fragment {
         cbDL = (CheckBox) v.findViewById(R.id.cb_dl);
         tvDonasiYa = (TextView) v.findViewById(R.id.tv_donasi_ya);
         tvDonasiTidak = (TextView) v.findViewById(R.id.tv_donasi_tidak);
+        tvTotalHistory = (TextView) v.findViewById(R.id.tv_jumlah_history);
 
         rv_history.setItemAnimator(new DefaultItemAnimator());
         rv_history.setLayoutManager(new LinearLayoutManager(activity));
@@ -101,6 +104,7 @@ public class CollectorHistoryFragment extends Fragment {
 
         initEvent();
         loadHistory();
+//        totalHistory();
 
         return v;
     }
@@ -186,6 +190,7 @@ public class CollectorHistoryFragment extends Fragment {
 
     private void loadHistory(){
 
+        totalHistory();
         dialogBox.showDialog(false);
 
         JSONBuilder body = new JSONBuilder();
@@ -220,6 +225,8 @@ public class CollectorHistoryFragment extends Fragment {
                                 dn.setTanggal(donatur.getString("tgl_insert"));
                                 listDonatur.add(dn);
                             }
+//                            if(activity instanceof CollectorActivity){
+//                            }
 
                             adapter.notifyDataSetChanged();
                         }
@@ -263,5 +270,44 @@ public class CollectorHistoryFragment extends Fragment {
                                 "Terjadi kesalahan saat mengambil data");
                     }
                 }));
+    }
+
+    private void totalHistory(){
+        JSONBuilder body = new JSONBuilder();
+        body.add("collector", new SessionManager(activity).getId());
+        body.add("tgl_awal", iv.ChangeFormatDateString(dateFrom, FormatItem.formatDateDisplay, FormatItem.formatDate));
+        body.add("tgl_akhir", iv.ChangeFormatDateString(dateTo, FormatItem.formatDateDisplay, FormatItem.formatDate));
+        body.add("keyword", edtSearch.getText().toString());
+        body.add("data_dalam", cbDD.isChecked() ? "1" : "0");
+        body.add("data_luar", cbDL.isChecked() ? "1" : "0");
+
+        new ApiVolley(activity, body.create(), "POST", ServerURL.getTotalHistoryCollector,
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
+                    @Override
+                    public void onSuccess(String response, String message) {
+                        try{
+                            Log.d("response>>",String.valueOf(response));
+                            JSONObject obj = new JSONObject(response);
+//                            Toast.makeText(activity, String.valueOf(obj), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(activity, obj.getString("total"), Toast.LENGTH_SHORT).show();
+                            total_data  = obj.getString("total");
+                            ((CollectorActivity)activity).updateJumlahHistory(total_data);
+                        }
+                        catch (JSONException e){
+                            Log.e("json_log", e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onEmpty(String message) {
+                        total_data  = "0";
+                    }
+
+                    @Override
+                    public void onFail(String message) {
+                        total_data  = "0";
+                    }
+                })
+        );
     }
 }

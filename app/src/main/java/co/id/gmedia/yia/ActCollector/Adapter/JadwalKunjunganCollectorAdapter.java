@@ -37,6 +37,7 @@ import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.FormatItem;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActCollector.CollectorDonaturDetailActivity;
+import co.id.gmedia.yia.ActCollector.EditDonaturCollectorActivity;
 import co.id.gmedia.yia.ActNotifikasi.Adapter.ListNotifikasiAdapter;
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
 import co.id.gmedia.yia.Model.DonaturModel;
@@ -97,7 +98,6 @@ public class JadwalKunjunganCollectorAdapter extends ArrayAdapter<DonaturModel> 
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        DonaturModel b = listDonatur.get(position);
         holder.txt_nama.setText(listDonatur.get(position).getNama());
         holder.txt_kontak.setText(listDonatur.get(position).getKontak());
         holder.txt_alamat.setText(listDonatur.get(position).getAlamat());
@@ -155,9 +155,8 @@ public class JadwalKunjunganCollectorAdapter extends ArrayAdapter<DonaturModel> 
                     public void onClick(View v) {
 
                         Gson gson = new Gson();
-                        Intent intent = new Intent(context, CollectorDonaturDetailActivity.class);
+                        Intent intent = new Intent(context, EditDonaturCollectorActivity.class);
                         intent.putExtra("donatur", gson.toJson(listDonatur.get(position)));
-                        intent.putExtra("edit", true);
                         context.startActivity(intent);
                     }
                 });

@@ -50,7 +50,7 @@ import co.id.gmedia.yia.Utils.TopCropCircularImageView;
 public class CollectorActivity extends AppCompatActivity {
 
     private Context context;
-    private TextView txt_nama, txt_jumlah;
+    private TextView txt_nama, txt_jumlah, tvJumlahHistory;
     private TopCropCircularImageView img_foto;
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -82,6 +82,7 @@ public class CollectorActivity extends AppCompatActivity {
         txt_jumlah = findViewById(R.id.txt_jumlah);
         img_foto = findViewById(R.id.img_foto);
         ivBackground = (ImageView) findViewById(R.id.img_sampul);
+        tvJumlahHistory= (TextView) findViewById(R.id.tv_jumlah_history);
 
         initToolbar();
         TabLayout tab_collector = findViewById(R.id.tab_collector);
@@ -122,8 +123,11 @@ public class CollectorActivity extends AppCompatActivity {
         imageUtils.LoadRealImage(session.getFoto(), img_foto);
     }
 
-    public void updateJumlah(int jumlah){
-        txt_jumlah.setText(String.valueOf(jumlah));
+    public void updateJumlah(String jumlah){
+        txt_jumlah.setText(jumlah);
+    }
+    public void updateJumlahHistory(String jumlah){
+        tvJumlahHistory.setText(jumlah);
     }
 
     private void switchTab(int position){
@@ -222,6 +226,10 @@ public class CollectorActivity extends AppCompatActivity {
         else if(requestCode == GoogleLocationManager.ACTIVATE_LOCATION){
             if(active_fragment instanceof CollectorTambahDonaturFragment){
                 ((CollectorTambahDonaturFragment)active_fragment).retryLocation();
+            }
+        }else if(requestCode == 1102){
+            if(data != null){
+                switchTab(0);
             }
         }
     }
