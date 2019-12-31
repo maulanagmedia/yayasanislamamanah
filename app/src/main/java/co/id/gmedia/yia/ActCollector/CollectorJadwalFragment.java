@@ -165,8 +165,8 @@ public class CollectorJadwalFragment extends Fragment {
                     InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     search = edtSearch.getText().toString();
-                    loadData();
                     start =0;
+                    loadData();
                     return true;
                 }
                 return false;
@@ -309,6 +309,7 @@ public class CollectorJadwalFragment extends Fragment {
                                         ,donatur.getString("kecamatan")
                                         ,donatur.getString("kelurahan")
                                         ,donatur.getString("status").equals("0")
+                                        ,donatur.getString("note")
                                 ));
                             }
 

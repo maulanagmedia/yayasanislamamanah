@@ -99,7 +99,7 @@ public class JadwalKunjunganCollectorAdapter extends ArrayAdapter<DonaturModel> 
         }
 
         holder.txt_nama.setText(listDonatur.get(position).getNama());
-        holder.txt_kontak.setText(listDonatur.get(position).getKontak());
+        holder.txt_kontak.setText(listDonatur.get(position).getKeterangan());
         holder.txt_alamat.setText(listDonatur.get(position).getAlamat());
         holder.txt_rk.setText(listDonatur.get(position).getRk().toUpperCase());
         if(listDonatur.get(position).isDikunjungi()){
