@@ -46,9 +46,12 @@ import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.OptionItem;
+import co.id.gmedia.coremodul.PhotoModel;
 import co.id.gmedia.coremodul.SessionManager;
+import co.id.gmedia.yia.ActCollector.Adapter.ImageDonaturAdapter;
 import co.id.gmedia.yia.ActSalesBrosur.Adapter.SearchableSpinnerDialogOptionAdapter;
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
+import co.id.gmedia.yia.ActSalesSosial.Adapter.ListPhotoAdapter;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.AppRequestCallback;
@@ -84,6 +87,9 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
     private boolean isEdit = false;
     private EditText edtKeterangan;
     private CheckBox cbCkecing;
+    private RecyclerView rv_PhotoDetail;
+    private List<PhotoModel> listPhotoDetail = new ArrayList<>();
+    private ImageDonaturAdapter adapterPhotoDetail;
 
 
     @Override
@@ -144,6 +150,12 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
                 llNominal.setVisibility(View.VISIBLE);
             }
         }
+        rv_PhotoDetail = findViewById(R.id.rv_foto_detail);
+
+        LinearLayoutManager layoutManagerDetail = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        adapterPhotoDetail = new ImageDonaturAdapter(context, listPhotoDetail);
+        rv_PhotoDetail.setLayoutManager(layoutManagerDetail);
+        rv_PhotoDetail.setAdapter(adapterPhotoDetail);
 
     }
 
@@ -151,7 +163,11 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         edt_nama.setText(donatur.getNama());
         edt_alamat.setText(donatur.getAlamat());
         edt_kontak.setText(donatur.getKontak());
-
+        for(String url : donatur.getListUrlPhoto()){
+            listPhotoDetail.add(new PhotoModel("", url));
+        }
+//        adapterPhotoDetail.notifyDataSetChanged();
+//        Toast.makeText(context, String.valueOf(listPhotoDetail), Toast.LENGTH_SHORT).show();
     }
 
     private void initUI() {
@@ -243,11 +259,13 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
                         final Button btnSimpan = (Button) viewDialog.findViewById(R.id.btn_simpan);
                         final Button btnBatal = (Button) viewDialog.findViewById(R.id.btn_batal);
                         final TextView tvNama = (TextView) viewDialog.findViewById(R.id.tv_nama);
+                        final TextView tvAlamat = (TextView) viewDialog.findViewById(R.id.tv_alamat);
                         final TextView tvDonasi = (TextView) viewDialog.findViewById(R.id.tv_donasi);
                         final TextView tvKaleng = (TextView) viewDialog.findViewById(R.id.tv_kaleng);
                         final TextView tvKeterangan = (TextView) viewDialog.findViewById(R.id.tv_keterangan);
 
                         tvNama.setText(edt_nama.getText().toString());
+                        tvAlamat.setText(edt_alamat.getText().toString());
                         tvDonasi.setText(txt_nominal.getText().toString());
                         tvKaleng.setText(txt_jumlah_kaleng.getText().toString());
                         tvKeterangan.setText(tvKeterangan.getText().toString());

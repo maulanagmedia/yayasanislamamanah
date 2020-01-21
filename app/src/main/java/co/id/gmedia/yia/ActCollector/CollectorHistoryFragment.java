@@ -301,6 +301,7 @@ public class CollectorHistoryFragment extends Fragment {
                     @Override
                     public void onEmpty(String message) {
                         total_data  = "0";
+                        ((CollectorActivity)activity).updateJumlahHistory(total_data);
                     }
 
                     @Override

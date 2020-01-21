@@ -41,6 +41,21 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_small"
             android:layout_marginTop="@dimen/padding_default"
+            android:text="Alamat"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_alamat"
+            android:text="Alamat"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/color_black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_small"
+            android:layout_marginTop="@dimen/padding_default"
             android:text="Total Donasi"/>
 
         <TextView

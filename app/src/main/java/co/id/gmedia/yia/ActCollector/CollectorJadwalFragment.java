@@ -93,6 +93,7 @@ public class CollectorJadwalFragment extends Fragment {
     private boolean isLoading = false;
     private String total_data="0";
     private boolean filterlocation=false;
+    private  int countMerchant=0;
 
     public CollectorJadwalFragment() {
         // Required empty public constructor
@@ -128,8 +129,10 @@ public class CollectorJadwalFragment extends Fragment {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
                 int threshold = 1;
-                int countMerchant = rv_jadwal.getCount();
+                countMerchant = rv_jadwal.getCount();
+//                Toast.makeText(activity,"Total Count Merchant "+countMerchant,Toast.LENGTH_SHORT).show();
                 int visiblePosition =rv_jadwal.getLastVisiblePosition();
+//                Toast.makeText(activity,"Total "+visiblePosition,Toast.LENGTH_SHORT).show();
 
                 if (i == SCROLL_STATE_IDLE) {
                     if ( visiblePosition >= countMerchant - threshold && !isLoading) {
@@ -173,6 +176,28 @@ public class CollectorJadwalFragment extends Fragment {
             }
         });
 
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(edtSearch.getText().toString().length() == 0) {
+                    search="";
+                    start=0;
+                    count=10;
+                    filterlocation = false;
+                    loadData();
+                }
+
+            }
+        });
         return v;
     }
 
@@ -286,12 +311,14 @@ public class CollectorJadwalFragment extends Fragment {
                             listDonatur.clear();
                         }
                         try{
-
-//                            int terkunjungi = 0, tidakTerkunjungi = 0;
                             JSONArray object = new JSONArray(response);
-
                             for(int i = 0; i < object.length(); i++){
                                 JSONObject donatur = object.getJSONObject(i);
+                                JSONArray arrayFoto = donatur.getJSONArray("img");
+                                List<String> listUrlFoto = new ArrayList<>();
+                                for(int j = 0; j < arrayFoto.length(); j++){
+                                    listUrlFoto.add(arrayFoto.getJSONObject(j).getString("image"));
+                                }
                                 listDonatur.add(new DonaturModel(
                                         object.getJSONObject(i).getString("id")
                                         ,object.getJSONObject(i).getString("id_donatur")
@@ -310,6 +337,7 @@ public class CollectorJadwalFragment extends Fragment {
                                         ,donatur.getString("kelurahan")
                                         ,donatur.getString("status").equals("0")
                                         ,donatur.getString("note")
+                                        ,listUrlFoto
                                 ));
                             }
 
@@ -343,6 +371,7 @@ public class CollectorJadwalFragment extends Fragment {
                     public void onEmpty(String message) {
                         dialogBox.dismissDialog();
                         isLoading=false;
+                        listDonatur.clear();
 //                        adapter.notifyDataSetChanged();
                         if (rk1.equals("0") && rk2.equals("0")  && rk3.equals("0") ) {
                             adapter.clearAdapter();
@@ -403,6 +432,9 @@ public class CollectorJadwalFragment extends Fragment {
 
                     @Override
                     public void onEmpty(String message) {
+//                        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                        total_data= String.valueOf(0);
+                        ((CollectorActivity)activity).updateJumlah(total_data);
                     }
 
                     @Override
