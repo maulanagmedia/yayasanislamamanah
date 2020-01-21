@@ -3,9 +3,9 @@ package co.id.gmedia.yia.Utils;
 public class ServerURL {
     public static final int PIX_REQUEST_CODE = 99;
 
-    private static final String baseURL = "http://192.168.20.23/gmedia/yia/v2/api/";
+//    private static final String baseURL = "http://192.168.20.23/gmedia/yia/v2/api/";
     //private static final String baseURL = "http://gmedia.bz/yia/v3/api/";
-//    private static final String baseURL = "http://yayasanislamamanah.com/api/";
+    private static final String baseURL = "http://yayasanislamamanah.com/api/";
 
     public static final String login = baseURL + "Authentication/";
     public static final String updateFCM = baseURL + "Authentication/update_fcm";
