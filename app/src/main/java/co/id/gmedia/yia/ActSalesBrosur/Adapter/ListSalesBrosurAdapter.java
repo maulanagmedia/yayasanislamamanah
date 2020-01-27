@@ -57,7 +57,7 @@ public class ListSalesBrosurAdapter extends ArrayAdapter {
             holder.tvNama = convertView.findViewById(R.id.tv_nama);
             holder.tvAlamat = convertView.findViewById(R.id.tv_alamat);
             holder.tvKontak= convertView.findViewById(R.id.tv_kontak);
-            holder.rlEdit = convertView.findViewById(R.id.rl_edit);
+//            holder.rlEdit = convertView.findViewById(R.id.rl_edit);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -69,16 +69,16 @@ public class ListSalesBrosurAdapter extends ArrayAdapter {
         holder.tvNama.setText(item.getItem2());
         holder.tvAlamat.setText(item.getItem3());
         holder.tvKontak.setText(item.getItem4());
-        holder.rlEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Gson gson = new Gson();
-                Intent intent = new Intent(context, EditDonaturActivity.class);
-                intent.putExtra("donatur", gson.toJson(item));
-                intent.putExtra("edit", true);
-                context.startActivityForResult(intent, 1102);
-            }
-        });
+//        holder.rlEdit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Gson gson = new Gson();
+//                Intent intent = new Intent(context, EditDonaturActivity.class);
+//                intent.putExtra("donatur", gson.toJson(item));
+//                intent.putExtra("edit", true);
+//                context.startActivityForResult(intent, 1102);
+//            }
+//        });
 
         return convertView;
 

@@ -34,7 +34,7 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
 
     private static class ViewHolder {
         private TextView tvTanggal, tvNama, tvAlamat, tvKontak, tvStatus, tvStatusChecking, tvChecker;
-        private RelativeLayout rlEdit;
+//        private RelativeLayout rlEdit;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
             holder.tvStatus = convertView.findViewById(R.id.tv_status);
             holder.tvStatusChecking = convertView.findViewById(R.id.tv_status_checking);
             holder.tvChecker = convertView.findViewById(R.id.tv_checker);
-            holder.rlEdit = convertView.findViewById(R.id.rl_edit);
+//            holder.rlEdit = convertView.findViewById(R.id.rl_edit);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -86,16 +86,16 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
         holder.tvStatus.setText(item.getItem9());
         holder.tvStatusChecking.setText(item.getItem11());
         holder.tvChecker.setText(item.getItem12());
-        holder.rlEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Gson gson = new Gson();
-                Intent intent = new Intent(context, EditDonaturSosialActivity.class);
-                intent.putExtra("donatur", gson.toJson(item));
-                intent.putExtra("edit", true);
-                context.startActivityForResult(intent, 1102);
-            }
-        });
+//        holder.rlEdit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Gson gson = new Gson();
+//                Intent intent = new Intent(context, EditDonaturSosialActivity.class);
+//                intent.putExtra("donatur", gson.toJson(item));
+//                intent.putExtra("edit", true);
+//                context.startActivityForResult(intent, 1102);
+//            }
+//        });
 
         return convertView;
 

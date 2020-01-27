@@ -74,7 +74,7 @@ public class DonaturLSosialFragment extends Fragment {
     private List<SimpleObjectModel> listChooser = new ArrayList<>();
 
     private TextView txt_kota, txt_kecamatan, txt_kelurahan;
-    private EditText txt_nama, txt_alamat, txt_kontak;
+    private EditText txt_nama, txt_alamat, txt_kontak, edtRT, edtRW;
     private TextView tv_latitude, tv_longitude;
 
     private String current = "";
@@ -117,6 +117,8 @@ public class DonaturLSosialFragment extends Fragment {
         txt_alamat = root.findViewById(R.id.txt_alamat);
         txt_kontak = root.findViewById(R.id.txt_kontak);
         txt_kota = root.findViewById(R.id.txt_kota);
+        edtRT = root.findViewById(R.id.edt_rt);
+        edtRW = root.findViewById(R.id.edt_rw);
         txt_kecamatan = root.findViewById(R.id.txt_kecamatan);
         txt_kelurahan = root.findViewById(R.id.txt_kelurahan);
         edtKetarangan = (EditText) root.findViewById(R.id.edt_keterangan);
@@ -216,6 +218,8 @@ public class DonaturLSosialFragment extends Fragment {
 
         body.add("nama", txt_nama.getText().toString());
         body.add("alamat", txt_alamat.getText().toString());
+        body.add("rt",edtRT.getText().toString());
+        body.add("rw",edtRW.getText().toString());
         body.add("kontak", txt_kontak.getText().toString());
         body.add("keterangan", edtKetarangan.getText().toString());
         body.add("lat", lat);
@@ -272,7 +276,7 @@ public class DonaturLSosialFragment extends Fragment {
                             }
                         };
 
-                        dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                        dialogBox.showDialog(clickListener, "Ulangi Proses", message);
                     }
                 }));
     }

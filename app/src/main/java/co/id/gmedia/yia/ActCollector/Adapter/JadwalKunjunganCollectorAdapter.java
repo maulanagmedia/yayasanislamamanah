@@ -98,9 +98,15 @@ public class JadwalKunjunganCollectorAdapter extends ArrayAdapter<DonaturModel> 
             holder = (ViewHolder) convertView.getTag();
         }
 
+        String rr="";
+        if(!listDonatur.get(position).getRt().equalsIgnoreCase("") && !listDonatur.get(position).getRw().equalsIgnoreCase("")){
+            rr = " RT "+listDonatur.get(position).getRt()+"/"+listDonatur.get(position).getRw();
+        }else{
+            rr ="";
+        }
         holder.txt_nama.setText(listDonatur.get(position).getNama());
         holder.txt_kontak.setText(listDonatur.get(position).getKeterangan());
-        holder.txt_alamat.setText(listDonatur.get(position).getAlamat());
+        holder.txt_alamat.setText(listDonatur.get(position).getAlamat()+rr);
         holder.txt_rk.setText(listDonatur.get(position).getRk().toUpperCase());
         if(listDonatur.get(position).isDikunjungi()){
             holder.img_cek.setVisibility(View.VISIBLE);
@@ -129,7 +135,7 @@ public class JadwalKunjunganCollectorAdapter extends ArrayAdapter<DonaturModel> 
                 builder.setView(viewDialog);
                 //builder.setCancelable(true);
 
-                final Button btn0 = (Button) viewDialog.findViewById(R.id.btn_0);
+//                final Button btn0 = (Button) viewDialog.findViewById(R.id.btn_0);
                 final Button btn1 = (Button) viewDialog.findViewById(R.id.btn_1);
                 final Button btn2 = (Button) viewDialog.findViewById(R.id.btn_2);
                 final ImageView ivClose = (ImageView) viewDialog.findViewById(R.id.iv_close);
@@ -150,16 +156,16 @@ public class JadwalKunjunganCollectorAdapter extends ArrayAdapter<DonaturModel> 
                     }
                 });
 
-                btn0.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Gson gson = new Gson();
-                        Intent intent = new Intent(context, EditDonaturCollectorActivity.class);
-                        intent.putExtra("donatur", gson.toJson(listDonatur.get(position)));
-                        context.startActivity(intent);
-                    }
-                });
+//                btn0.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        Gson gson = new Gson();
+//                        Intent intent = new Intent(context, EditDonaturCollectorActivity.class);
+//                        intent.putExtra("donatur", gson.toJson(listDonatur.get(position)));
+//                        context.startActivity(intent);
+//                    }
+//                });
 
                 btn1.setOnClickListener(new View.OnClickListener() {
                     @Override

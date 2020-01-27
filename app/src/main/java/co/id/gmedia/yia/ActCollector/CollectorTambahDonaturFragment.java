@@ -68,7 +68,7 @@ public class CollectorTambahDonaturFragment extends Fragment {
     private List<SimpleObjectModel> listChooser = new ArrayList<>();
 
     private TextView txt_kota, txt_kecamatan, txt_kelurahan;
-    private EditText txt_nama, txt_alamat, txt_kontak, txt_jumlah_donasi;
+    private EditText txt_nama, txt_alamat, txt_kontak, txt_jumlah_donasi,edtRt, edtRw;
 
     private String current = "";
 
@@ -93,6 +93,8 @@ public class CollectorTambahDonaturFragment extends Fragment {
         txt_kota = v.findViewById(R.id.txt_kota);
         txt_kecamatan = v.findViewById(R.id.txt_kecamatan);
         txt_kelurahan = v.findViewById(R.id.txt_kelurahan);
+        edtRt = v.findViewById(R.id.edt_rt);
+        edtRw = v.findViewById(R.id.edt_rw);
         edtKetarangan = (EditText) v.findViewById(R.id.edt_keterangan);
 
         RecyclerView rv_foto = v.findViewById(R.id.rv_foto);
@@ -196,6 +198,8 @@ public class CollectorTambahDonaturFragment extends Fragment {
         body.add("alamat", txt_alamat.getText().toString());
         body.add("kontak", txt_kontak.getText().toString());
         body.add("keterangan", edtKetarangan.getText().toString());
+        body.add("rt", edtRt.getText().toString());
+        body.add("rw", edtRw.getText().toString());
         body.add("lat", lat);
         body.add("long", lng);
         body.add("kota", selectedKota);

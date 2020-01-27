@@ -1,5 +1,6 @@
 package co.id.gmedia.yia.ActSalesSosial.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -52,6 +53,7 @@ public class ListJadwalSSAdapter extends ArrayAdapter {
         return items.size();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -73,7 +75,13 @@ public class ListJadwalSSAdapter extends ArrayAdapter {
 
         final CustomModel item = items.get(position);
         holder.tvItem1.setText(item.getItem2());
-        holder.tvItem2.setText(item.getItem3());
+        String rr="";
+        if(!item.getItem11().equalsIgnoreCase("") && !item.getItem12().equalsIgnoreCase("")){
+            rr =" RT "+item.getItem11()+"/"+item.getItem12();
+        }else{
+            rr ="";
+        }
+        holder.tvItem2.setText(item.getItem3()+rr);
         holder.tvItem3.setText(item.getItem10());
 
         if(item.getItem6().equals("0")){

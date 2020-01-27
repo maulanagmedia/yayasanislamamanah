@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -66,7 +67,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
     private DonaturModel donatur;
 
     private TextView tv_latitude, tv_longitude;
-    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng, txt_nominal;
+    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng, txt_nominal, edtRt, edtRw;
 
     private Context context;
     private SessionManager session;
@@ -163,6 +164,8 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         edt_nama.setText(donatur.getNama());
         edt_alamat.setText(donatur.getAlamat());
         edt_kontak.setText(donatur.getKontak());
+        edtRt.setText(donatur.getRt());
+        edtRw.setText(donatur.getRw());
         for(String url : donatur.getListUrlPhoto()){
             listPhotoDetail.add(new PhotoModel("", url));
         }
@@ -175,6 +178,8 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         edt_nama = findViewById(R.id.edt_nama);
         edt_alamat = findViewById(R.id.edt_alamat);
         edt_kontak = findViewById(R.id.edt_kontak);
+        edtRt = findViewById(R.id.edt_rt);
+        edtRw = findViewById(R.id.edt_rw);
         tv_latitude = findViewById(R.id.tv_latitude);
         tv_longitude = findViewById(R.id.tv_longitude);
         txt_jumlah_kaleng = findViewById(R.id.txt_jumlah_kaleng);
@@ -241,6 +246,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btn_simpan).setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 if(donatur != null){
@@ -264,8 +270,14 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
                         final TextView tvKaleng = (TextView) viewDialog.findViewById(R.id.tv_kaleng);
                         final TextView tvKeterangan = (TextView) viewDialog.findViewById(R.id.tv_keterangan);
 
+                        String rr="";
+                        if(!edtRt.getText().toString().equalsIgnoreCase("") && !edtRw.getText().toString().equalsIgnoreCase("")){
+                            rr = " RT "+edtRt.getText().toString()+"/"+edtRw.getText().toString();
+                        }else {
+                            rr="";
+                        }
                         tvNama.setText(edt_nama.getText().toString());
-                        tvAlamat.setText(edt_alamat.getText().toString());
+                        tvAlamat.setText(edt_alamat.getText().toString()+rr);
                         tvDonasi.setText(txt_nominal.getText().toString());
                         tvKaleng.setText(txt_jumlah_kaleng.getText().toString());
                         tvKeterangan.setText(tvKeterangan.getText().toString());

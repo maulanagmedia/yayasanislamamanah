@@ -126,6 +126,82 @@
                 <ImageView
                     android:layout_width="@dimen/icon_size3"
                     android:layout_height="@dimen/icon_size3"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:id="@+id/ic_rt"/>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size1"
+                    android:layout_height="@dimen/icon_size1"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/ic_rw"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_toLeftOf="@id/ic_rw"
+                    android:layout_toRightOf="@id/ic_rt"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_alignParentBottom="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:background="@drawable/bg_input"
+                        android:padding="@dimen/padding_small">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:minHeight="24dp"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/colorBlack"
+                            android:id="@+id/edt_rt"
+                            android:hint="RT"
+                            android:textSize="@dimen/text_small"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/bg_input"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:padding="@dimen/padding_small">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:minHeight="24dp"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/colorBlack"
+                            android:id="@+id/edt_rw"
+                            android:hint="RW"
+                            android:textSize="@dimen/text_small"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_default">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size3"
+                    android:layout_height="@dimen/icon_size3"
                     android:src="@drawable/ic_kontak"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
@@ -161,6 +237,7 @@
                         android:textColor="@color/colorBlack"
                         android:text="Kontak"
                         android:id="@+id/edt_kontak"
+                        android:hint="Kontak"
                         android:textSize="@dimen/text_small"/>
 
                 </LinearLayout>

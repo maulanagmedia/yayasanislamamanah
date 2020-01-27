@@ -288,8 +288,6 @@ public class CollectorHistoryFragment extends Fragment {
                         try{
                             Log.d("response>>",String.valueOf(response));
                             JSONObject obj = new JSONObject(response);
-//                            Toast.makeText(activity, String.valueOf(obj), Toast.LENGTH_SHORT).show();
-//                            Toast.makeText(activity, obj.getString("total"), Toast.LENGTH_SHORT).show();
                             total_data  = obj.getString("total");
                             ((CollectorActivity)activity).updateJumlahHistory(total_data);
                         }

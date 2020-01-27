@@ -132,8 +132,6 @@ public class CheckingJadwalFragment extends Fragment {
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
-        //body.add("tgl_awal", Converter.DToString(new Date()));
-        //body.add("tgl_akhir", Converter.DToString(new Date()));
         body.add("keyword", "");
         body.add("status", "1");
         if(withLocation){
@@ -163,11 +161,14 @@ public class CheckingJadwalFragment extends Fragment {
                                         ,donatur.getString("id_donatur")
                                         ,donatur.getString("nama")
                                         ,donatur.getString("alamat")
+                                        ,donatur.getString("rt")
+                                        ,donatur.getString("rw")
                                         ,donatur.getString("kontak")
                                         ,donatur.getString("total_kaleng")
                                         ,donatur.getString("lat")
                                         ,donatur.getString("long")
                                         ,donatur.getInt("status") == 0
+                                        ,donatur.getString("note")
                                         , listUrlFoto);
 
                                 donat.setKeterangan(donatur.getString("note"));

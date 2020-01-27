@@ -61,7 +61,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
     private DonaturModel donatur;
 
     private TextView tv_latitude, tv_longitude;
-    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng;
+    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng, edtRt, edtRw;
     private RadioButton rb_donasi_ya, rb_kaleng_ya, rb_kaleng_tidak;
 
     private SessionManager sessionManager;
@@ -132,6 +132,8 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         edt_nama.setText(donatur.getNama());
         edt_alamat.setText(donatur.getAlamat());
         edt_kontak.setText(donatur.getKontak());
+        edtRt.setText(donatur.getRt());
+        edtRw.setText(donatur.getRw());
         txt_jumlah_kaleng.setText(donatur.getKaleng());
         edtKeterangan.setText(donatur.getKeterangan());
         cbCkecing = (CheckBox) findViewById(R.id.cb_checking);
@@ -148,6 +150,8 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         edt_nama = findViewById(R.id.edt_nama);
         edt_alamat = findViewById(R.id.edt_alamat);
         edt_kontak = findViewById(R.id.edt_kontak);
+        edtRt = findViewById(R.id.edt_rt);
+        edtRw = findViewById(R.id.edt_rw);
         rb_kaleng_ya = findViewById(R.id.rb_kaleng_ya);
         rb_kaleng_tidak = findViewById(R.id.rb_kaleng_tidak);
         rb_donasi_ya = findViewById(R.id.rb_donasi_ya);

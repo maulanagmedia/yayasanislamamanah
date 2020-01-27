@@ -65,7 +65,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
     private FotoAdapter adapter;
 
     private TextView tv_latitude, tv_longitude;
-    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng;
+    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng, edtRt, edtRw;
     private RadioButton rb_donasi_ya, rb_kaleng_ya;
 
     private SessionManager sessionManager;
@@ -119,6 +119,8 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
         edt_alamat.setText(donatur.getItem3());
         edt_kontak.setText(donatur.getItem4());
         edtKeterangan.setText(donatur.getItem10());
+        edtRt.setText(donatur.getItem11());
+        edtRw.setText(donatur.getItem12());
 
         try{
             JSONArray array_gambar = new JSONArray(donatur.getItem9());
@@ -136,6 +138,8 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
 
         edt_nama = findViewById(R.id.edt_nama);
         edt_alamat = findViewById(R.id.edt_alamat);
+        edtRt = findViewById(R.id.edt_rt);
+        edtRw = findViewById(R.id.edt_rw);
         edt_kontak = findViewById(R.id.edt_kontak);
         rb_kaleng_ya = findViewById(R.id.rb_kaleng_ya);
         rb_donasi_ya = findViewById(R.id.rb_donasi_ya);
@@ -201,6 +205,26 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
                         }else{
 
                             edt_alamat.setError(null);
+                        }
+
+                        if(edtRt.getText().toString().length() == 0){
+
+                            edtRt.setError("RWHarap diisi");
+                            edtRt.requestFocus();
+                            return;
+                        }else{
+
+                            edtRt.setError(null);
+                        }
+
+                        if(edtRw.getText().toString().length() == 0){
+
+                            edtRw.setError("RW Harap diisi");
+                            edtRw.requestFocus();
+                            return;
+                        }else{
+
+                            edtRw.setError(null);
                         }
 
                         /*if(edt_kontak.getText().toString().length() == 0){
@@ -303,6 +327,8 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
         body.add("id_rk", donatur.getItem1());
         body.add("nama", edt_nama.getText().toString());
         body.add("alamat", edt_alamat.getText().toString());
+        body.add("rt", edtRt.getText().toString());
+        body.add("rw", edtRw.getText().toString());
         body.add("kontak", edt_kontak.getText().toString());
         body.add("note", edtKeterangan.getText().toString());
         body.add("id_sales", sessionManager.getId());

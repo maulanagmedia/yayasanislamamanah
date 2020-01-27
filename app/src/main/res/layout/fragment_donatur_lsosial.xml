@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Informasi Donatur"
+                android:text="Informasi Donatur Luar"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/color_black"/>
@@ -164,6 +164,72 @@
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginStart="@dimen/padding_super"
                 android:textColor="#4F4F4F"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_super"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="RT"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:textColor="@color/color_black"/>
+
+                    <EditText
+                        android:id="@+id/edt_rt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textStyle="bold"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:textSize="14sp"
+                        android:background="@drawable/bg_input"
+                        android:padding="@dimen/dp10"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:textColor="#4F4F4F"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="RW"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:textColor="@color/color_black"/>
+
+                    <EditText
+                        android:id="@+id/edt_rw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:textSize="14sp"
+                        android:background="@drawable/bg_input"
+                        android:padding="@dimen/dp10"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:textColor="#4F4F4F"/>
+
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

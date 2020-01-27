@@ -217,6 +217,8 @@ public class SalesSosialJadwalFragment extends Fragment {
                                         ,jadwal.getString("long")//item 8
                                         ,jadwal.getString("image")//item 9
                                         ,jadwal.getString("note")//item 10
+                                        ,jadwal.getString("rt")//item 11
+                                        ,jadwal.getString("rw")//item 12
                                 ));
                             }
 

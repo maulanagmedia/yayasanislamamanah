@@ -136,7 +136,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Tambah Donatur"
+                            android:text="Tambah Donatur Luar"
                             android:gravity="center"
                             android:textSize="@dimen/text_tiny"
                             android:paddingLeft="@dimen/padding_default"

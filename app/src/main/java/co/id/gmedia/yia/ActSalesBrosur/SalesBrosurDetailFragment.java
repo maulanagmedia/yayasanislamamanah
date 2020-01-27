@@ -100,7 +100,7 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
     private View root;
     private Context context;
     private SessionManager session;
-    private EditText edtNama, edtAlamat, edtKontak;
+    private EditText edtNama, edtAlamat, edtKontak, edtRT, edtRW;
     private Spinner spKota, spKecamatan, spKelurahan;
     private TextView tvLatitude, tvLongitude;
     private LinearLayout llBukaMap;
@@ -204,6 +204,8 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
         spKecamatan = (Spinner) root.findViewById(R.id.sp_kecamatan);
         spKelurahan = (Spinner) root.findViewById(R.id.sp_kelurahan);
         edtAlamat = (EditText) root.findViewById(R.id.edt_alamat);
+        edtRT = (EditText) root.findViewById(R.id.edt_rt);
+        edtRW = (EditText) root.findViewById(R.id.edt_rw);
         edtKontak = (EditText) root.findViewById(R.id.edt_kontak);
         edtKeterangan = (EditText) root.findViewById(R.id.edt_keterangan);
         rlPhoto = (RelativeLayout) root.findViewById(R.id.rl_photo);
@@ -882,6 +884,8 @@ public class SalesBrosurDetailFragment extends Fragment implements LocationListe
         try {
             jBody.put("nama", edtNama.getText().toString());
             jBody.put("alamat", edtAlamat.getText().toString());
+            jBody.put("rt", edtRT.getText().toString());
+            jBody.put("rw", edtRW.getText().toString());
             jBody.put("kontak", edtKontak.getText().toString());
             jBody.put("note", edtKeterangan.getText().toString());
             jBody.put("lat", tvLatitude.getText().toString());

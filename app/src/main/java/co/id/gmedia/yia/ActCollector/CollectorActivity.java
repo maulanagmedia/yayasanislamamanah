@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fxn.pix.Pix;
 import com.google.android.material.appbar.AppBarLayout;
@@ -126,8 +127,10 @@ public class CollectorActivity extends AppCompatActivity {
     public void updateJumlah(String jumlah){
         txt_jumlah.setText(jumlah);
     }
+
     public void updateJumlahHistory(String jumlah){
         tvJumlahHistory.setText(jumlah);
+//        Toast.makeText(context, "Total "+jumlah, Toast.LENGTH_SHORT).show();
     }
 
     private void switchTab(int position){

@@ -1,5 +1,6 @@
 package co.id.gmedia.yia.ActCollector.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -82,11 +83,18 @@ public class JadwalKunjunganAdapter extends RecyclerView.Adapter<JadwalKunjungan
             rlInput = itemView.findViewById(R.id.rl_input);
         }
 
+        @SuppressLint("SetTextI18n")
         void bind(final DonaturModel b){
+            String rr="";
+            if(!b.getRt().equalsIgnoreCase("") && !b.getRw().equalsIgnoreCase("")){
+                rr = " RT "+b.getRt()+"/"+b.getRw();
+            }else {
+                rr ="";
+            }
 
             txt_nama.setText(b.getNama());
             txt_kontak.setText(b.getKeterangan());
-            txt_alamat.setText(b.getAlamat());
+            txt_alamat.setText(b.getAlamat()+rr);
 
             if(b.isDikunjungi()){
                 img_cek.setVisibility(View.VISIBLE);

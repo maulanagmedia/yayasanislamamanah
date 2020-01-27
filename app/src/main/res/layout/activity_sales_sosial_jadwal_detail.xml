@@ -126,6 +126,88 @@
                 <ImageView
                     android:layout_width="@dimen/icon_size3"
                     android:layout_height="@dimen/icon_size3"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:id="@+id/iv_rt"/>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size1"
+                    android:layout_height="@dimen/icon_size1"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/iv_pass2"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/iv_pass2"
+                    android:layout_toRightOf="@id/iv_rt"
+                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:background="@drawable/bg_input"
+                        android:padding="@dimen/padding_small"
+                        android:layout_weight="1"
+                        >
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:minHeight="24dp"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/colorBlack"
+                            android:text="RT"
+                            android:inputType="number"
+                            android:id="@+id/edt_rt"
+                            android:hint="RT"
+                            android:layout_marginRight="@dimen/dp5"
+                            android:textSize="@dimen/text_small"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/bg_input"
+                        android:padding="@dimen/padding_small"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/dp5"
+                        >
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:minHeight="24dp"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/colorBlack"
+                            android:text="RW"
+                            android:id="@+id/edt_rw"
+                            android:inputType="number"
+                            android:hint="RW"
+                            android:layout_marginRight="@dimen/dp5"
+                            android:textSize="@dimen/text_small"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_default">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size3"
+                    android:layout_height="@dimen/icon_size3"
                     android:src="@drawable/ic_kontak"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
@@ -161,6 +243,7 @@
                         android:textColor="@color/colorBlack"
                         android:text="Kontak"
                         android:inputType="phone"
+                        android:hint="Kontak"
                         android:imeOptions="actionNext"
                         android:id="@+id/edt_kontak"
                         android:textSize="@dimen/text_small"/>

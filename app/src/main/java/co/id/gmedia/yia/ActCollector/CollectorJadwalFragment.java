@@ -338,6 +338,8 @@ public class CollectorJadwalFragment extends Fragment {
                                         ,donatur.getString("status").equals("0")
                                         ,donatur.getString("note")
                                         ,listUrlFoto
+                                        ,donatur.getString("rt")
+                                        ,donatur.getString("rw")
                                 ));
                             }
 

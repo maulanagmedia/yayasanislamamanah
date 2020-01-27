@@ -12,7 +12,7 @@ public class DonaturModel {
     private String kaleng;
     private String latitude;
     private String lognitude;
-    private String rk;
+    private String rk, rt, rw;
     private String idKota, idKecamatan, idKelurahan, kota, kecamatan, kelurahan;
     private String nominal, jenisDonatur, tanggal, keterangan;
 
@@ -158,6 +158,46 @@ public class DonaturModel {
         this.dikunjungi = dikunjungi;
         this.keterangan = keterangan;
         this.listUrlPhoto = listPhoto;
+    }
+
+
+    public DonaturModel(String id, String id_donatur, String nama, String alamat, String rt, String rw, String kontak,String kaleng,  String latitude, String longitude, boolean dikunjungi,String keterangan,List<String> listPhoto){
+        this.id = id;
+        this.id_donatur = id_donatur;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.rt = rt;
+        this.rw = rw;
+        this.kontak = kontak;
+        this.latitude = latitude;
+        this.lognitude = longitude;
+        this.kaleng = kaleng;
+        this.dikunjungi = dikunjungi;
+        this.keterangan = keterangan;
+        this.listUrlPhoto = listPhoto;
+    }
+
+    public DonaturModel(String id, String id_donatur, String nama, String alamat, String kontak, String latitude, String longitude, String kaleng, String rk, String idKota, String idKecamatan, String idKelurahan, String kota, String kecamatan, String kelurahan, boolean dikunjungi,String keterangan,List<String> listPhoto, String rt,String rw){
+        this.id = id;
+        this.id_donatur = id_donatur;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.kontak = kontak;
+        this.latitude = latitude;
+        this.lognitude = longitude;
+        this.kaleng = kaleng;
+        this.rk = rk;
+        this.idKota = idKota;
+        this.idKecamatan = idKecamatan;
+        this.idKelurahan = idKelurahan;
+        this.kota = kota;
+        this.kecamatan = kecamatan;
+        this.kelurahan = kelurahan;
+        this.dikunjungi = dikunjungi;
+        this.keterangan = keterangan;
+        this.listUrlPhoto = listPhoto;
+        this.rt =rt;
+        this.rw = rw;
     }
 
     public void setId(String id){
@@ -322,5 +362,21 @@ public class DonaturModel {
 
     public void setKeterangan(String keterangan) {
         this.keterangan = keterangan;
+    }
+
+    public String getRt() {
+        return rt;
+    }
+
+    public void setRt(String rt) {
+        this.rt = rt;
+    }
+
+    public String getRw() {
+        return rw;
+    }
+
+    public void setRw(String rw) {
+        this.rw = rw;
     }
 }
