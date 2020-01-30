@@ -3,14 +3,15 @@ package co.id.gmedia.yia.Utils;
 public class ServerURL {
     public static final int PIX_REQUEST_CODE = 99;
 
-//    private static final String baseURL = "http://192.168.20.16/gmedia/yia/v2/api/";
+    private static final String baseURL = "http://192.168.20.16/gmedia/yia/v2/api/";
     //private static final String baseURL = "http://gmedia.bz/yia/v3/api/";
-    private static final String baseURL = "http://yayasanislamamanah.com/api/";
+//    private static final String baseURL = "http://yayasanislamamanah.com/api/";
 
     public static final String login = baseURL + "Authentication/";
     public static final String updateFCM = baseURL + "Authentication/update_fcm";
     public static final String changePassword = baseURL + "Authentication/update_password/";
     public static final String updateAkun = baseURL + "Authentication/process_user/";
+    public static final String sendRequest = baseURL + "Donatur/request/";
     public static final String getKota = baseURL + "Master/kota/";
     public static final String getKecamatan = baseURL + "Master/kecamatan/";
     public static final String getKelurahan = baseURL + "Master/kelurahan/";

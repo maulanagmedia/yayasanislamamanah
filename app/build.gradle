@@ -6,8 +6,8 @@ android {
         applicationId "co.id.gmedia.yia"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 5
-        versionName "2.4"
+        versionCode 6
+        versionName "2.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -42,6 +42,7 @@ dependencies {
     //implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
 
     implementation 'com.google.code.gson:gson:2.8.5'
 }

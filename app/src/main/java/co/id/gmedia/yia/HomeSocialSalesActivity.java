@@ -40,6 +40,7 @@ import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
+import co.id.gmedia.yia.ActAkun.RequestActivity;
 import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
 import co.id.gmedia.yia.ActSalesSosial.DonaturLSosialFragment;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialJadwalFragment;
@@ -312,6 +313,10 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
         }else if(id == R.id.option_notif){
 
             Intent intent = new Intent(context, ListNotificationActivity.class);
+            startActivity(intent);
+            return true;
+        }else if(id == R.id.option_request){
+            Intent intent = new Intent(context, RequestActivity.class);
             startActivity(intent);
             return true;
         }else{

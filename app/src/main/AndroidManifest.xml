@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ActCollector.EditDonaturCollectorActivity"></activity>
+        <activity android:name=".ActAkun.RequestActivity"></activity>
+        <activity android:name=".ActCollector.EditDonaturCollectorActivity" />
         <activity android:name=".ActSalesSosial.EditDonaturSosialActivity" />
         <activity android:name=".ActSalesBrosur.EditDonaturActivity" />
         <activity android:name=".ActNotifikasi.DetailNotifikasiActivity" />

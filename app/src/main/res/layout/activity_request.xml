@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="@dimen/icon_size2"
+            android:layout_height="@dimen/icon_size2"
+            android:src="@drawable/ic_subject_black_24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/padding_mid"
+            android:id="@+id/ic_subjek"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/ic_subjek"
+            android:layout_marginLeft="@dimen/padding_default">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:text="Subjek"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_big" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"
+                android:id="@+id/edt_subjek"
+                android:textSize="@dimen/text_small"
+                android:text=""
+                android:layout_marginTop="@dimen/padding_default"
+                android:padding="@dimen/padding_default"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_medium">
+
+        <ImageView
+            android:layout_width="@dimen/icon_size2"
+            android:layout_height="@dimen/icon_size2"
+            android:src="@drawable/ic_note_black_24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/padding_mid"
+            android:id="@+id/ic_kota"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/ic_kota"
+            android:layout_marginLeft="@dimen/padding_default">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:text="Keterangan"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_big" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="80dp"
+                android:background="@drawable/bg_input"
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"
+                android:text=""
+                android:id="@+id/edt_keterangan"
+                android:textSize="@dimen/text_small"
+                android:gravity="top"
+                android:layout_marginTop="@dimen/padding_default"
+                android:padding="@dimen/padding_default"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_button_green"
+        android:textColor="@color/colorWhite"
+        android:text="Simpan Data"
+        android:id="@+id/btn_simpan"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"/>
+</LinearLayout>
