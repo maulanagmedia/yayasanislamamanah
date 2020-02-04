@@ -373,8 +373,7 @@ public class CollectorJadwalFragment extends Fragment {
                     public void onEmpty(String message) {
                         dialogBox.dismissDialog();
                         isLoading=false;
-                        listDonatur.clear();
-//                        adapter.notifyDataSetChanged();
+//                        listDonatur.clear();
                         if (rk1.equals("0") && rk2.equals("0")  && rk3.equals("0") ) {
                             adapter.clearAdapter();
                         }
