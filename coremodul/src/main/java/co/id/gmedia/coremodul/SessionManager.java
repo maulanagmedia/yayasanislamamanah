@@ -32,6 +32,7 @@ public class SessionManager {
     public static final String TAG_FOTO = "foto";
     public static final String TAG_KONTAK = "kontak";
     public static final String TAG_ID = "id_record";
+    public static final String TAG_PROFIL = "image_profil";
 
     // Constructor
     public SessionManager(Context context){

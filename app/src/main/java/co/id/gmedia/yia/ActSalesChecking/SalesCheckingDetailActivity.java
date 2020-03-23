@@ -296,6 +296,8 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         body.add("latitude", lat);
         body.add("longitude", lng);
         body.add("foto", jFoto);
+        body.add("rt", edtRt.getText().toString());
+        body.add("rw", edtRw.getText().toString());
         body.add("ceklist", cbCkecing.isChecked() ? "1" : "0");
 
         new ApiVolley(this, body.create(), "POST", ServerURL.saveSurvey,
