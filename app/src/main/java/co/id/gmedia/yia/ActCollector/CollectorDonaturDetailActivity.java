@@ -136,6 +136,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
 
     private Dialog dialogDevices;
     public Dialog dialogBluetooth;
+    public Dialog dialogConfirm;
     private BroadcastReceiver broadcastReceiver;
 
     private ArrayAdapter<String> deviceAdapter;
@@ -901,31 +902,46 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
                         dialogBox.dismissDialog();
                         Toast.makeText(CollectorDonaturDetailActivity.this, message, Toast.LENGTH_SHORT).show();
 
-                        Calendar date = Calendar.getInstance();
-                        List<Item> items = new ArrayList<>();
+                        final Calendar date = Calendar.getInstance();
+                        final List<Item> items = new ArrayList<>();
                         items.add(new Item("Teknolgi", "-", 20000));
                         if(message.equals("Infaq berhasil diambil")){
-                            String nominal ="";
-                            if(!txt_nominal.getText().toString().equals("0")){
-                                nominal = txt_nominal.getText().toString().replaceAll("[Rp,.\\s]", "");
-                            }else{
-                                nominal = "0";
-                            }
-                            transaksi = new Transaksi(edt_nama.getText().toString(), edt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(), items,session.getNama());
-                            if(!bluetoothAdapter.isEnabled()) {
-
-                                dialogBluetooth.show();
-                                Toast.makeText(context, "Hidupkan bluetooth anda kemudian klik cetak kembali", Toast.LENGTH_LONG).show();
-                            }else{
-
-                                if(isPrinterReady()){
-                                    print(transaksi, true);
-                                    finish();
-                                }else{
-                                    Toast.makeText(context, "Harap pilih device printer telebih dahulu", Toast.LENGTH_LONG).show();
-                                    showDevices();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Print nota infaq");
+                            builder.setMessage("Apakah anda ingin mengeprint nota infaq ?");
+                            builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String nominal ="";
+                                    if(!txt_nominal.getText().toString().equals("0")){
+                                        nominal = txt_nominal.getText().toString().replaceAll("[Rp,.\\s]", "");
+                                    }else{
+                                        nominal = "0";
+                                    }
+                                    transaksi = new Transaksi(edt_nama.getText().toString(), edt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(), items,session.getNama());
+                                    if(!bluetoothAdapter.isEnabled()) {
+                                        dialogBluetooth.show();
+                                        Toast.makeText(context, "Hidupkan bluetooth anda kemudian klik cetak kembali", Toast.LENGTH_LONG).show();
+                                    }else{
+                                        if(isPrinterReady()){
+                                            print(transaksi, true);
+                                            finish();
+                                        }else{
+                                            Toast.makeText(context, "Harap pilih device printer telebih dahulu", Toast.LENGTH_LONG).show();
+                                            showDevices();
+                                        }
+                                    }
                                 }
-                            }
+                            });
+                            builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                    finish();
+                                }
+                            });
+                            dialogConfirm = builder.create();
+                            dialogConfirm.show();
                         }else{
                             finish();
                         }
