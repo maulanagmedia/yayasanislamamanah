@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <application
         android:allowBackup="true"
@@ -19,7 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ActAkun.RequestActivity"></activity>
+        <activity
+            android:name=".ActCollector.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".ActAkun.RequestActivity" />
         <activity android:name=".ActCollector.EditDonaturCollectorActivity" />
         <activity android:name=".ActSalesSosial.EditDonaturSosialActivity" />
         <activity android:name=".ActSalesBrosur.EditDonaturActivity" />
@@ -46,6 +51,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActAkun.DetailAkunActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ActCollector.DeviceActivity"
             android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

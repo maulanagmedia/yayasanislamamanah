@@ -7,7 +7,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 6
-        versionName "2.6"
+        versionName "2.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -33,6 +33,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'androidx.preference:preference:1.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
@@ -45,6 +46,10 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.4.2'
 
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'pub.devrel:easypermissions:0.4.3'
+    implementation project(path: ':bluetoothprinter')
+    // bluetooth lib sdk
+//    implementation files('libs/bluetoothsdk.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'

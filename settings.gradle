@@ -1,2 +1,2 @@
-include ':app', ':coremodul'
+include ':app', ':coremodul', ':bluetoothprinter'
 rootProject.name='islamiamanah'

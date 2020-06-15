@@ -33,6 +33,7 @@ public class SessionManager {
     public static final String TAG_KONTAK = "kontak";
     public static final String TAG_ID = "id_record";
     public static final String TAG_PROFIL = "image_profil";
+    public static final String TAG_PRINTER ="status_printer";
 
     // Constructor
     public SessionManager(Context context){
@@ -87,6 +88,11 @@ public class SessionManager {
         editor.commit();
     }
 
+    public void saveStatusPrinter(boolean printer){
+        editor.putBoolean(TAG_PRINTER, printer);
+        editor.commit();
+    }
+
     /**
      * Get stored session data
      * */
@@ -129,6 +135,10 @@ public class SessionManager {
 
     public String getKontak(){
         return pref.getString(TAG_KONTAK, "");
+    }
+
+    public boolean getStatusPrinter(){
+        return pref.getBoolean(TAG_PRINTER, false);
     }
 
     /**

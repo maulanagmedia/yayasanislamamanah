@@ -61,11 +61,15 @@ public class CollectorActivity extends AppCompatActivity {
     private ItemValidation iv = new ItemValidation();
     private DialogBox dialogBox;
     private ImageView ivBackground;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collector);
+
+        session = new SessionManager(this);
+        session.saveStatusPrinter(false);
 
         context = this;
         dialogBox = new DialogBox(context);
@@ -119,7 +123,6 @@ public class CollectorActivity extends AppCompatActivity {
     }
 
     private void loadProfil(){
-        SessionManager session = new SessionManager(this);
         txt_nama.setText(session.getNama());
         ImageUtils imageUtils = new ImageUtils();
         imageUtils.LoadRealImage(session.getFoto(), img_foto);
@@ -189,7 +192,7 @@ public class CollectorActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home, menu);
+        inflater.inflate(R.menu.menu_collector, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -207,8 +210,12 @@ public class CollectorActivity extends AppCompatActivity {
             Intent intent = new Intent(context, ListNotificationActivity.class);
             startActivity(intent);
             return true;
-        }else if(id == R.id.option_request){
+        }else if(id == R.id.option_request) {
             Intent intent = new Intent(context, RequestActivity.class);
+            startActivity(intent);
+            return true;
+        }else if(id == R.id.option_settings){
+            Intent intent = new Intent(context, SettingsActivity.class);
             startActivity(intent);
             return true;
         }else{

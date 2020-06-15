@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_akun"
+        android:title="Option"
+        android:orderInCategory="101"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_setting">
+
+        <menu>
+
+            <item android:title="Profile"
+                android:id="@+id/option_profile"
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/ic_person_black_24dp"/>
+
+            <item android:title="Notifikasi"
+                android:id="@+id/option_notif"
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/ic_notif"/>
+
+            <item android:title="Request"
+                android:id="@+id/option_request"
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/ic_speaker_notes_black_24dp"/>
+
+            <item android:title="Settings"
+                android:id="@+id/option_settings"
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/ic_settings"/>
+        </menu>
+    </item>
+</menu>
