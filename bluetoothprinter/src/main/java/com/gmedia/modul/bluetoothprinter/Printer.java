@@ -12,9 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class PspPrinter extends BluetoothPrinter {
+public class Printer extends BluetoothPrinter {
     /*
-        BLUETOOTH PRINTER PSP
+        BLUETOOTH PRINTER
         Library untuk menggunakan bluetooth printer. Langkah menggunakan :
         1. Buat objek BluetoothPrinter dengan menggunakan keyword new dengan parameter input context
             (ex : btPrint = new BluetoothPrinter(this))
@@ -36,7 +36,7 @@ public class PspPrinter extends BluetoothPrinter {
     */
 
     public static String npwpToko = "";
-    public PspPrinter(Context context){
+    public Printer(Context context){
         super(context);
     }
 
@@ -48,6 +48,63 @@ public class PspPrinter extends BluetoothPrinter {
             isSocketConncet = socket.isConnected();
         }
         return bluetoothDevice != null && isSocketConncet;
+    }
+
+    public void print(Transaksi transaksi, String ket, boolean isKet){
+        final int NAMA_MAX = 15;
+        final int JUMLAH_MAX = 5;
+        final int HARGA_TOTAL_MAX = 10;
+
+        if(bluetoothDevice == null){
+            Toast.makeText(context, "Sambungkan ke device printer terlebih dahulu!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            double jum = 0;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+            //PROSES CETAK HEADER
+            outputStream.write(PrintFormatter.DEFAULT_STYLE);
+            outputStream.write(PrintFormatter.ALIGN_CENTER);
+            Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), com.gmedia.modul.bluetoothprinter.R.drawable.ic_yayasan);
+            byte[] bmp_byte = PrintFormatter.decodeBitmap(bmp);
+            if(bmp_byte != null){
+                outputStream.write(bmp_byte);
+            }
+            outputStream.write("YAYASAN ISLAM AMANAH \n  @yay.amanah \n WA 0813-1162-6307".getBytes());
+
+            outputStream.write(PrintFormatter.NEW_LINE);
+            outputStream.write(PrintFormatter.ALIGN_RIGHT);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+            String currentDateandTime = sdf.format(transaksi.getTglNota());
+            outputStream.write(String.format("%s\n", currentDateandTime).getBytes());
+            outputStream.write(PrintFormatter.NEW_LINE);
+
+            outputStream.write(PrintFormatter.ALIGN_LEFT);
+            outputStream.write(String.format("Nama    : %s\n", transaksi.getOutlet()).getBytes());
+            outputStream.write(PrintFormatter.NEW_LINE);
+            outputStream.write(String.format("Alamat  : %s\n", transaksi.getSales()).getBytes());
+            outputStream.write(PrintFormatter.NEW_LINE);
+            outputStream.write(String.format("Nominal : %s\n", RupiahFormatter.getRupiah(transaksi.getNo_nota())).getBytes());
+            outputStream.write(PrintFormatter.NEW_LINE);
+            outputStream.write(String.format("Petugas : %s\n", transaksi.getTglTransaksi()).getBytes());
+
+            outputStream.write(PrintFormatter.NEW_LINE);
+
+            //PROSES CETAK FOOTER
+            outputStream.write(PrintFormatter.ALIGN_CENTER);
+            outputStream.write("Jazakumulloh Khoiron Katsiron\n".getBytes());
+
+            outputStream.write("==============================\n".getBytes());
+            outputStream.write(PrintFormatter.DEFAULT_STYLE);
+            outputStream.write(PrintFormatter.NEW_LINE);
+            outputStream.write(PrintFormatter.NEW_LINE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Koneksi printer terputus, harap koneksi ulang bluetooth anda", Toast.LENGTH_LONG).show();
+            stopService();
+        }
     }
 
     // this will send text data to be printed by the bluetooth printer

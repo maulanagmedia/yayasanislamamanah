@@ -52,9 +52,6 @@
         <activity
             android:name=".ActAkun.DetailAkunActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ActCollector.DeviceActivity"
-            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

@@ -1,6 +1,5 @@
 package co.id.gmedia.yia.ActCollector;
 
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -76,7 +75,7 @@ public class CollectorJadwalFragment extends Fragment {
     private CheckBox cbk1, cbk2, cbk3;
     private ListView rv_jadwal;
     private LinearLayoutManager linearLayoutManager;
-//    private TextView tvKunjungi, tvBelumKunjungi;
+    //    private TextView tvKunjungi, tvBelumKunjungi;
     private ImageView ivSort;
     private GoogleLocationManager locationManager;
     private boolean isLocationReloaded;

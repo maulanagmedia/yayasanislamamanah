@@ -1,6 +1,5 @@
 package co.id.gmedia.yia.ActCollector;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
@@ -15,8 +14,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -32,11 +29,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gmedia.modul.bluetoothprinter.BluetoothPrinter;
 import com.gmedia.modul.bluetoothprinter.Model.Item;
 import com.gmedia.modul.bluetoothprinter.Model.Transaksi;
 import com.gmedia.modul.bluetoothprinter.PrintFormatter;
-import com.gmedia.modul.bluetoothprinter.PspPrinter;
+import com.gmedia.modul.bluetoothprinter.Printer;
 import com.gmedia.modul.bluetoothprinter.RupiahFormatter;
 import com.zj.btsdk.BluetoothService;
 
@@ -45,7 +41,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -55,10 +50,6 @@ import java.util.UUID;
 
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.R;
-import co.id.gmedia.yia.Utils.BluetoothHandler;
-import co.id.gmedia.yia.Utils.PrinterCommands;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -73,7 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private BluetoothService mService = null;
     private boolean isPrinterReady = false;
-    private PspPrinter printer;
+    private Printer printer;
     SessionManager sessionManager;
     String message = "<h3>Yayasan Islam Amanah<br> @yay.amanah / WA 0813-1162-6307</h3>";
 

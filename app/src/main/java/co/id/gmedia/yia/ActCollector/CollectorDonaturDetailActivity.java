@@ -50,6 +50,7 @@ import android.widget.Toast;
 import com.gmedia.modul.bluetoothprinter.Model.Item;
 import com.gmedia.modul.bluetoothprinter.Model.Transaksi;
 import com.gmedia.modul.bluetoothprinter.PrintFormatter;
+import com.gmedia.modul.bluetoothprinter.Printer;
 import com.gmedia.modul.bluetoothprinter.RupiahFormatter;
 import com.google.gson.Gson;
 
@@ -118,6 +119,8 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
     private List<PhotoModel> listPhotoDetail = new ArrayList<>();
     private ImageDonaturAdapter adapterPhotoDetail;
 
+    Printer printer;
+
     // set printer
     private final UUID BLUETOOTH_PRINTER_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
@@ -154,6 +157,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collector_donatur_detail);
+        printer = new Printer(CollectorDonaturDetailActivity.this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getWindow().setSoftInputMode(
@@ -393,7 +397,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         dialogBox = new DialogBox(this);
 
 
-        //Inisialisasi UI
+        //Inisialisasi UI bluetooth
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Bluetooth tidak menyala");
         builder.setMessage("Bluetooth anda tidak menyala. Nyalakan bluetooth sekarang?");
