@@ -27,4 +27,6 @@
     <color name="colorGreyDeactive">#C0C0C0</color>
     <color name="colorGAP">#ECECEC</color>
     <color name="colorOrange">#F48B09</color>
+    <color name="status_bar_blue">#41C8FF</color>
+    <color name="status_bar_red">#E75351</color>
 </resources>

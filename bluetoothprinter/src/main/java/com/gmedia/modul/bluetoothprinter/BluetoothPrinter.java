@@ -256,7 +256,7 @@ public class BluetoothPrinter {
         } catch (Exception e) {
 
             bluetoothDevice = null;
-            Toast.makeText(context, "Device Bluetooth Printer gagal tersambung", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Device Bluetooth Printer gagal tersambung \n Silahkan cetak ulang nota di history", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

@@ -137,7 +137,7 @@ public class CollectorActivity extends AppCompatActivity {
 //        Toast.makeText(context, "Total "+jumlah, Toast.LENGTH_SHORT).show();
     }
 
-    private void switchTab(int position){
+    public void switchTab(int position){
         switch (position){
             case 0 : loadFragment(new CollectorJadwalFragment());break;
             case 1 : loadFragment(new CollectorHistoryFragment());break;

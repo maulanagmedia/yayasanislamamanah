@@ -868,11 +868,46 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void prosesInfaq(){
+
+        final Calendar date = Calendar.getInstance();
+
+        if(!printer.bluetoothAdapter.isEnabled()){
+
+            Toast.makeText(context, "Mohon hidupkan bluetooth anda, kemudian klik cetak kembali", Toast.LENGTH_LONG).show();
+            try{
+                printer.dialogBluetooth.show();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else{
+
+            if(printer.isPrinterReady()){
+                // TODO doing
+                jemputInfaq();
+                String nominal ="";
+                if(!txt_nominal.getText().toString().equals("0")){
+                    nominal = txt_nominal.getText().toString().replaceAll("[Rp,.\\s]", "");
+                }else{
+                    nominal = "0";
+                }
+
+                transaksi = new Transaksi(edt_nama.getText().toString(), edt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(), session.getNama());
+                printer.print(transaksi,true);
+
+            }else{
+
+                Toast.makeText(context, "Harap pilih device printer telebih dahulu", Toast.LENGTH_LONG).show();
+                printer.showDevices();
+            }
+        }
+
+    }
+
     private void jemputInfaq(){
 
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
-
         String url = ServerURL.saveCollector;
 
         if(isEdit){
@@ -905,50 +940,50 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
                         Toast.makeText(CollectorDonaturDetailActivity.this, message, Toast.LENGTH_SHORT).show();
-
-                        final Calendar date = Calendar.getInstance();
-                        final List<Item> items = new ArrayList<>();
-                        items.add(new Item("Teknolgi", "-", 20000));
-                        if(message.equals("Infaq berhasil diambil")){
-                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("Print nota infaq");
-                            builder.setMessage("Apakah anda ingin mengeprint nota infaq ?");
-                            builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    String nominal ="";
-                                    if(!txt_nominal.getText().toString().equals("0")){
-                                        nominal = txt_nominal.getText().toString().replaceAll("[Rp,.\\s]", "");
-                                    }else{
-                                        nominal = "0";
-                                    }
-                                    transaksi = new Transaksi(edt_nama.getText().toString(), edt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(), items,session.getNama());
-                                    if(!bluetoothAdapter.isEnabled()) {
-                                        dialogBluetooth.show();
-                                        Toast.makeText(context, "Hidupkan bluetooth anda kemudian klik cetak kembali", Toast.LENGTH_LONG).show();
-                                    }else{
-                                        if(isPrinterReady()){
-                                            print(transaksi, true);
-                                            finish();
-                                        }else{
-                                            Toast.makeText(context, "Harap pilih device printer telebih dahulu", Toast.LENGTH_LONG).show();
-                                            showDevices();
-                                        }
-                                    }
-                                }
-                            });
-                            builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                    finish();
-                                }
-                            });
-                            dialogConfirm = builder.create();
-                            dialogConfirm.show();
-                        }else{
-                            finish();
-                        }
+                        finish();
+//                        final Calendar date = Calendar.getInstance();
+//                        final List<Item> items = new ArrayList<>();
+//                        items.add(new Item("Teknolgi", "-", 20000));
+//                        if(message.equals("Infaq berhasil diambil")){
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                            builder.setTitle("Print nota infaq");
+//                            builder.setMessage("Apakah anda ingin mengeprint nota infaq ?");
+//                            builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    String nominal ="";
+//                                    if(!txt_nominal.getText().toString().equals("0")){
+//                                        nominal = txt_nominal.getText().toString().replaceAll("[Rp,.\\s]", "");
+//                                    }else{
+//                                        nominal = "0";
+//                                    }
+//                                    transaksi = new Transaksi(edt_nama.getText().toString(), edt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(), items,session.getNama());
+//                                    if(!bluetoothAdapter.isEnabled()) {
+//                                        dialogBluetooth.show();
+//                                        Toast.makeText(context, "Hidupkan bluetooth anda kemudian klik cetak kembali", Toast.LENGTH_LONG).show();
+//                                    }else{
+//                                        if(isPrinterReady()){
+//                                            print(transaksi, true);
+//                                            finish();
+//                                        }else{
+//                                            Toast.makeText(context, "Harap pilih device printer telebih dahulu", Toast.LENGTH_LONG).show();
+//                                            showDevices();
+//                                        }
+//                                    }
+//                                }
+//                            });
+//                            builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    dialog.cancel();
+//                                    finish();
+//                                }
+//                            });
+//                            dialogConfirm = builder.create();
+//                            dialogConfirm.show();
+//                        }else{
+//                            finish();
+//                        }
                     }
 
                     @Override
@@ -1089,8 +1124,9 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
             Toast.makeText(context, "Device Bluetooth Printer tersambung", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
 
+            finish();
             bluetoothDevice = null;
-            Toast.makeText(context, "Device Bluetooth Printer gagal tersambung", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Device Bluetooth Printer gagal tersambung \n Silahkan cetak ulang nota di history", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

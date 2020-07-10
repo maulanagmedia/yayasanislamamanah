@@ -134,6 +134,7 @@ public class CollectorTambahDonaturFragment extends Fragment {
     private List<BluetoothDevice> listDiscovered = new ArrayList<>();
     public static ListView list_devices;
     Transaksi transaksi;
+    Printer printer;
 
     public CollectorTambahDonaturFragment() {
         // Required empty public constructor
@@ -146,6 +147,8 @@ public class CollectorTambahDonaturFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_collector_tambah_donatur, container, false);
         dialogBox = new DialogBox(activity);
         sessionManager = new SessionManager(activity);
+        printer = new Printer(activity);
+        printer.startService();
 
         txt_nama = v.findViewById(R.id.txt_nama);
         txt_alamat = v.findViewById(R.id.txt_alamat);
@@ -223,7 +226,7 @@ public class CollectorTambahDonaturFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                tambahDonatur();
+                                saveDonatur();
                             }
                         })
                         .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
@@ -342,10 +345,44 @@ public class CollectorTambahDonaturFragment extends Fragment {
         return v;
     }
 
-    private void tambahDonatur(){
+    private void saveDonatur(){
         final Calendar date = Calendar.getInstance();
         final List<Item> items = new ArrayList<>();
 
+        if(!printer.bluetoothAdapter.isEnabled()){
+
+            Toast.makeText(activity, "Mohon hidupkan bluetooth anda, kemudian klik cetak kembali", Toast.LENGTH_LONG).show();
+            try{
+                printer.dialogBluetooth.show();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else{
+
+            if(printer.isPrinterReady()){
+                // TODO doing
+                tambahDonatur();
+                String nominal ="";
+                if(!txt_jumlah_donasi.getText().toString().equals("0")){
+                    nominal = txt_jumlah_donasi.getText().toString().replaceAll("[Rp,.\\s]", "");
+                }else{
+                    nominal = "0";
+                }
+
+                transaksi = new Transaksi(txt_nama.getText().toString(), txt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(), items,sessionManager.getNama());
+
+                printer.print(transaksi,true);
+
+            }else{
+
+                Toast.makeText(activity, "Harap pilih device printer telebih dahulu", Toast.LENGTH_LONG).show();
+                printer.showDevices();
+            }
+        }
+
+    }
+
+    private void tambahDonatur(){
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("nama", txt_nama.getText().toString());
@@ -376,19 +413,17 @@ public class CollectorTambahDonaturFragment extends Fragment {
         new ApiVolley(activity, body.create(), "POST",
                 ServerURL.tambahDonaturLuarCollector, new AppRequestCallback
                 (new AppRequestCallback.ResponseListener() {
-            @Override
-            public void onSuccess(String response, String message) {
-
-                dialogBox.dismissDialog();
-//                if(activity instanceof CollectorActivity){
-//                    ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
-//                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setTitle("Print nota infaq");
-                builder.setMessage("Apakah anda ingin mengeprint nota infaq ?");
-                builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onSuccess(String response, String message) {
+
+                        dialogBox.dismissDialog();
+                        if(activity instanceof CollectorActivity){
+                            ((CollectorActivity) activity).switchTab(1);
+                            ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
+                        }
+                        final Calendar date = Calendar.getInstance();
+                        final List<Item> items = new ArrayList<>();
+
                         String nominal ="";
                         if(!txt_jumlah_donasi.getText().toString().equals("0")){
                             nominal = txt_jumlah_donasi.getText().toString().replaceAll("[Rp,.\\s]", "");
@@ -396,59 +431,183 @@ public class CollectorTambahDonaturFragment extends Fragment {
                             nominal = "0";
                         }
                         transaksi = new Transaksi(txt_nama.getText().toString(), txt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(), items,sessionManager.getNama());
-                        if(!bluetoothAdapter.isEnabled()) {
-                            dialogBluetooth.show();
-                            Toast.makeText(activity, "Hidupkan bluetooth anda kemudian klik cetak kembali", Toast.LENGTH_LONG).show();
-                        }else{
-                            if(isPrinterReady()){
-                                print(transaksi, true);
-                                if(activity instanceof CollectorActivity){
-                                    ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
-                                }
-                            }else{
-                                Toast.makeText(activity, "Harap pilih device printer telebih dahulu", Toast.LENGTH_LONG).show();
-                                showDevices();
-                            }
-                        }
+
+                        printer.print(transaksi,true);
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+//                        builder.setTitle("Print nota infaq");
+//                        builder.setMessage("Apakah anda ingin mengeprint nota infaq ?");
+//                        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                String nominal ="";
+//                                if(!txt_jumlah_donasi.getText().toString().equals("0")){
+//                                    nominal = txt_jumlah_donasi.getText().toString().replaceAll("[Rp,.\\s]", "");
+//                                }else{
+//                                    nominal = "0";
+//                                }
+//                                transaksi = new Transaksi(txt_nama.getText().toString(), txt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(), items,sessionManager.getNama());
+//                                if(!bluetoothAdapter.isEnabled()) {
+//                                    dialogBluetooth.show();
+//                                    Toast.makeText(activity, "Hidupkan bluetooth anda kemudian klik cetak kembali", Toast.LENGTH_LONG).show();
+//                                }else{
+//                                    if(isPrinterReady()){
+//                                        print(transaksi, true);
+//                                        if(activity instanceof CollectorActivity){
+//                                            ((CollectorActivity) activity).switchTab(1);
+//                                            ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
+//                                        }
+//                                    }else{
+//                                        Toast.makeText(activity, "Harap pilih device printer telebih dahulu", Toast.LENGTH_LONG).show();
+//                                        showDevices();
+//                                    }
+//                                }
+//                            }
+//                        });
+//                        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.cancel();
+//                                if(activity instanceof CollectorActivity){
+//                                    ((CollectorActivity) activity).switchTab(1);
+//                                    ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
+//                                }
+//                            }
+//                        });
+//                        dialogConfirm = builder.create();
+//                        dialogConfirm.show();
+                        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
                     }
-                });
-                builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        if(activity instanceof CollectorActivity){
-                            ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
-                        }
-                    }
-                });
-                dialogConfirm = builder.create();
-                dialogConfirm.show();
-                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onEmpty(String message) {
-                dialogBox.dismissDialog();
-                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFail(String message) {
-                dialogBox.dismissDialog();
-                View.OnClickListener clickListener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
+                    public void onEmpty(String message) {
                         dialogBox.dismissDialog();
-                        tambahDonatur();
-
+                        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
                     }
-                };
 
-                dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
-            }
-        }));
+                    @Override
+                    public void onFail(String message) {
+                        dialogBox.dismissDialog();
+                        View.OnClickListener clickListener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                dialogBox.dismissDialog();
+                                tambahDonatur();
+
+                            }
+                        };
+
+                        dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+                    }
+                }));
     }
+
+//    private void tambahDonatur(){
+//        final Calendar date = Calendar.getInstance();
+//        final List<Item> items = new ArrayList<>();
+//
+//        dialogBox.showDialog(false);
+//        JSONBuilder body = new JSONBuilder();
+//        body.add("nama", txt_nama.getText().toString());
+//        body.add("alamat", txt_alamat.getText().toString());
+//        body.add("kontak", txt_kontak.getText().toString());
+//        body.add("keterangan", edtKetarangan.getText().toString());
+//        body.add("rt", edtRt.getText().toString());
+//        body.add("rw", edtRw.getText().toString());
+//        body.add("lat", lat);
+//        body.add("long", lng);
+//        body.add("kota", selectedKota);
+//        body.add("kecamatan", selectedKecamatan);
+//        body.add("kelurahan", selectedKelurahan);
+//        body.add("sales_collector", new SessionManager(activity).getId());
+//        body.add("nominal", txt_jumlah_donasi.getText().toString().replaceAll("[Rp,.\\s]", ""));
+//        ArrayList<String> listFoto = new ArrayList<>();
+//
+//        for(String path : listGambar){
+//            File image = new File(path);
+//            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+//            Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
+//            String bitmap_string = Converter.convertToBase64(bitmap);
+//            listFoto.add(bitmap_string);
+//        }
+//
+//        body.add("foto", new JSONArray(listFoto));
+//
+//        new ApiVolley(activity, body.create(), "POST",
+//                ServerURL.tambahDonaturLuarCollector, new AppRequestCallback
+//                (new AppRequestCallback.ResponseListener() {
+//            @Override
+//            public void onSuccess(String response, String message) {
+//
+//                dialogBox.dismissDialog();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+//                builder.setTitle("Print nota infaq");
+//                builder.setMessage("Apakah anda ingin mengeprint nota infaq ?");
+//                builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String nominal ="";
+//                        if(!txt_jumlah_donasi.getText().toString().equals("0")){
+//                            nominal = txt_jumlah_donasi.getText().toString().replaceAll("[Rp,.\\s]", "");
+//                        }else{
+//                            nominal = "0";
+//                        }
+//                        transaksi = new Transaksi(txt_nama.getText().toString(), txt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(), items,sessionManager.getNama());
+//                        if(!bluetoothAdapter.isEnabled()) {
+//                            dialogBluetooth.show();
+//                            Toast.makeText(activity, "Hidupkan bluetooth anda kemudian klik cetak kembali", Toast.LENGTH_LONG).show();
+//                        }else{
+//                            if(isPrinterReady()){
+//                                print(transaksi, true);
+//                                if(activity instanceof CollectorActivity){
+//                                    ((CollectorActivity) activity).switchTab(1);
+//                                    ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
+//                                }
+//                            }else{
+//                                Toast.makeText(activity, "Harap pilih device printer telebih dahulu", Toast.LENGTH_LONG).show();
+//                                showDevices();
+//                            }
+//                        }
+//                    }
+//                });
+//                builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                        if(activity instanceof CollectorActivity){
+//                            ((CollectorActivity) activity).switchTab(1);
+//                            ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
+//                        }
+//                    }
+//                });
+//                dialogConfirm = builder.create();
+//                dialogConfirm.show();
+//                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onEmpty(String message) {
+//                dialogBox.dismissDialog();
+//                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFail(String message) {
+//                dialogBox.dismissDialog();
+//                View.OnClickListener clickListener = new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//
+//                        dialogBox.dismissDialog();
+//                        tambahDonatur();
+//
+//                    }
+//                };
+//
+//                dialogBox.showDialog(clickListener, "Ulangi Proses", "Terjadi kesalahan saat mengambil data");
+//            }
+//        }));
+//    }
 
     private void showKotaDialog(){
         final Dialog dialogChooser = DialogFactory.getInstance().createDialog(activity,
@@ -930,13 +1089,17 @@ public class CollectorTambahDonaturFragment extends Fragment {
             print(transaksi, true);
 //            activity.finish();
             if(activity instanceof CollectorActivity){
+                ((CollectorActivity) activity).switchTab(1);
                 ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
             }
             Toast.makeText(activity, "Device Bluetooth Printer tersambung", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-
+//            if(activity instanceof CollectorActivity){
+//                ((CollectorActivity) activity).switchTab(1);
+//                ((CollectorActivity)activity).loadFragment(new CollectorHistoryFragment());
+//            }
             bluetoothDevice = null;
-            Toast.makeText(activity, "Device Bluetooth Printer gagal tersambung", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Device Bluetooth Printer gagal tersambung \n Silahkan cetak ulang nota di history", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -1149,5 +1312,12 @@ public class CollectorTambahDonaturFragment extends Fragment {
             Toast.makeText(activity, "Koneksi printer terputus, harap koneksi ulang bluetooth anda", Toast.LENGTH_LONG).show();
             stopService();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+
+        printer.stopService();
+        super.onDestroy();
     }
 }

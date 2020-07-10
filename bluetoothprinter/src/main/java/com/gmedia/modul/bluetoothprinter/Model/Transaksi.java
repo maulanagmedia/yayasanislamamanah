@@ -21,6 +21,14 @@ public class Transaksi {
         this.tglTransaksi = tglTransaksi;
     }
 
+    public Transaksi(String outlet, String sales, Double no_nota, Date tglNota,  String tglTransaksi){
+        this.outlet = outlet;
+        this.sales = sales;
+        this.no_nota = no_nota;
+        this.tglNota = tglNota;
+        this.tglTransaksi = tglTransaksi;
+    }
+
 
     public void setTunai(double tunai){
         this.tunai = tunai;

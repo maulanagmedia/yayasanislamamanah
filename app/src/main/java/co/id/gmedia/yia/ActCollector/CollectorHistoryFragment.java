@@ -21,6 +21,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gmedia.modul.bluetoothprinter.Model.Transaksi;
+import com.gmedia.modul.bluetoothprinter.Printer;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +52,7 @@ import co.id.gmedia.yia.Utils.ServerURL;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CollectorHistoryFragment extends Fragment {
+public class CollectorHistoryFragment extends Fragment implements HistoryCollectorAdapter.HistoryCollectorAdapterCalback{
 
     private Activity activity;
     private HistoryCollectorAdapter adapter;
@@ -65,6 +68,7 @@ public class CollectorHistoryFragment extends Fragment {
     private CheckBox cbDD, cbDL;
     String total_data="0";
     private TextView tvDonasiYa, tvDonasiTidak, tvTotalHistory;
+    Printer printer;
 
     public CollectorHistoryFragment() {
         // Required empty public constructor
@@ -75,6 +79,8 @@ public class CollectorHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         activity = getActivity();
         View v = inflater.inflate(R.layout.fragment_collector_history, container, false);
+        printer = new Printer(activity);
+        printer.startService();
 
         rv_history = v.findViewById(R.id.rv_history);
         edtSearch = (EditText) v.findViewById(R.id.edt_search);
@@ -91,7 +97,7 @@ public class CollectorHistoryFragment extends Fragment {
 
         rv_history.setItemAnimator(new DefaultItemAnimator());
         rv_history.setLayoutManager(new LinearLayoutManager(activity));
-        adapter = new HistoryCollectorAdapter(activity, listDonatur);
+        adapter = new HistoryCollectorAdapter(activity, listDonatur,this);
         rv_history.setAdapter(adapter);
 
         dateFrom = iv.getCurrentDate(FormatItem.formatDateDisplay);
@@ -186,6 +192,12 @@ public class CollectorHistoryFragment extends Fragment {
                 loadHistory();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        printer.startService();
     }
 
     private void loadHistory(){
@@ -308,5 +320,26 @@ public class CollectorHistoryFragment extends Fragment {
                     }
                 })
         );
+    }
+
+    @Override
+    public void onRowPrintNota(Transaksi transaksi) {
+        if(!printer.bluetoothAdapter.isEnabled()) {
+            printer.dialogBluetooth.show();
+            Toast.makeText(activity, "Hidupkan bluetooth anda kemudian klik cetak kembali", Toast.LENGTH_LONG).show();
+        }else{
+            if(printer.isPrinterReady()){
+                printer.print(transaksi, true);
+            }else{
+                Toast.makeText(activity, "Harap pilih device printer telebih dahulu", Toast.LENGTH_LONG).show();
+                printer.showDevices();
+            }
+        }
+    }
+    @Override
+    public void onDestroy() {
+
+        printer.stopService();
+        super.onDestroy();
     }
 }
