@@ -6,8 +6,8 @@ android {
         applicationId "co.id.gmedia.yia"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 6
-        versionName "2.8"
+        versionCode 10
+        versionName "2.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
