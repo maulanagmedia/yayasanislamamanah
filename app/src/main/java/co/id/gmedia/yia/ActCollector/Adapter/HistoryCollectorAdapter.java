@@ -102,27 +102,15 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
             }else{
                 nominal = "0";
             }
-//            transaksi = new Transaksi(b.getNama(), b.getAlamat(), Double.parseDouble(nominal), date.getTime(), items,sessionManager.getNama());
+
             final String finalNominal = nominal;
             imgPrint.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    transaksi = new Transaksi(b.getNama(), b.getAlamat(), Double.parseDouble(finalNominal), date.getTime(), items,sessionManager.getNama());
+                    transaksi = new Transaksi(b.getNama(), b.getAlamat(), Double.parseDouble(finalNominal), date.getTime(), sessionManager.getNama());
                     collectorAdapterCalback.onRowPrintNota(transaksi);
                 }
             });
-
-            /*txt_tanggal.setText(Converter.DToString(b.getTanggal()));
-            txt_jenis_donasi.setText(b.getJenis());
-            txt_waktu_donasi.setText(b.getWaktu());
-            txt_jumlah_donasi.setText(Converter.doubleToRupiah(b.getJumlah()));
-
-            if(b.isTambahan()){
-                txt_tambahan.setVisibility(View.VISIBLE);
-            }
-            else{
-                txt_tambahan.setVisibility(View.GONE);
-            }*/
         }
     }
 

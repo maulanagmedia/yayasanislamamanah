@@ -50,180 +50,6 @@ public class Printer extends BluetoothPrinter {
         return bluetoothDevice != null && isSocketConncet;
     }
 
-    public void print(Transaksi transaksi, String ket, boolean isKet){
-        final int NAMA_MAX = 15;
-        final int JUMLAH_MAX = 5;
-        final int HARGA_TOTAL_MAX = 10;
-
-        if(bluetoothDevice == null){
-            Toast.makeText(context, "Sambungkan ke device printer terlebih dahulu!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        try {
-            double jum = 0;
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-
-            //PROSES CETAK HEADER
-            outputStream.write(PrintFormatter.DEFAULT_STYLE);
-            outputStream.write(PrintFormatter.ALIGN_CENTER);
-            Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), com.gmedia.modul.bluetoothprinter.R.drawable.ic_yayasan);
-            byte[] bmp_byte = PrintFormatter.decodeBitmap(bmp);
-            if(bmp_byte != null){
-                outputStream.write(bmp_byte);
-            }
-            outputStream.write("YAYASAN ISLAM AMANAH \n  @yay.amanah \n WA 0813-1162-6307".getBytes());
-
-            outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(PrintFormatter.ALIGN_RIGHT);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
-            String currentDateandTime = sdf.format(transaksi.getTglNota());
-            outputStream.write(String.format("%s\n", currentDateandTime).getBytes());
-            outputStream.write(PrintFormatter.NEW_LINE);
-
-            outputStream.write(PrintFormatter.ALIGN_LEFT);
-            outputStream.write(String.format("Nama    : %s\n", transaksi.getOutlet()).getBytes());
-            outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(String.format("Alamat  : %s\n", transaksi.getSales()).getBytes());
-            outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(String.format("Nominal : %s\n", RupiahFormatter.getRupiah(transaksi.getNo_nota())).getBytes());
-            outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(String.format("Petugas : %s\n", transaksi.getTglTransaksi()).getBytes());
-
-            outputStream.write(PrintFormatter.NEW_LINE);
-
-            //PROSES CETAK FOOTER
-            outputStream.write(PrintFormatter.ALIGN_CENTER);
-            outputStream.write("Jazakumulloh Khoiron Katsiron\n".getBytes());
-
-            outputStream.write("==============================\n".getBytes());
-            outputStream.write(PrintFormatter.DEFAULT_STYLE);
-            outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(PrintFormatter.NEW_LINE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Koneksi printer terputus, harap koneksi ulang bluetooth anda", Toast.LENGTH_LONG).show();
-            stopService();
-        }
-    }
-
-    // this will send text data to be printed by the bluetooth printer
-    public void print(Transaksi transaksi){
-        final int NAMA_MAX = 15;
-        final int JUMLAH_MAX = 5;
-        final int HARGA_TOTAL_MAX = 10;
-
-        if(bluetoothDevice == null){
-            Toast.makeText(context, "Sambungkan ke device printer terlebih dahulu!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        try {
-            double jum = 0;
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-
-            //PROSES CETAK HEADER
-            outputStream.write(PrintFormatter.DEFAULT_STYLE);
-            outputStream.write(PrintFormatter.ALIGN_CENTER);
-            Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.psp_header);
-            byte[] bmp_byte = PrintFormatter.decodeBitmap(bmp);
-            if(bmp_byte != null){
-                outputStream.write(bmp_byte);
-            }
-            outputStream.write(PrintFormatter.NEW_LINE);
-
-            outputStream.write(PrintFormatter.ALIGN_LEFT);
-            outputStream.write(String.format("NPWP     : %s\n", npwpToko).getBytes());
-            outputStream.write(String.format("Reseller : %s\n", transaksi.getOutlet()).getBytes());
-            outputStream.write(String.format("Sales    : %s\n", transaksi.getSales()).getBytes());
-            outputStream.write(String.format("No. Nota : %s\n", transaksi.getNo_nota()).getBytes());
-            outputStream.write(String.format("Tgl Nota : %s\n", transaksi.getTglTransaksi()).getBytes());
-
-            outputStream.write(PrintFormatter.NEW_LINE);
-
-            //PROSES CETAK TRANSAKSI
-            outputStream.write("--------------------------------\n".getBytes());
-            outputStream.write(PrintFormatter.ALIGN_LEFT);
-            outputStream.write("Nama Barang    Jumlah      Total\n".getBytes());
-            outputStream.write("--------------------------------\n".getBytes());
-            outputStream.write(PrintFormatter.ALIGN_LEFT);
-
-            List<Item> listItem = transaksi.getListItem();
-            for(int i = 0; i < listItem.size(); i++){
-                Item t =  listItem.get(i);
-                String nama = t.getNama();
-                String jumlah = t.getJumlah();
-                String harga_total = RupiahFormatter.getRupiah(t.getHarga()/**t.getJumlah()*/);
-
-                int n = 1;
-                if(nama.length() > NAMA_MAX){
-                    n = Math.max((int)Math.ceil((double)nama.length()/(double)NAMA_MAX), n);
-                }
-                if(jumlah.length() > JUMLAH_MAX){
-                    n = Math.max((int)Math.ceil((double)jumlah.length()/(double)JUMLAH_MAX), n);
-                }
-                if(harga_total.length() > HARGA_TOTAL_MAX){
-                    n = Math.max((int)Math.ceil((double)harga_total.length()/(double)HARGA_TOTAL_MAX), n);
-                }
-
-                String[] nama_array = leftAligned(nama, NAMA_MAX, n);
-                String[] jumlah_array = rightAligned(jumlah, JUMLAH_MAX, n);
-                String[] harga_total_array = rightAligned(harga_total, HARGA_TOTAL_MAX, n);
-
-                for(int j = 0; j < n; j++){
-                    outputStream.write(String.format(Locale.getDefault(), "%s %s %s\n", nama_array[j], jumlah_array[j], harga_total_array[j]).getBytes());
-                }
-
-                jum += t.getHarga()/**t.getJumlah()*/;
-            }
-
-            transaksi.setTunai(jum); //tunai selalu sama dengan jumlah
-            String jum_string = "", tunai_string = "", dpp = "", ppn = "";
-            //String kembali_string;
-            jum_string = RupiahFormatter.getRupiah(jum);
-            tunai_string = RupiahFormatter.getRupiah(transaksi.getTunai());
-            double dppDouble = jum/1.1;
-            dpp = RupiahFormatter.getRupiah(Math.round(dppDouble));
-            ppn = RupiahFormatter.getRupiah(Math.round(jum - dppDouble));
-
-            //kembali_string = RupiahFormatter.getRupiah(transaksi.getTunai() - jum);
-
-            outputStream.write(PrintFormatter.ALIGN_RIGHT);
-            outputStream.write("----------".getBytes());
-            outputStream.write("\nTOTAL :  ".getBytes());
-            outputStream.write(jum_string.getBytes());
-            outputStream.write("\nTUNAI :  ".getBytes());
-            outputStream.write(tunai_string.getBytes());
-            /*outputStream.write("\nKEMBALI : ".getBytes());
-            for(int i = 0; i < character_size - kembali_string.length(); i++){
-                outputStream.write(" ".getBytes());
-            }
-            outputStream.write(kembali_string.getBytes());*/
-
-            outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(PrintFormatter.ALIGN_LEFT);
-            outputStream.write(String.format(Locale.getDefault(), "\nDPP : %s PPN : %s", dpp, ppn).getBytes());
-
-            outputStream.write(PrintFormatter.NEW_LINE);
-
-            //PROSES CETAK FOOTER
-            outputStream.write(PrintFormatter.ALIGN_CENTER);
-            outputStream.write("Terima Kasih\n".getBytes());
-
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-            String currentDateandTime = sdf.format(transaksi.getTglNota());
-
-            outputStream.write(String.format("%s\n", currentDateandTime).getBytes());
-            outputStream.write("==============================\n".getBytes());
-            outputStream.write(PrintFormatter.DEFAULT_STYLE);
-            outputStream.write(PrintFormatter.NEW_LINE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Koneksi printer terputus, harap koneksi ulang bluetooth anda", Toast.LENGTH_LONG).show();
-            stopService();
-        }
-    }
-
     // this will send text data to be printed by the bluetooth printer
     public void print(Transaksi transaksi, boolean isDeposit){
         final int NAMA_MAX = 15;
@@ -252,18 +78,18 @@ public class Printer extends BluetoothPrinter {
             outputStream.write(PrintFormatter.NEW_LINE);
             outputStream.write(PrintFormatter.ALIGN_RIGHT);
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
-            String currentDateandTime = sdf.format(transaksi.getTglNota());
+            String currentDateandTime = sdf.format(transaksi.getTglPengambilan());
             outputStream.write(String.format("%s\n", currentDateandTime).getBytes());
             outputStream.write(PrintFormatter.NEW_LINE);
 
             outputStream.write(PrintFormatter.ALIGN_LEFT);
-            outputStream.write(String.format("Nama    : %s\n", transaksi.getOutlet()).getBytes());
+            outputStream.write(String.format("Nama    : %s\n", transaksi.getNama()).getBytes());
             outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(String.format("Alamat  : %s\n", transaksi.getSales()).getBytes());
+            outputStream.write(String.format("Alamat  : %s\n", transaksi.getAlamat()).getBytes());
             outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(String.format("Nominal : %s\n", RupiahFormatter.getRupiah(transaksi.getNo_nota())).getBytes());
+            outputStream.write(String.format("Nominal : %s\n", RupiahFormatter.getRupiah(transaksi.getNominal())).getBytes());
             outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(String.format("Petugas : %s\n", transaksi.getTglTransaksi()).getBytes());
+            outputStream.write(String.format("Petugas : %s\n", transaksi.getSales()).getBytes());
 
             outputStream.write(PrintFormatter.NEW_LINE);
 
@@ -274,122 +100,6 @@ public class Printer extends BluetoothPrinter {
             outputStream.write("==============================\n".getBytes());
             outputStream.write(PrintFormatter.DEFAULT_STYLE);
             outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(PrintFormatter.NEW_LINE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Koneksi printer terputus, harap koneksi ulang bluetooth anda", Toast.LENGTH_LONG).show();
-            stopService();
-        }
-    }
-
-    public void print(Transaksi transaksi, String label){
-        final int NAMA_MAX = 15;
-        final int JUMLAH_MAX = 4;
-        final int HARGA_TOTAL_MAX = 11;
-
-        if(bluetoothDevice == null){
-            Toast.makeText(context, "Sambungkan ke device printer terlebih dahulu!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        try {
-            double jum = 0;
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-
-            //PROSES CETAK HEADER
-            outputStream.write(PrintFormatter.DEFAULT_STYLE);
-            outputStream.write(PrintFormatter.ALIGN_CENTER);
-            Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.psp_header);
-            byte[] bmp_byte = PrintFormatter.decodeBitmap(bmp);
-            if(bmp_byte != null){
-                outputStream.write(bmp_byte);
-            }
-            outputStream.write(PrintFormatter.NEW_LINE);
-
-            outputStream.write(PrintFormatter.ALIGN_LEFT);
-            outputStream.write(String.format("NPWP     : %s\n", npwpToko).getBytes());
-            outputStream.write(String.format("Nama     : %s\n", transaksi.getOutlet()).getBytes());
-            outputStream.write(String.format("Sales    : %s\n", transaksi.getSales()).getBytes());
-            outputStream.write(String.format("No. Nota : %s\n", transaksi.getNo_nota()).getBytes());
-            outputStream.write(String.format("Tgl Nota : %s\n", transaksi.getTglTransaksi()).getBytes());
-
-            outputStream.write(PrintFormatter.NEW_LINE);
-
-            //PROSES CETAK TRANSAKSI
-            outputStream.write("--------------------------------\n".getBytes());
-            outputStream.write(PrintFormatter.ALIGN_LEFT);
-            outputStream.write("Nama Barang    Jumlah      Total\n".getBytes());
-            outputStream.write("--------------------------------\n".getBytes());
-            outputStream.write(PrintFormatter.ALIGN_LEFT);
-
-            List<Item> listItem = transaksi.getListItem();
-            for(int i = 0; i < listItem.size(); i++){
-                Item t =  listItem.get(i);
-                String nama = t.getNama();
-                String jumlah = t.getJumlah();
-                String harga_total = RupiahFormatter.getRupiah(t.getHarga()/**t.getJumlah()*/);
-
-                int n = 1;
-                if(nama.length() > NAMA_MAX){
-                    n = Math.max((int)Math.ceil((double)nama.length()/(double)NAMA_MAX), n);
-                }
-                if(jumlah.length() > JUMLAH_MAX){
-                    n = Math.max((int)Math.ceil((double)jumlah.length()/(double)JUMLAH_MAX), n);
-                }
-                if(harga_total.length() > HARGA_TOTAL_MAX){
-                    n = Math.max((int)Math.ceil((double)harga_total.length()/(double)HARGA_TOTAL_MAX), n);
-                }
-
-                String[] nama_array = leftAligned(nama, NAMA_MAX, n);
-                String[] jumlah_array = rightAligned(jumlah, JUMLAH_MAX, n);
-                String[] harga_total_array = rightAligned(harga_total, HARGA_TOTAL_MAX, n);
-
-                for(int j = 0; j < n; j++){
-                    outputStream.write(String.format(Locale.getDefault(), "%s %s %s\n", nama_array[j], jumlah_array[j], harga_total_array[j]).getBytes());
-                }
-
-                jum += t.getHarga()/**t.getJumlah()*/;
-            }
-
-            transaksi.setTunai(jum); //tunai selalu sama dengan jumlah
-            String jum_string = "", tunai_string = "", dpp = "", ppn = "";
-            //String kembali_string;
-            jum_string = RupiahFormatter.getRupiah(jum);
-            tunai_string = RupiahFormatter.getRupiah(transaksi.getTunai());
-
-            double dppDouble = jum/1.1;
-            dpp = RupiahFormatter.getRupiah(Math.round(dppDouble));
-            ppn = RupiahFormatter.getRupiah(Math.round(jum - dppDouble));
-            //kembali_string = RupiahFormatter.getRupiah(transaksi.getTunai() - jum);
-
-            outputStream.write(PrintFormatter.ALIGN_RIGHT);
-            outputStream.write("----------".getBytes());
-            outputStream.write("\nTOTAL :  ".getBytes());
-            outputStream.write(jum_string.getBytes());
-            outputStream.write("\nTUNAI :  ".getBytes());
-            outputStream.write(tunai_string.getBytes());
-            /*outputStream.write("\nKEMBALI : ".getBytes());
-            for(int i = 0; i < character_size - kembali_string.length(); i++){
-                outputStream.write(" ".getBytes());
-            }
-            outputStream.write(kembali_string.getBytes());*/
-
-            outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(PrintFormatter.ALIGN_LEFT);
-            outputStream.write(String.format(Locale.getDefault(), "\nDPP : %s PPN : %s", dpp, ppn).getBytes());
-
-            outputStream.write(PrintFormatter.NEW_LINE);
-
-            //PROSES CETAK FOOTER
-            outputStream.write(PrintFormatter.ALIGN_CENTER);
-            outputStream.write("Terima Kasih\n".getBytes());
-
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-            String currentDateandTime = sdf.format(transaksi.getTglNota());
-
-            outputStream.write(String.format("%s\n", currentDateandTime).getBytes());
-            outputStream.write("==============================\n".getBytes());
-            outputStream.write(PrintFormatter.DEFAULT_STYLE);
             outputStream.write(PrintFormatter.NEW_LINE);
         } catch (Exception e) {
             e.printStackTrace();

@@ -228,7 +228,6 @@ public class CollectorTambahDonaturFragment extends Fragment {
 
     private void saveDonatur(){
         final Calendar date = Calendar.getInstance();
-        final List<Item> items = new ArrayList<>();
 
         AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setTitle("Konfirmasi print nota")
@@ -257,7 +256,7 @@ public class CollectorTambahDonaturFragment extends Fragment {
                                     nominal = "0";
                                 }
 
-                                transaksi = new Transaksi(txt_nama.getText().toString(), txt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(), items,sessionManager.getNama());
+                                transaksi = new Transaksi(txt_nama.getText().toString(), txt_alamat.getText().toString(), Double.parseDouble(nominal), date.getTime(),sessionManager.getNama());
 
                                 printer.print(transaksi,true);
 
