@@ -210,7 +210,7 @@ public class SettingsActivity extends AppCompatActivity {
         Calendar date = Calendar.getInstance();
         List<Item> items = new ArrayList<>();
         items.add(new Item("Teknolgi", "-", 20000));
-        transaksi = new Transaksi("Rohim", "Tegalarum RT 05/04", Double.parseDouble("20000"), date.getTime(), items,sessionManager.getNama());
+        transaksi = new Transaksi("Rohim", "Tegalarum RT 05/04", Double.parseDouble("20000"), date.getTime(), sessionManager.getNama());
         rlPrinter = findViewById(R.id.rl_printer);
         tvStatus = findViewById(R.id.tv_status);
         rlPrinter.setOnClickListener(new View.OnClickListener() {
@@ -521,18 +521,18 @@ public class SettingsActivity extends AppCompatActivity {
             outputStream.write(PrintFormatter.NEW_LINE);
             outputStream.write(PrintFormatter.ALIGN_RIGHT);
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
-            String currentDateandTime = sdf.format(transaksi.getTglNota());
+            String currentDateandTime = sdf.format(transaksi.getTglPengambilan());
             outputStream.write(String.format("%s\n", currentDateandTime).getBytes());
             outputStream.write(PrintFormatter.NEW_LINE);
 
             outputStream.write(PrintFormatter.ALIGN_LEFT);
-            outputStream.write(String.format("Nama    : %s\n", transaksi.getOutlet()).getBytes());
+            outputStream.write(String.format("Nama    : %s\n", transaksi.getNama()).getBytes());
             outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(String.format("Alamat  : %s\n", transaksi.getSales()).getBytes());
+            outputStream.write(String.format("Alamat  : %s\n", transaksi.getAlamat()).getBytes());
             outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(String.format("Nominal : %s\n", RupiahFormatter.getRupiah(transaksi.getNo_nota())).getBytes());
+            outputStream.write(String.format("Nominal : %s\n", RupiahFormatter.getRupiah(transaksi.getNominal())).getBytes());
             outputStream.write(PrintFormatter.NEW_LINE);
-            outputStream.write(String.format("Petugas : %s\n", transaksi.getTglTransaksi()).getBytes());
+            outputStream.write(String.format("Petugas : %s\n", transaksi.getSales()).getBytes());
 
             outputStream.write(PrintFormatter.NEW_LINE);
 

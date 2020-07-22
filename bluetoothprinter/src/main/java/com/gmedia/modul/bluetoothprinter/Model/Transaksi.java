@@ -4,65 +4,57 @@ import java.util.Date;
 import java.util.List;
 
 public class Transaksi {
-    private String outlet;
+    private String nama;
+    private String alamat;
+    private Double nominal;
+    private Date tglPengambilan;
     private String sales;
-    private Double no_nota;
-    private Date tglNota;
-    private double tunai;
-    private List<Item> listItem;
-    private String tglTransaksi;
 
-    public Transaksi(String outlet, String sales, Double no_nota, Date tglNota, List<Item> listItem, String tglTransaksi){
-        this.outlet = outlet;
+    public Transaksi(String nama, String alamat, Double nominal, Date tglPengambilan, String sales){
+        this.nama = nama;
+        this.alamat = alamat;
+        this.nominal = nominal;
+        this.tglPengambilan = tglPengambilan;
         this.sales = sales;
-        this.no_nota = no_nota;
-        this.tglNota = tglNota;
-        this.listItem = listItem;
-        this.tglTransaksi = tglTransaksi;
     }
 
-    public Transaksi(String outlet, String sales, Double no_nota, Date tglNota,  String tglTransaksi){
-        this.outlet = outlet;
-        this.sales = sales;
-        this.no_nota = no_nota;
-        this.tglNota = tglNota;
-        this.tglTransaksi = tglTransaksi;
+    public String getNama() {
+        return nama;
     }
 
-
-    public void setTunai(double tunai){
-        this.tunai = tunai;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
-    public double getTunai() {
-        return tunai;
+    public String getAlamat() {
+        return alamat;
     }
 
-    public Double getNo_nota() {
-        return no_nota;
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
     }
 
-    public Date getTglNota() {
-        return tglNota;
+    public Double getNominal() {
+        return nominal;
     }
 
-    public List<Item> getListItem() {
-        return listItem;
+    public void setNominal(Double nominal) {
+        this.nominal = nominal;
     }
 
-    public String getOutlet() {
-        return outlet;
+    public Date getTglPengambilan() {
+        return tglPengambilan;
+    }
+
+    public void setTglPengambilan(Date tglPengambilan) {
+        this.tglPengambilan = tglPengambilan;
     }
 
     public String getSales() {
         return sales;
     }
 
-    public String getTglTransaksi() {
-        return tglTransaksi;
-    }
-
-    public void setTglTransaksi(String tglTransaksi) {
-        this.tglTransaksi = tglTransaksi;
+    public void setSales(String sales) {
+        this.sales = sales;
     }
 }
