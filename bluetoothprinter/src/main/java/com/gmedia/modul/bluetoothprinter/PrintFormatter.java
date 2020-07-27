@@ -11,7 +11,7 @@ public class PrintFormatter {
     public static final byte[] ALIGN_LEFT = new byte[] { 0x1b, 'a', 0x00 };
     public static final byte[] ALIGN_RIGHT = new byte[] { 0x1b, 'a', 0x02 };
     public static final byte[] ALIGN_CENTER = new byte[] { 0x1b, 'a', 0x01 };
-    public static byte[] NEW_LINE = {8};
+    public static byte[] NEW_LINE = {10};
     public static byte[] DEFAULT_STYLE = new byte[]{(byte) 27, (byte) 64};
 
     private static byte[] arrayOfByte1 = { 27, 33, 0 };

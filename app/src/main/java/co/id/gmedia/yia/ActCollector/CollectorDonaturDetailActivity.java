@@ -128,6 +128,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collector_donatur_detail);
         printer = new Printer(CollectorDonaturDetailActivity.this);
+        printer.startService();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getWindow().setSoftInputMode(
