@@ -15,8 +15,11 @@ import com.gmedia.modul.bluetoothprinter.Model.Item;
 import com.gmedia.modul.bluetoothprinter.Model.Transaksi;
 import com.gmedia.modul.bluetoothprinter.Printer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import co.id.gmedia.coremodul.FormatItem;
@@ -107,7 +110,14 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
             imgPrint.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    transaksi = new Transaksi(b.getNama(), b.getAlamat(), Double.parseDouble(finalNominal), date.getTime(), sessionManager.getNama());
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = null;
+                    try {
+                        date = format.parse(b.getTanggal());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    transaksi = new Transaksi(b.getNama(), b.getAlamat(), Double.parseDouble(finalNominal), date, sessionManager.getNama());
                     collectorAdapterCalback.onRowPrintNota(transaksi);
                 }
             });

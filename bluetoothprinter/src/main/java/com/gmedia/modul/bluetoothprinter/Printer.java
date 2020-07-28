@@ -68,7 +68,7 @@ public class Printer extends BluetoothPrinter {
             //PROSES CETAK HEADER
             outputStream.write(PrintFormatter.DEFAULT_STYLE);
             outputStream.write(PrintFormatter.ALIGN_CENTER);
-            Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_logo);
+            Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.yia_header);
             byte[] bmp_byte = PrintFormatter.decodeBitmap(bmp);
             if(bmp_byte != null){
                 outputStream.write(bmp_byte);
