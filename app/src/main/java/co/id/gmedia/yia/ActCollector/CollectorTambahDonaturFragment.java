@@ -198,7 +198,9 @@ public class CollectorTambahDonaturFragment extends Fragment {
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+//                                final Calendar date = Calendar.getInstance();
+//                                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+//                                Toast.makeText(getContext(), String.valueOf(sdf.format(date.getTime())), Toast.LENGTH_SHORT).show();
                                 saveDonatur();
                             }
                         })

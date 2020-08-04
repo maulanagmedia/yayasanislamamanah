@@ -76,10 +76,15 @@ public class Printer extends BluetoothPrinter {
             outputStream.write("YAYASAN ISLAM AMANAH \n  @yay.amanah \n WA 0813-1162-6307".getBytes());
 
             outputStream.write(PrintFormatter.NEW_LINE);
+            outputStream.write(PrintFormatter.NEW_LINE);
             outputStream.write(PrintFormatter.ALIGN_RIGHT);
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
             String currentDateandTime = sdf.format(transaksi.getTglPengambilan());
             outputStream.write(String.format("%s\n", currentDateandTime).getBytes());
+            outputStream.write(PrintFormatter.ALIGN_RIGHT);
+            SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+            String currentTime = formatTime.format(transaksi.getTglPengambilan());
+            outputStream.write(String.format("%s\n", currentTime).getBytes());
             outputStream.write(PrintFormatter.NEW_LINE);
 
             outputStream.write(PrintFormatter.ALIGN_LEFT);

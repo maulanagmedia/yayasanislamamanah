@@ -8,6 +8,7 @@ public class Transaksi {
     private String alamat;
     private Double nominal;
     private Date tglPengambilan;
+
     private String sales;
 
     public Transaksi(String nama, String alamat, Double nominal, Date tglPengambilan, String sales){
