@@ -6,7 +6,7 @@ android {
         applicationId "co.id.gmedia.yia"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 13
+        versionCode 14
         versionName "2.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
