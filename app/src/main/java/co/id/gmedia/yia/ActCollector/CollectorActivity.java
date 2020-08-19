@@ -214,10 +214,10 @@ public class CollectorActivity extends AppCompatActivity {
             Intent intent = new Intent(context, RequestActivity.class);
             startActivity(intent);
             return true;
-        }else if(id == R.id.option_settings){
-            Intent intent = new Intent(context, SettingsActivity.class);
-            startActivity(intent);
-            return true;
+//        }else if(id == R.id.option_settings){
+//            Intent intent = new Intent(context, SettingsActivity.class);
+//            startActivity(intent);
+//            return true;
         }else{
             return super.onOptionsItemSelected(item);
         }

@@ -50,37 +50,10 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_button_red"
-                        android:text="Berhenti"
-                        android:layout_marginTop="@dimen/padding_big"
-                        android:id="@+id/btn_berhenti"
-                        android:textColor="@color/colorWhite"/>
-
-<!--                    <Button-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:background="@drawable/bg_button_green"-->
-<!--                        android:text="Edit Data"-->
-<!--                        android:layout_marginTop="@dimen/padding_default"-->
-<!--                        android:id="@+id/btn_0"-->
-<!--                        android:textColor="@color/colorWhite"/>-->
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_button_white"
-                        android:text="Hubungi"
-                        android:layout_marginTop="@dimen/padding_big"
-                        android:id="@+id/btn_1"
-                        android:textColor="@color/colorGreen1"/>
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_big"
                         android:background="@drawable/bg_button_white"
-                        android:text="Lihat Map"
-                        android:id="@+id/btn_2"
+                        android:text="Print"
+                        android:id="@+id/btn_print"
                         android:textColor="@color/colorGreen1"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

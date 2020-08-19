@@ -36,6 +36,7 @@ import co.id.gmedia.coremodul.CustomModel;
 import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.FormatItem;
 import co.id.gmedia.coremodul.SessionManager;
+import co.id.gmedia.yia.ActAkun.RequestActivity;
 import co.id.gmedia.yia.ActCollector.CollectorDonaturDetailActivity;
 import co.id.gmedia.yia.ActCollector.EditDonaturCollectorActivity;
 import co.id.gmedia.yia.ActNotifikasi.Adapter.ListNotifikasiAdapter;
@@ -79,6 +80,8 @@ public class JadwalKunjunganCollectorAdapter extends ArrayAdapter<DonaturModel> 
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
+        final DonaturModel item = listDonatur.get(position);
 
         ViewHolder holder = new ViewHolder();
 
@@ -153,6 +156,15 @@ public class JadwalKunjunganCollectorAdapter extends ArrayAdapter<DonaturModel> 
                     public void onClick(View v) {
                         alert.dismiss();
                         showBerhentiDialog(listDonatur.get(position).getId_donatur(), listDonatur.get(position).getKaleng());
+                    }
+                });
+
+                viewDialog.findViewById(R.id.btn_request).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, RequestActivity.class);
+                        intent.putExtra(RequestActivity.DONATUR_ITEM, new Gson().toJson(item));
+                        context.startActivity(intent);
                     }
                 });
 

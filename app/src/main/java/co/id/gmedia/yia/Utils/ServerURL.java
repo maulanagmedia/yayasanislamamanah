@@ -12,6 +12,7 @@ public class ServerURL {
     public static final String changePassword = baseURL + "Authentication/update_password/";
     public static final String updateAkun = baseURL + "Authentication/process_user/";
     public static final String sendRequest = baseURL + "Donatur/request/";
+    public static final String urlRequestDonatur = baseURL + "Donatur/request_donatur/";
     public static final String getKota = baseURL + "Master/kota/";
     public static final String getKecamatan = baseURL + "Master/kecamatan/";
     public static final String getKelurahan = baseURL + "Master/kelurahan/";
