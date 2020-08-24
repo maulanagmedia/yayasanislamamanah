@@ -1,19 +1,28 @@
 package co.id.gmedia.yia.ActCollector.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gmedia.modul.bluetoothprinter.Model.Item;
 import com.gmedia.modul.bluetoothprinter.Model.Transaksi;
 import com.gmedia.modul.bluetoothprinter.Printer;
+import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,12 +34,16 @@ import java.util.List;
 import co.id.gmedia.coremodul.FormatItem;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
+import co.id.gmedia.yia.ActAkun.RequestActivity;
 import co.id.gmedia.yia.ActCollector.CollectorActivity;
 import co.id.gmedia.yia.ActCollector.CollectorHistoryFragment;
+import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.Model.HistoryDonaturModel;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.Converter;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class HistoryCollectorAdapter extends RecyclerView.Adapter
         <HistoryCollectorAdapter.HistoryCollectorViewHolder> {
@@ -70,7 +83,7 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
 
         TextView txt_tambahan, txt_tanggal, txt_waktu_donasi, txt_jenis_donasi,
                 txt_jumlah_donasi, txt_nama_donatur, txt_alamat_donatur, txt_kontak_donatur, txt_nominal, txt_jenis, tvTanggal;
-        ImageView imgPrint;
+        ImageView imgMenu;
 
         HistoryCollectorViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,7 +99,7 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
             txt_nominal= itemView.findViewById(R.id.txt_nominal);
             txt_jenis= itemView.findViewById(R.id.txt_jenis);
             tvTanggal= itemView.findViewById(R.id.tv_tanggal);
-            imgPrint = itemView.findViewById(R.id.img_print);
+            imgMenu = itemView.findViewById(R.id.img_menu);
         }
 
         void bind(final DonaturModel b){
@@ -107,18 +120,70 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
             }
 
             final String finalNominal = nominal;
-            imgPrint.setOnClickListener(new View.OnClickListener() {
+            imgMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date date = null;
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    LayoutInflater inflater = (LayoutInflater) ((Activity)context).getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View viewDialog = inflater.inflate(R.layout.dialog_choser_history_collector, null);
+                    builder.setView(viewDialog);
+
+                    final ImageView ivClose = (ImageView) viewDialog.findViewById(R.id.iv_close);
+
+                    final AlertDialog alert = builder.create();
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                    alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+                    alert.getWindow().setGravity(Gravity.BOTTOM);
+
+                    final AlertDialog alertDialogs = alert;
+
+                    viewDialog.findViewById(R.id.btn_request).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, RequestActivity.class);
+                            intent.putExtra(RequestActivity.DONATUR_ITEM, new Gson().toJson(b));
+                            context.startActivity(intent);
+                        }
+                    });
+
+                    viewDialog.findViewById(R.id.btn_print).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            Date date = null;
+                            try {
+                                date = format.parse(b.getTanggal());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            transaksi = new Transaksi(b.getNama(), b.getAlamat(), Double.parseDouble(finalNominal), date, sessionManager.getNama());
+                            collectorAdapterCalback.onRowPrintNota(transaksi);
+                        }
+                    });
+
+                    ivClose.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            if(alertDialogs != null) {
+
+                                try {
+                                    alertDialogs.dismiss();
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+
                     try {
-                        date = format.parse(b.getTanggal());
-                    } catch (ParseException e) {
+
+                        alert.show();
+                    }catch (Exception e){
                         e.printStackTrace();
                     }
-                    transaksi = new Transaksi(b.getNama(), b.getAlamat(), Double.parseDouble(finalNominal), date, sessionManager.getNama());
-                    collectorAdapterCalback.onRowPrintNota(transaksi);
                 }
             });
         }

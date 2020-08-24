@@ -21,10 +21,10 @@
                 app:showAsAction="ifRoom"
                 android:icon="@drawable/ic_notif"/>
 
-            <item android:title="Request"
-                android:id="@+id/option_request"
-                app:showAsAction="ifRoom"
-                android:icon="@drawable/ic_speaker_notes_black_24dp"/>
+<!--            <item android:title="Request"-->
+<!--                android:id="@+id/option_request"-->
+<!--                app:showAsAction="ifRoom"-->
+<!--                android:icon="@drawable/ic_speaker_notes_black_24dp"/>-->
 
         </menu>
     </item>

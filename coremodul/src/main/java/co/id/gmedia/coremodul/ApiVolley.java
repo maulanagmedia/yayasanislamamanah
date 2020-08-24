@@ -147,6 +147,7 @@ public class ApiVolley {
                 params.put("Client-Service", "yia");
                 params.put("Auth-Key", "gmedia");
                 params.put("User-Id", token1);
+                params.put("User-Name", session.getUsername());
                 params.put("Timestamp", token2);
                 params.put("Signature", token3);
                 params.put("Nik", token4);
