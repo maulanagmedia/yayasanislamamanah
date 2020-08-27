@@ -50,6 +50,15 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bg_button_red"
+                        android:text="Berhenti"
+                        android:layout_marginTop="@dimen/padding_big"
+                        android:id="@+id/btn_berhenti"
+                        android:textColor="@color/colorWhite"/>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_big"
                         android:background="@drawable/bg_button_white"
                         android:text="Print"
