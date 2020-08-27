@@ -172,7 +172,7 @@ public class ApiVolley {
         };
         //endregion
 
-        trustAllCertivicate();
+        //trustAllCertivicate();
 
         if(requestQueue == null){
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
