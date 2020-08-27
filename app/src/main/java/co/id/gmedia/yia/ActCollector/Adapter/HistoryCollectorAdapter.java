@@ -1,7 +1,9 @@
 package co.id.gmedia.yia.ActCollector.Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +34,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import co.id.gmedia.coremodul.ApiVolley;
+import co.id.gmedia.coremodul.DialogBox;
 import co.id.gmedia.coremodul.FormatItem;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
@@ -41,7 +46,11 @@ import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
 import co.id.gmedia.yia.Model.DonaturModel;
 import co.id.gmedia.yia.Model.HistoryDonaturModel;
 import co.id.gmedia.yia.R;
+import co.id.gmedia.yia.Utils.AppRequestCallback;
 import co.id.gmedia.yia.Utils.Converter;
+import co.id.gmedia.yia.Utils.DialogFactory;
+import co.id.gmedia.yia.Utils.JSONBuilder;
+import co.id.gmedia.yia.Utils.ServerURL;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -163,6 +172,14 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
                         }
                     });
 
+                    viewDialog.findViewById(R.id.btn_berhenti).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alert.dismiss();
+                            showBerhentiDialog(b.getId_donatur(), b.getKaleng());
+                        }
+                    });
+
                     ivClose.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -189,9 +206,84 @@ public class HistoryCollectorAdapter extends RecyclerView.Adapter
         }
     }
 
-    /*
-    interface sebagai listener onclick adapter ke parent activity
-     */
+    private void showBerhentiDialog(final String id_donatur, final String kaleng){
+        final Dialog dialog_berhenti = DialogFactory.getInstance().createDialog((Activity) context,
+                R.layout.dialog_berhenti_donasi, 90);
+
+        final EditText txt_kaleng_kembali = dialog_berhenti.findViewById(R.id.txt_kaleng_kembali);
+        txt_kaleng_kembali.setText(kaleng);
+        final EditText txt_keterangan = dialog_berhenti.findViewById(R.id.txt_keterangan);
+
+        dialog_berhenti.findViewById(R.id.btn_dialog_berhenti).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!txt_kaleng_kembali.getText().toString().equals("")){
+
+                    AlertDialog dialog = new AlertDialog.Builder(context)
+                            .setTitle("Konfirmasi")
+                            .setMessage("Apakah anda yakin ingin menyimpan data?")
+                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    berhentiDonasi(id_donatur, Integer.parseInt(txt_kaleng_kembali.getText().toString()), txt_keterangan.getText().toString());
+                                    dialog_berhenti.dismiss();
+                                }
+                            })
+                            .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
+                }
+                else{
+                    Toast.makeText(context, "Jumlah kaleng kembali tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        dialog_berhenti.show();
+    }
+
+
+    private void berhentiDonasi(String id_donatur, int kaleng_kembali, String keterangan){
+        final DialogBox dialogBox = new DialogBox(context);
+        dialogBox.showDialog(false);
+
+        JSONBuilder body = new JSONBuilder();
+        body.add("id_donatur", id_donatur);
+        body.add("id_user", new SessionManager(context).getId());
+        body.add("tgl_berhenti", Converter.DToString(new Date()));
+        body.add("kaleng_kembali", kaleng_kembali);
+        body.add("ket_berhenti", keterangan);
+
+        new ApiVolley(context, body.create(), "POST", ServerURL.berhentiDonasi,
+                new AppRequestCallback(new AppRequestCallback.ResponseListener() {
+                    @Override
+                    public void onSuccess(String response, String message) {
+
+                        dialogBox.dismissDialog();
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onEmpty(String message) {
+
+                        dialogBox.dismissDialog();
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFail(String message) {
+
+                        dialogBox.dismissDialog();
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    }
+                }));
+    }
+
     public interface HistoryCollectorAdapterCalback {
         void onRowPrintNota(Transaksi transaksi);
     }
