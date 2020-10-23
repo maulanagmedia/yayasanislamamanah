@@ -87,10 +87,6 @@ public class DetailAkunActivity extends AppCompatActivity {
         session = new SessionManager(context);
         dialogBox = new DialogBox(context);
 
-        if (checkPermission()){
-
-        }
-
         initUI();
         initEvent();
         initData();
@@ -115,6 +111,16 @@ public class DetailAkunActivity extends AppCompatActivity {
         }
 
         return  true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!checkPermission()){
+
+            checkPermission();
+        }
     }
 
     @Override

@@ -4,12 +4,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +36,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import co.id.gmedia.coremodul.ApiVolley;
 import co.id.gmedia.coremodul.DialogBox;
@@ -66,6 +70,14 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
     private ItemValidation iv = new ItemValidation();
     private ImageView ivBackground;
     private ImageUtils iu = new ImageUtils();
+
+    //permission
+    private String[] appPermission =  {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+    private final int PERMIOSSION_REQUEST_CODE = 1240;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +136,36 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
         initEvent();
     }
 
+    private boolean checkPermission(){
+
+        List<String> permissionList = new ArrayList<>();
+        for (String perm : appPermission) {
+
+            if (ContextCompat.checkSelfPermission(context, perm) != PackageManager.PERMISSION_GRANTED){
+
+                permissionList.add(perm);
+            }
+        }
+
+        if (!permissionList.isEmpty()) {
+
+            ActivityCompat.requestPermissions((Activity) context, permissionList.toArray(new String[permissionList.size()]), PERMIOSSION_REQUEST_CODE);
+
+            return  false;
+        }
+
+        return  true;
+    }
+
     @Override
     protected void onResume() {
         initAkun();
         super.onResume();
+
+        if (!checkPermission()){
+
+            checkPermission();
+        }
     }
 
     private void initAkun(){
