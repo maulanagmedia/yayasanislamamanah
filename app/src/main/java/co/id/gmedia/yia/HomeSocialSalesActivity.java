@@ -315,10 +315,10 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
             Intent intent = new Intent(context, ListNotificationActivity.class);
             startActivity(intent);
             return true;
-        }else if(id == R.id.option_request){
-            Intent intent = new Intent(context, RequestActivity.class);
-            startActivity(intent);
-            return true;
+//        }else if(id == R.id.option_request){
+//            Intent intent = new Intent(context, RequestActivity.class);
+//            startActivity(intent);
+//            return true;
         }else{
             return super.onOptionsItemSelected(item);
         }

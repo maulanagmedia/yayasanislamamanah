@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import co.id.gmedia.yia.ActAkun.RequestActivity;
 import co.id.gmedia.yia.ActSalesBrosur.DetailCurrentPosActivity;
 import co.id.gmedia.yia.ActSalesChecking.CheckingJadwalFragment;
 import co.id.gmedia.yia.ActSalesChecking.SalesCheckingDetailActivity;
@@ -120,7 +121,7 @@ public class JadwalKunjunganAdapter extends RecyclerView.Adapter<JadwalKunjungan
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     LayoutInflater inflater = (LayoutInflater) ((Activity)context).getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View viewDialog = inflater.inflate(R.layout.dialog_choser, null);
+                    View viewDialog = inflater.inflate(R.layout.dialog_choser_checking, null);
                     builder.setView(viewDialog);
                     //builder.setCancelable(true);
 
@@ -135,6 +136,15 @@ public class JadwalKunjunganAdapter extends RecyclerView.Adapter<JadwalKunjungan
                     alert.getWindow().setGravity(Gravity.BOTTOM);
 
                     final AlertDialog alertDialogs = alert;
+
+                    viewDialog.findViewById(R.id.btn_request).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, RequestActivity.class);
+                            intent.putExtra(RequestActivity.DONATUR_ITEM, new Gson().toJson(b));
+                            context.startActivity(intent);
+                        }
+                    });
 
                     btn1.setOnClickListener(new View.OnClickListener() {
                         @Override

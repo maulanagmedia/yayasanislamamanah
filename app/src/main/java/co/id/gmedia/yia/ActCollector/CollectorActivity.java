@@ -192,7 +192,7 @@ public class CollectorActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home, menu);
+        inflater.inflate(R.menu.menu_collector, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -210,14 +210,10 @@ public class CollectorActivity extends AppCompatActivity {
             Intent intent = new Intent(context, ListNotificationActivity.class);
             startActivity(intent);
             return true;
-        }else if(id == R.id.option_request) {
-            Intent intent = new Intent(context, RequestActivity.class);
+        }else if(id == R.id.option_donatur){
+            Intent intent = new Intent(context, DonaturTetapActivity.class);
             startActivity(intent);
             return true;
-//        }else if(id == R.id.option_settings){
-//            Intent intent = new Intent(context, SettingsActivity.class);
-//            startActivity(intent);
-//            return true;
         }else{
             return super.onOptionsItemSelected(item);
         }

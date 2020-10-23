@@ -16,20 +16,16 @@
                 app:showAsAction="ifRoom"
                 android:icon="@drawable/ic_person_black_24dp"/>
 
+            <item android:title="Donatur Tetap"
+                android:id="@+id/option_donatur"
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/ic_baseline_account_box_24"/>
+
             <item android:title="Notifikasi"
                 android:id="@+id/option_notif"
                 app:showAsAction="ifRoom"
                 android:icon="@drawable/ic_notif"/>
 
-            <item android:title="Request"
-                android:id="@+id/option_request"
-                app:showAsAction="ifRoom"
-                android:icon="@drawable/ic_speaker_notes_black_24dp"/>
-
-            <item android:title="Settings"
-                android:id="@+id/option_settings"
-                app:showAsAction="ifRoom"
-                android:icon="@drawable/ic_settings"/>
         </menu>
     </item>
 </menu>
