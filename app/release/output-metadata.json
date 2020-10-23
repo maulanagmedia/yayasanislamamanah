@@ -1,19 +1,17 @@
 {
-  "version": 1,
+  "version": 2,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "co.id.gmedia.yia",
-  "variantName": "release",
+  "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "properties": [],
-      "versionCode": 16,
-      "versionName": "3.1",
-      "enabled": true,
+      "versionCode": 17,
+      "versionName": "3.2",
       "outputFile": "app-release.apk"
     }
   ]
