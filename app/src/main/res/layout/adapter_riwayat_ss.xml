@@ -148,38 +148,122 @@
             android:layout_marginTop="@dimen/padding_tiny"
             android:layout_marginBottom="@dimen/padding_tiny"
             />
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_small">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            <ImageView
-                android:layout_width="@dimen/icon_size2"
-                android:layout_height="@dimen/icon_size2"
-                android:src="@drawable/ic_location"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="@dimen/padding_mid"
-                android:id="@+id/ic_alamat"/>
-            <LinearLayout
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/ic_alamat"
-                android:orientation="horizontal">
+                android:layout_weight="0.5"
+                android:layout_marginTop="@dimen/padding_small">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size2"
+                    android:layout_height="@dimen/icon_size2"
+                    android:src="@drawable/ic_location"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_mid"
+                    android:id="@+id/ic_alamat"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ic_alamat"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/padding_default">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack"
+                            android:text="Alamat"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_big" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack"
+                            android:text="Alamat"
+                            android:id="@+id/tv_alamat"
+                            android:layout_marginTop="@dimen/padding_tiny"
+                            android:textSize="@dimen/text_small" />
+
+                    </LinearLayout>
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:orientation="vertical"-->
+    <!--                    android:layout_gravity="center_vertical"-->
+    <!--                    android:layout_toRightOf="@+id/ll_alamat">-->
+
+    <!--                    <RelativeLayout-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_gravity="center_vertical"-->
+    <!--                        android:padding="4dp"-->
+    <!--                        android:id="@+id/rl_edit"-->
+    <!--                        android:background="@drawable/bg_button_green"-->
+    <!--                        android:layout_height="wrap_content">-->
+
+    <!--                        <ImageView-->
+    <!--                            android:layout_width="15dp"-->
+    <!--                            android:layout_height="15dp"-->
+    <!--                            android:focusableInTouchMode="true"-->
+    <!--                            android:id="@+id/img_edit"-->
+    <!--                            android:layout_gravity="center_vertical|center_horizontal"-->
+    <!--                            android:foregroundGravity="center_vertical"-->
+    <!--                            android:src="@drawable/ic_edit_black_24dp" />-->
+    <!--                    </RelativeLayout>-->
+    <!--                </LinearLayout>-->
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="@dimen/line"
+                android:layout_height="match_parent"
+                android:background="@color/colorGrey"
+                android:layout_marginLeft="@dimen/padding_tiny"
+                android:layout_marginRight="@dimen/padding_small"
+                />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size2"
+                    android:layout_height="@dimen/icon_size2"
+                    android:src="@drawable/ic_kontak"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/padding_mid"
+                    android:id="@+id/ic_wa"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="1"
+                    android:layout_toRightOf="@id/ic_wa"
                     android:layout_marginLeft="@dimen/padding_default">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorBlack"
-                        android:text="Alamat"
+                        android:text="WA"
                         android:textStyle="bold"
                         android:textSize="@dimen/text_big" />
 
@@ -187,40 +271,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorBlack"
-                        android:text="Alamat"
-                        android:id="@+id/tv_alamat"
+                        android:text="Wa"
+                        android:id="@+id/tv_wa"
                         android:layout_marginTop="@dimen/padding_tiny"
                         android:textSize="@dimen/text_small" />
 
                 </LinearLayout>
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    android:layout_toRightOf="@+id/ll_alamat">-->
 
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:padding="4dp"-->
-<!--                        android:id="@+id/rl_edit"-->
-<!--                        android:background="@drawable/bg_button_green"-->
-<!--                        android:layout_height="wrap_content">-->
-
-<!--                        <ImageView-->
-<!--                            android:layout_width="15dp"-->
-<!--                            android:layout_height="15dp"-->
-<!--                            android:focusableInTouchMode="true"-->
-<!--                            android:id="@+id/img_edit"-->
-<!--                            android:layout_gravity="center_vertical|center_horizontal"-->
-<!--                            android:foregroundGravity="center_vertical"-->
-<!--                            android:src="@drawable/ic_edit_black_24dp" />-->
-<!--                    </RelativeLayout>-->
-<!--                </LinearLayout>-->
-            </LinearLayout>
-
-        </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:layout_height="@dimen/line"

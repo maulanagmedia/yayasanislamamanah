@@ -65,7 +65,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
     private FotoAdapter adapter;
 
     private TextView tv_latitude, tv_longitude;
-    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng, edtRt, edtRw;
+    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng, edtRt, edtRw, edtWa;
     private RadioButton rb_donasi_ya, rb_kaleng_ya;
 
     private SessionManager sessionManager;
@@ -121,6 +121,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
         edtKeterangan.setText(donatur.getItem10());
         edtRt.setText(donatur.getItem11());
         edtRw.setText(donatur.getItem12());
+        edtWa.setText(donatur.getItem13());
 
         try{
             JSONArray array_gambar = new JSONArray(donatur.getItem9());
@@ -150,6 +151,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
         txt_jumlah_kaleng = findViewById(R.id.txt_jumlah_kaleng);
         llBukaMap = (LinearLayout) findViewById(R.id.ll_buka_map);
         edtKeterangan = (EditText) findViewById(R.id.edt_keterangan);
+        edtWa = (EditText) findViewById(R.id.edt_wa);
 
         rb_kaleng_ya.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -330,6 +332,7 @@ public class SalesSosialJadwalDetailActivity extends AppCompatActivity {
         body.add("rt", edtRt.getText().toString());
         body.add("rw", edtRw.getText().toString());
         body.add("kontak", edt_kontak.getText().toString());
+        body.add("wa", edtWa.getText().toString());
         body.add("note", edtKeterangan.getText().toString());
         body.add("id_sales", sessionManager.getId());
         body.add("donasi", rb_donasi_ya.isChecked() ? 1 : 0);

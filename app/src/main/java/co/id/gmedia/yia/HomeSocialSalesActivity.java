@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fxn.pix.Pix;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -45,6 +46,7 @@ import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActAkun.RequestActivity;
+import co.id.gmedia.yia.ActCollector.CollectorActivity;
 import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
 import co.id.gmedia.yia.ActSalesSosial.DonaturLSosialFragment;
 import co.id.gmedia.yia.ActSalesSosial.SalesSosialJadwalFragment;
@@ -172,7 +174,11 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
         tvAdmin.setText(session.getNama());
         if(session.getFoto().charAt(session.getFoto().length() - 1) != '/'){
             ImageUtils imageUtils = new ImageUtils();
-            imageUtils.LoadRealImage(session.getFoto(), img_foto);
+//            imageUtils.LoadRealImage(session.getFoto(), img_foto);
+            Glide.with(HomeSocialSalesActivity.this)
+                    .load(session.getFoto())
+                    .placeholder(R.drawable.ic_profile)
+                    .into(img_foto);
         }
     }
 
@@ -419,7 +425,11 @@ public class HomeSocialSalesActivity extends AppCompatActivity {
                             if(iv.parseNullInteger(status) == 200){
 
                                 String gambarBg = response.getJSONObject("response").getString("gambar");
-                                iu.LoadRealImage(gambarBg, ivBackground);
+//                                iu.LoadRealImage(gambarBg, ivBackground);
+                                Glide.with(HomeSocialSalesActivity.this)
+                                        .load(gambarBg)
+                                        .placeholder(R.drawable.bg_home)
+                                        .into(ivBackground);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

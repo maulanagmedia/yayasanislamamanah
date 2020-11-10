@@ -33,7 +33,7 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
     }
 
     private static class ViewHolder {
-        private TextView tvTanggal, tvNama, tvAlamat, tvKontak, tvStatus, tvStatusChecking, tvChecker;
+        private TextView tvTanggal, tvNama, tvAlamat, tvKontak, tvStatus, tvStatusChecking, tvChecker, tvWa;
 //        private RelativeLayout rlEdit;
     }
 
@@ -57,6 +57,7 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
             holder.tvStatus = convertView.findViewById(R.id.tv_status);
             holder.tvStatusChecking = convertView.findViewById(R.id.tv_status_checking);
             holder.tvChecker = convertView.findViewById(R.id.tv_checker);
+            holder.tvWa = convertView.findViewById(R.id.tv_wa);
 //            holder.rlEdit = convertView.findViewById(R.id.rl_edit);
             convertView.setTag(holder);
         }else{
@@ -68,6 +69,7 @@ public class ListRiwayatSSAdapter extends ArrayAdapter {
         holder.tvNama.setText(item.getItem3());
         holder.tvAlamat.setText(item.getItem4());
         holder.tvKontak.setText(item.getItem5());
+        holder.tvWa.setText(item.getItem19());
 
         if(item.getItem7().equals("0")){
 

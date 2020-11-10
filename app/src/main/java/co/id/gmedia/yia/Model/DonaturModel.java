@@ -14,7 +14,7 @@ public class DonaturModel {
     private String lognitude;
     private String rk, rt, rw;
     private String idKota, idKecamatan, idKelurahan, kota, kecamatan, kelurahan;
-    private String nominal, jenisDonatur, tanggal, keterangan;
+    private String nominal, jenisDonatur, tanggal, keterangan, wa;
 
     private List<String> listUrlPhoto = new ArrayList<>();
     private boolean dikunjungi = false;
@@ -22,6 +22,7 @@ public class DonaturModel {
     public DonaturModel(){
 
     }
+
     public DonaturModel(String id, String id_donatur, String nama, String alamat, String kontak){
         this.id = id;
         this.id_donatur = id_donatur;
@@ -39,13 +40,13 @@ public class DonaturModel {
         this.dikunjungi = dikunjungi;
     }
 
-    public DonaturModel(String id,  String id_donatur, String nama, String alamat, String kontak, String kaleng, boolean dikunjungi){
+    public DonaturModel(String id,  String id_donatur, String nama, String alamat, String kontak, String wa, boolean dikunjungi){
         this.id = id;
         this.id_donatur = id_donatur;
         this.nama = nama;
         this.alamat = alamat;
         this.kontak = kontak;
-        this.kaleng = kaleng;
+        this.wa = wa;
         this.dikunjungi = dikunjungi;
     }
 
@@ -160,7 +161,6 @@ public class DonaturModel {
         this.listUrlPhoto = listPhoto;
     }
 
-
     public DonaturModel(String id, String id_donatur, String nama, String alamat, String rt, String rw, String kontak,String kaleng,  String latitude, String longitude, boolean dikunjungi,String keterangan,List<String> listPhoto){
         this.id = id;
         this.id_donatur = id_donatur;
@@ -177,7 +177,24 @@ public class DonaturModel {
         this.listUrlPhoto = listPhoto;
     }
 
-    public DonaturModel(String id, String id_donatur, String nama, String alamat, String kontak, String latitude, String longitude, String kaleng, String rk, String idKota, String idKecamatan, String idKelurahan, String kota, String kecamatan, String kelurahan, boolean dikunjungi,String keterangan,List<String> listPhoto, String rt,String rw){
+    public DonaturModel(String id, String id_donatur, String nama, String alamat, String rt, String rw, String kontak,String wa,String kaleng,  String latitude, String longitude, boolean dikunjungi,String keterangan,List<String> listPhoto){
+        this.id = id;
+        this.id_donatur = id_donatur;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.rt = rt;
+        this.rw = rw;
+        this.kontak = kontak;
+        this.latitude = latitude;
+        this.lognitude = longitude;
+        this.kaleng = kaleng;
+        this.dikunjungi = dikunjungi;
+        this.keterangan = keterangan;
+        this.listUrlPhoto = listPhoto;
+        this.wa = wa;
+    }
+
+    public DonaturModel(String id, String id_donatur, String nama, String alamat, String kontak, String latitude, String longitude, String kaleng, String rk, String idKota, String idKecamatan, String idKelurahan, String kota, String kecamatan, String kelurahan, boolean dikunjungi,String keterangan,List<String> listPhoto, String rt,String rw, String wa){
         this.id = id;
         this.id_donatur = id_donatur;
         this.nama = nama;
@@ -198,6 +215,7 @@ public class DonaturModel {
         this.listUrlPhoto = listPhoto;
         this.rt =rt;
         this.rw = rw;
+        this.wa =wa;
     }
 
     public void setId(String id){
@@ -378,5 +396,13 @@ public class DonaturModel {
 
     public void setRw(String rw) {
         this.rw = rw;
+    }
+
+    public String getWa() {
+        return wa;
+    }
+
+    public void setWa(String wa) {
+        this.wa = wa;
     }
 }

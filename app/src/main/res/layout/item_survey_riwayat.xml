@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_black"
                 android:textSize="12sp"
-                android:text="Kontak"
+                android:text="Kontak / WA"
                 android:textStyle="bold"
                 />
 

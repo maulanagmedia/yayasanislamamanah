@@ -26,15 +26,6 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="@dimen/icon_size3"
-                    android:layout_height="@dimen/icon_size3"
-                    android:src="@drawable/ic_name"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="@dimen/padding_small"
-                    android:id="@+id/ic_nama"/>
-
-                <ImageView
                     android:layout_width="@dimen/icon_size1"
                     android:layout_height="@dimen/icon_size1"
                     android:src="@drawable/ic_edit"
@@ -45,17 +36,24 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama"
+                    android:textSize="@dimen/_8sdp"
+                    android:textColor="@color/colorGrey3"
+                    android:id="@+id/tv_nama"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/bg_input"
                     android:layout_toLeftOf="@id/iv_edit"
-                    android:layout_toRightOf="@id/ic_nama"
-                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_below="@+id/tv_nama"
                     android:layout_alignParentBottom="true"
-                    android:padding="@dimen/padding_small"
-                    >
+                    android:padding="@dimen/padding_small">
 
                     <EditText
                         android:layout_width="match_parent"
@@ -73,16 +71,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_default">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size3"
-                    android:layout_height="@dimen/icon_size3"
-                    android:src="@drawable/ic_location"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="@dimen/padding_small"
-                    android:id="@+id/ic_pass"/>
+                android:layout_marginTop="@dimen/_6sdp">
 
                 <ImageView
                     android:layout_width="@dimen/icon_size1"
@@ -93,14 +82,22 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Alamat"
+                    android:textSize="@dimen/_8sdp"
+                    android:textColor="@color/colorGrey3"
+                    android:id="@+id/tv_alamat"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_below="@id/tv_alamat"
                     android:background="@drawable/bg_input"
                     android:layout_toLeftOf="@id/iv_pass"
-                    android:layout_toRightOf="@id/ic_pass"
-                    android:layout_marginLeft="@dimen/padding_default"
                     android:layout_alignParentBottom="true"
                     android:padding="@dimen/padding_small"
                     >
@@ -121,15 +118,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_default">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size3"
-                    android:layout_height="@dimen/icon_size3"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="@dimen/padding_small"
-                    android:id="@+id/iv_rt"/>
+                android:layout_marginTop="@dimen/_6sdp">
 
                 <ImageView
                     android:layout_width="@dimen/icon_size1"
@@ -139,83 +128,110 @@
                     android:layout_marginLeft="@dimen/padding_default"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/iv_pass2"
-                    android:layout_toRightOf="@id/iv_rt"
-                    android:layout_marginLeft="@dimen/padding_default"
                     android:layout_alignParentBottom="true"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:layout_marginRight="@dimen/dp5"
-                        android:background="@drawable/bg_input"
-                        android:padding="@dimen/padding_small"
                         android:layout_weight="1"
                         >
 
-                        <EditText
+                        <TextView
                             android:layout_width="match_parent"
-                            android:minHeight="24dp"
                             android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:textColor="@color/colorBlack"
-                            android:hint="RT"
-                            android:id="@+id/edt_rt"
-                            android:layout_marginRight="@dimen/dp5"
-                            android:textSize="@dimen/text_small"/>
+                            android:text="RT"
+                            android:textSize="@dimen/_8sdp"
+                            android:textColor="@color/colorGrey3"
+                            android:id="@+id/tv_rt"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:background="@drawable/bg_input"
+                            android:padding="@dimen/padding_small"
+                            >
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:minHeight="24dp"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/transparent"
+                                android:textColor="@color/colorBlack"
+                                android:text="RT"
+                                android:inputType="number"
+                                android:id="@+id/edt_rt"
+                                android:hint="RT"
+                                android:layout_marginRight="@dimen/dp5"
+                                android:textSize="@dimen/text_small"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@drawable/bg_input"
-                        android:padding="@dimen/padding_small"
+                        android:orientation="vertical"
                         android:layout_weight="1"
                         android:layout_marginLeft="@dimen/dp5"
                         >
 
-                        <EditText
+                        <TextView
                             android:layout_width="match_parent"
-                            android:minHeight="24dp"
                             android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:textColor="@color/colorBlack"
-                            android:hint="RW"
-                            android:id="@+id/edt_rw"
-                            android:layout_marginRight="@dimen/dp5"
-                            android:textSize="@dimen/text_small"/>
+                            android:text="RW"
+                            android:textSize="@dimen/_8sdp"
+                            android:textColor="@color/colorGrey3"
+                            android:id="@+id/tv_rw"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:orientation="horizontal"
+                            android:background="@drawable/bg_input"
+                            android:padding="@dimen/padding_small"
+                            >
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:minHeight="24dp"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/transparent"
+                                android:textColor="@color/colorBlack"
+                                android:text="RW"
+                                android:id="@+id/edt_rw"
+                                android:inputType="number"
+                                android:hint="RW"
+                                android:layout_marginRight="@dimen/dp5"
+                                android:textSize="@dimen/text_small"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
 
             </RelativeLayout>
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_default">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size3"
-                    android:layout_height="@dimen/icon_size3"
-                    android:src="@drawable/ic_kontak"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="@dimen/padding_small"
-                    android:id="@+id/ic_kontak"/>
+                android:layout_marginTop="@dimen/_6sdp">
 
                 <ImageView
                     android:layout_width="@dimen/icon_size1"
                     android:layout_height="@dimen/icon_size1"
                     android:scaleType="fitCenter"
-                    android:id="@+id/iv_kontak"
-                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/iv_kontak2"
                     android:layout_marginLeft="@dimen/padding_default"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"/>
@@ -223,29 +239,145 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_input"
-                    android:layout_toLeftOf="@id/iv_kontak"
-                    android:layout_toRightOf="@id/ic_kontak"
-                    android:layout_marginLeft="@dimen/padding_default"
+                    android:layout_toLeftOf="@id/iv_kontak2"
                     android:layout_alignParentBottom="true"
-                    android:padding="@dimen/padding_small"
-                    >
+                    android:orientation="horizontal">
 
-                    <EditText
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="24dp"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/colorBlack"
-                        android:text=""
-                        android:inputType="phone"
-                        android:imeOptions="actionNext"
-                        android:id="@+id/edt_kontak"
-                        android:textSize="@dimen/text_small"/>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:layout_weight="1"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Kontak"
+                            android:textSize="@dimen/_8sdp"
+                            android:textColor="@color/colorGrey3"
+                            android:id="@+id/tv_"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:background="@drawable/bg_input"
+                            android:padding="@dimen/padding_small"
+                            >
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:minHeight="24dp"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/transparent"
+                                android:textColor="@color/colorBlack"
+                                android:text="Kontak"
+                                android:inputType="number"
+                                android:id="@+id/edt_kontak"
+                                android:hint="RT"
+                                android:layout_marginRight="@dimen/dp5"
+                                android:textSize="@dimen/text_small"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/dp5"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="WA"
+                            android:textSize="@dimen/_8sdp"
+                            android:textColor="@color/colorGrey3"
+                            android:id="@+id/tv_wa"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:orientation="horizontal"
+                            android:background="@drawable/bg_input"
+                            android:padding="@dimen/padding_small"
+                            >
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:minHeight="24dp"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/transparent"
+                                android:textColor="@color/colorBlack"
+                                android:text="WA"
+                                android:id="@+id/edt_wa"
+                                android:inputType="number"
+                                android:hint="WA"
+                                android:layout_marginRight="@dimen/dp5"
+                                android:textSize="@dimen/text_small"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </RelativeLayout>
+
+            <!--            <RelativeLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/_6sdp">-->
+
+            <!--                <ImageView-->
+            <!--                    android:layout_width="@dimen/icon_size1"-->
+            <!--                    android:layout_height="@dimen/icon_size1"-->
+            <!--                    android:scaleType="fitCenter"-->
+            <!--                    android:id="@+id/iv_kontak"-->
+            <!--                    android:background="?attr/selectableItemBackground"-->
+            <!--                    android:layout_marginLeft="@dimen/padding_default"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:layout_alignParentRight="true"/>-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="Kontak"-->
+            <!--                    android:textSize="@dimen/_8sdp"-->
+            <!--                    android:textColor="@color/colorGrey3"-->
+            <!--                    android:id="@+id/tv_kontak"/>-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="vertical"-->
+            <!--                    android:background="@drawable/bg_input"-->
+            <!--                    android:layout_below="@+id/tv_kontak"-->
+            <!--                    android:layout_marginTop="@dimen/_2sdp"-->
+            <!--                    android:layout_toLeftOf="@id/iv_kontak"-->
+            <!--                    android:layout_alignParentBottom="true"-->
+            <!--                    android:padding="@dimen/padding_small"-->
+            <!--                    >-->
+
+            <!--                    <EditText-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="24dp"-->
+            <!--                        android:background="@android:color/transparent"-->
+            <!--                        android:textColor="@color/colorBlack"-->
+            <!--                        android:text="Kontak"-->
+            <!--                        android:inputType="phone"-->
+            <!--                        android:hint="Kontak"-->
+            <!--                        android:imeOptions="actionNext"-->
+            <!--                        android:id="@+id/edt_kontak"-->
+            <!--                        android:textSize="@dimen/text_small"/>-->
+
+            <!--                </LinearLayout>-->
+
+            <!--            </RelativeLayout>-->
 
         </LinearLayout>
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -160,7 +161,7 @@ public class SalesSosialRiwayatFragment extends Fragment {
                     @Override
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
-
+                        Log.d(">>res",response);
                         int totalYa = 0, totalTidak = 0;
                         try{
                             listData.clear();
@@ -186,6 +187,7 @@ public class SalesSosialRiwayatFragment extends Fragment {
                                         ,jadwal.getString("kota") // item16
                                         ,jadwal.getString("kecamatan") // item17
                                         ,jadwal.getString("kelurahan") // item18
+                                        ,jadwal.getString("wa") // item19
                                         )
                                 );
 

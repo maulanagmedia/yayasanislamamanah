@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -38,6 +39,7 @@ import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActAkun.RequestActivity;
+import co.id.gmedia.yia.ActCollector.CollectorActivity;
 import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
 import co.id.gmedia.yia.ActSalesBrosur.SalesBrosurDetailFragment;
 import co.id.gmedia.yia.ActSalesBrosur.SalesBrosurRiwayatFragment;
@@ -166,8 +168,12 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
 
         tvAdmin.setText(session.getNama());
-        imageUtils.LoadCircleRealImage(session.getFoto(), ivProfile);
+//        imageUtils.LoadCircleRealImage(session.getFoto(), ivProfile);
 
+        Glide.with(HomeActivity.this)
+                .load(session.getFoto())
+                .placeholder(R.drawable.ic_profile)
+                .into(ivProfile);
     }
 
     private void initEvent() {
@@ -325,7 +331,11 @@ public class HomeActivity extends AppCompatActivity {
                             if(iv.parseNullInteger(status) == 200){
 
                                 String gambarBg = response.getJSONObject("response").getString("gambar");
-                                imageUtils.LoadRealImage(gambarBg, ivBackground);
+//                                imageUtils.LoadRealImage(gambarBg, ivBackground);
+                                Glide.with(HomeActivity.this)
+                                        .load(gambarBg)
+                                        .placeholder(R.drawable.bg_home)
+                                        .into(ivBackground);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

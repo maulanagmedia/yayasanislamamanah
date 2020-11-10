@@ -94,7 +94,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
     private DonaturModel donatur;
 
     private TextView tv_latitude, tv_longitude;
-    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng, txt_nominal, edtRt, edtRw;
+    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng, txt_nominal, edtRt, edtRw, edtWa;
 
     private Context context;
     private SessionManager session;
@@ -198,6 +198,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         edt_kontak.setText(donatur.getKontak());
         edtRt.setText(donatur.getRt());
         edtRw.setText(donatur.getRw());
+        edtWa.setText(donatur.getWa());
         for(String url : donatur.getListUrlPhoto()){
             listPhotoDetail.add(new PhotoModel("", url));
         }
@@ -212,6 +213,7 @@ public class CollectorDonaturDetailActivity extends AppCompatActivity {
         edt_kontak = findViewById(R.id.edt_kontak);
         edtRt = findViewById(R.id.edt_rt);
         edtRw = findViewById(R.id.edt_rw);
+        edtWa = findViewById(R.id.edt_wa);
         tv_latitude = findViewById(R.id.tv_latitude);
         tv_longitude = findViewById(R.id.tv_longitude);
         txt_jumlah_kaleng = findViewById(R.id.txt_jumlah_kaleng);

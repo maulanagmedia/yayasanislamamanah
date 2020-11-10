@@ -145,6 +145,7 @@ public class CheckingJadwalFragment extends Fragment {
                     @Override
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
+                        Log.d(">>res",response);
                         try{
                             listDonatur.clear();
                             JSONArray object = new JSONArray(response);
@@ -164,6 +165,7 @@ public class CheckingJadwalFragment extends Fragment {
                                         ,donatur.getString("rt")
                                         ,donatur.getString("rw")
                                         ,donatur.getString("kontak")
+                                        ,donatur.getString("wa")
                                         ,donatur.getString("total_kaleng")
                                         ,donatur.getString("lat")
                                         ,donatur.getString("long")

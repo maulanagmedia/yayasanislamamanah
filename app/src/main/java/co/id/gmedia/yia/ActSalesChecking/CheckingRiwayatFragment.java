@@ -205,6 +205,7 @@ public class CheckingRiwayatFragment extends Fragment {
                     @Override
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
+                        Log.d(">>res",response);
                         try{
                             listDonatur.clear();
                             int totalYa = 0, totalTidak = 0;
@@ -217,6 +218,7 @@ public class CheckingRiwayatFragment extends Fragment {
                                         ,donatur.getString("nama")
                                         ,donatur.getString("alamat")
                                         ,donatur.getString("kontak")
+                                        ,donatur.getString("wa")
                                         ,donatur.getInt("status") == 0)
                                         ,donatur.getString("tgl")
                                         ,"",

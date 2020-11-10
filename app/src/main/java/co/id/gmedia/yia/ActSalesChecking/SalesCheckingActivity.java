@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
@@ -36,6 +37,7 @@ import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
 import co.id.gmedia.yia.ActAkun.RequestActivity;
+import co.id.gmedia.yia.ActCollector.CollectorActivity;
 import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.GoogleLocationManager;
@@ -113,7 +115,11 @@ public class SalesCheckingActivity extends AppCompatActivity {
         SessionManager session = new SessionManager(this);
         txt_nama.setText(session.getNama());
         ImageUtils imageUtils = new ImageUtils();
-        imageUtils.LoadRealImage(session.getFoto(), img_foto);
+//        imageUtils.LoadRealImage(session.getFoto(), img_foto);
+        Glide.with(SalesCheckingActivity.this)
+                .load(session.getFoto())
+                .placeholder(R.drawable.ic_profile)
+                .into(img_foto);
     }
 
     @Override
@@ -282,7 +288,11 @@ public class SalesCheckingActivity extends AppCompatActivity {
                             if(iv.parseNullInteger(status) == 200){
 
                                 String gambarBg = response.getJSONObject("response").getString("gambar");
-                                imageUtils.LoadRealImage(gambarBg, ivBackground);
+//                                imageUtils.LoadRealImage(gambarBg, ivBackground);
+                                Glide.with(SalesCheckingActivity.this)
+                                        .load(gambarBg)
+                                        .placeholder(R.drawable.bg_home)
+                                        .into(ivBackground);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

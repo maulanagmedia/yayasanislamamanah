@@ -32,6 +32,7 @@ import co.id.gmedia.yia.ActCollector.CollectorActivity;
 import co.id.gmedia.yia.ActSalesChecking.SalesCheckingActivity;
 import co.id.gmedia.yia.NotificationUtils.InitFirebaseSetting;
 import co.id.gmedia.yia.Utils.ServerURL;
+import co.id.gmedia.yia.admin.AdminActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -364,6 +365,8 @@ public class LoginActivity extends AppCompatActivity {
             case "4":
                 intent = new Intent(context, CollectorActivity.class);
                 break;
+            case "6":
+                intent = new Intent(context, AdminActivity.class);
             default:
                 intent = new Intent(context, HomeActivity.class);
                 break;

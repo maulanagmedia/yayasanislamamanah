@@ -65,7 +65,7 @@ public class CheckingRiwayatAdapter extends RecyclerView.Adapter<CheckingRiwayat
 
             txt_nama_donatur.setText(b.getDonatur().getNama());
             txt_alamat_donatur.setText(b.getDonatur().getAlamat());
-            txt_kontak_donatur.setText(b.getDonatur().getKontak());
+            txt_kontak_donatur.setText(b.getDonatur().getKontak()+" / "+b.getDonatur().getWa());
             txt_tanggal.setText(iv.ChangeFormatDateString(b.getWaktu(), FormatItem.formatTimestamp, FormatItem.formatDateTimeDisplay1));
             txt_waktu_donasi.setText(b.getWaktu());
             txt_lobi_kaleng.setText(b.getLobi_kaleng());

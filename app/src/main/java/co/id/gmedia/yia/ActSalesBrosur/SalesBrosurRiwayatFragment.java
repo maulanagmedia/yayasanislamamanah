@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -210,6 +211,7 @@ public class SalesBrosurRiwayatFragment extends Fragment {
                 dialogBox.dismissDialog();
                 listData.clear();
                 try {
+                    Log.d(">>>res",result);
 
                     JSONObject response = new JSONObject(result);
                     String status = response.getJSONObject("metadata").getString("status");
@@ -235,6 +237,7 @@ public class SalesBrosurRiwayatFragment extends Fragment {
                                             ,jo.getString("kota") // item10
                                             ,jo.getString("kecamatan") // item11
                                             ,jo.getString("kelurahan") // item12
+                                            ,jo.getString("wa") // item13
                                     )
                             );
                         }

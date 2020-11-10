@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.fxn.pix.Pix;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -48,6 +49,7 @@ import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.GoogleLocationManager;
 import co.id.gmedia.yia.Utils.ServerURL;
 import co.id.gmedia.yia.Utils.TopCropCircularImageView;
+import co.id.gmedia.yia.admin.AdminActivity;
 
 public class CollectorActivity extends AppCompatActivity {
 
@@ -125,7 +127,11 @@ public class CollectorActivity extends AppCompatActivity {
     private void loadProfil(){
         txt_nama.setText(session.getNama());
         ImageUtils imageUtils = new ImageUtils();
-        imageUtils.LoadRealImage(session.getFoto(), img_foto);
+//        imageUtils.LoadRealImage(session.getFoto(), img_foto);
+        Glide.with(CollectorActivity.this)
+                .load(session.getFoto())
+                .placeholder(R.drawable.ic_profile)
+                .into(img_foto);
     }
 
     public void updateJumlah(String jumlah){
@@ -172,7 +178,6 @@ public class CollectorActivity extends AppCompatActivity {
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = true;
             int scrollRange = -1;
-
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (scrollRange == -1) {
@@ -201,17 +206,12 @@ public class CollectorActivity extends AppCompatActivity {
 
         int id = item.getItemId();
         if (id == R.id.option_profile) {
-
             Intent intent = new Intent(context, DetailAkunActivity.class);
             startActivity(intent);
             return true;
         }else if(id == R.id.option_notif) {
-
             Intent intent = new Intent(context, ListNotificationActivity.class);
-            startActivity(intent);
-            return true;
-        }else if(id == R.id.option_donatur){
-            Intent intent = new Intent(context, DonaturTetapActivity.class);
+//            Intent intent =new Intent(context, AdminActivity.class);
             startActivity(intent);
             return true;
         }else{
@@ -313,7 +313,11 @@ public class CollectorActivity extends AppCompatActivity {
                             if(iv.parseNullInteger(status) == 200){
 
                                 String gambarBg = response.getJSONObject("response").getString("gambar");
-                                imageUtils.LoadRealImage(gambarBg, ivBackground);
+//                                imageUtils.LoadRealImage(gambarBg, ivBackground);
+                                Glide.with(CollectorActivity.this)
+                                        .load(gambarBg)
+                                        .placeholder(R.drawable.bg_home)
+                                        .into(ivBackground);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

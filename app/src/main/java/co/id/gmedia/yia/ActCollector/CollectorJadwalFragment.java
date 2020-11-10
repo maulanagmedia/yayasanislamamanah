@@ -303,6 +303,7 @@ public class CollectorJadwalFragment extends Fragment {
                 new AppRequestCallback(new AppRequestCallback.ResponseListener() {
                     @Override
                     public void onSuccess(String response, String message) {
+                        Log.d(">>collector","res "+response);
                         dialogBox.dismissDialog();
                         rv_jadwal.removeFooterView(footerList);
                         isLoading=false;
@@ -339,6 +340,7 @@ public class CollectorJadwalFragment extends Fragment {
                                         ,listUrlFoto
                                         ,donatur.getString("rt")
                                         ,donatur.getString("rw")
+                                        ,donatur.getString("wa")
                                 ));
                             }
 

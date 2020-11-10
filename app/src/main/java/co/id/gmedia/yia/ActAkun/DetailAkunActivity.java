@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.fxn.pix.Options;
 import com.fxn.pix.Pix;
 import com.fxn.utility.ImageQuality;
@@ -236,7 +237,11 @@ public class DetailAkunActivity extends AppCompatActivity {
 
         tvNama.setText(session.getNama());
         tvKontak.setText(session.getKontak());
-        imageUtils.LoadCircleRealImage(session.getFoto(), ivProfileMain);
+//        imageUtils.LoadCircleRealImage(session.getFoto(), ivProfileMain);
+        Glide.with(DetailAkunActivity.this)
+                .load(session.getFoto())
+                .placeholder(R.drawable.ic_profile)
+                .into(ivProfileMain);
     }
 
     @Override

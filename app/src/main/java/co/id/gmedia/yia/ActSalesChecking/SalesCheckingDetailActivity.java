@@ -61,7 +61,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
     private DonaturModel donatur;
 
     private TextView tv_latitude, tv_longitude;
-    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng, edtRt, edtRw;
+    private EditText edt_nama, edt_alamat, edt_kontak, txt_jumlah_kaleng, edtRt, edtRw, edtWa;
     private RadioButton rb_donasi_ya, rb_kaleng_ya, rb_kaleng_tidak;
 
     private SessionManager sessionManager;
@@ -134,6 +134,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         edt_kontak.setText(donatur.getKontak());
         edtRt.setText(donatur.getRt());
         edtRw.setText(donatur.getRw());
+        edtWa.setText(donatur.getWa());
         txt_jumlah_kaleng.setText(donatur.getKaleng());
         edtKeterangan.setText(donatur.getKeterangan());
         cbCkecing = (CheckBox) findViewById(R.id.cb_checking);
@@ -152,6 +153,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         edt_kontak = findViewById(R.id.edt_kontak);
         edtRt = findViewById(R.id.edt_rt);
         edtRw = findViewById(R.id.edt_rw);
+        edtWa = findViewById(R.id.edt_wa);
         rb_kaleng_ya = findViewById(R.id.rb_kaleng_ya);
         rb_kaleng_tidak = findViewById(R.id.rb_kaleng_tidak);
         rb_donasi_ya = findViewById(R.id.rb_donasi_ya);
@@ -287,6 +289,7 @@ public class SalesCheckingDetailActivity extends AppCompatActivity{
         body.add("nama", edt_nama.getText().toString());
         body.add("alamat", edt_alamat.getText().toString());
         body.add("kontak", edt_kontak.getText().toString());
+        body.add("wa", edtWa.getText().toString());
         body.add("note", edtKeterangan.getText().toString());
         body.add("id_sales", sessionManager.getId());
         body.add("id_donatur", donatur.getId_donatur());

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -202,6 +203,7 @@ public class SalesSosialJadwalFragment extends Fragment {
                     public void onSuccess(String response, String message) {
                         dialogBox.dismissDialog();
                         try{
+                            Log.d(">>res",response);
                             listData.clear();
                             JSONArray obj = new JSONArray(response);
                             for(int i = 0; i < obj.length(); i++){
@@ -219,6 +221,7 @@ public class SalesSosialJadwalFragment extends Fragment {
                                         ,jadwal.getString("note")//item 10
                                         ,jadwal.getString("rt")//item 11
                                         ,jadwal.getString("rw")//item 12
+                                        ,jadwal.getString("wa")//item 13
                                 ));
                             }
 

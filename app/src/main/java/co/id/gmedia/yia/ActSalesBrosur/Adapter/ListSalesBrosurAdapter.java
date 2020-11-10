@@ -68,7 +68,7 @@ public class ListSalesBrosurAdapter extends ArrayAdapter {
         holder.tvTanggal.setText(item.getItem5());
         holder.tvNama.setText(item.getItem2());
         holder.tvAlamat.setText(item.getItem3());
-        holder.tvKontak.setText(item.getItem4());
+        holder.tvKontak.setText(item.getItem4()+" / "+item.getItem13());
 //        holder.rlEdit.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
