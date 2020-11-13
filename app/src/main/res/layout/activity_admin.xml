@@ -82,17 +82,80 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_white"
+        android:id="@+id/nv"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <FrameLayout
-            android:id="@+id/layout_container"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/ll_parent"
+                android:layout_alignParentTop="true"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    </androidx.core.widget.NestedScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_marginRight="@dimen/_12sdp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_34sdp"
+                        android:descendantFocusability="beforeDescendants"
+                        android:focusableInTouchMode="true"
+                        android:background="@drawable/bg_input">
+
+                        <ImageView
+                            android:id="@+id/iv_search"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="@dimen/padding_default"
+                            android:src="@mipmap/ic_search1" />
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/edt_search"
+                            android:layout_toRightOf="@+id/iv_search"
+                            android:background="@android:color/transparent"
+                            android:hint="Keyword"
+                            android:textSize="@dimen/_12sdp"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionSearch"
+                            android:inputType="textPersonName"
+                            android:foregroundGravity="center_vertical"/>
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_below="@+id/ll_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_6sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/rv_donatur"/>
+<!--            <FrameLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/layout_container"/>-->
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

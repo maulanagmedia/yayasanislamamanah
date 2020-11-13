@@ -23,7 +23,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.fxn.pix.Pix;
@@ -43,13 +42,11 @@ import co.id.gmedia.coremodul.ImageUtils;
 import co.id.gmedia.coremodul.ItemValidation;
 import co.id.gmedia.coremodul.SessionManager;
 import co.id.gmedia.yia.ActAkun.DetailAkunActivity;
-import co.id.gmedia.yia.ActAkun.RequestActivity;
 import co.id.gmedia.yia.ActNotifikasi.ListNotificationActivity;
 import co.id.gmedia.yia.R;
 import co.id.gmedia.yia.Utils.GoogleLocationManager;
 import co.id.gmedia.yia.Utils.ServerURL;
 import co.id.gmedia.yia.Utils.TopCropCircularImageView;
-import co.id.gmedia.yia.admin.AdminActivity;
 
 public class CollectorActivity extends AppCompatActivity {
 

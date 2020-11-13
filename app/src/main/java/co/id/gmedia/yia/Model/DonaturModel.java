@@ -14,10 +14,11 @@ public class DonaturModel {
     private String lognitude;
     private String rk, rt, rw;
     private String idKota, idKecamatan, idKelurahan, kota, kecamatan, kelurahan;
-    private String nominal, jenisDonatur, tanggal, keterangan, wa;
+    private String nominal, jenisDonatur, tanggal, keterangan, wa, kdcus;
 
     private List<String> listUrlPhoto = new ArrayList<>();
     private boolean dikunjungi = false;
+    private int status_kontak;
 
     public DonaturModel(){
 
@@ -218,6 +219,24 @@ public class DonaturModel {
         this.wa =wa;
     }
 
+    public DonaturModel(String id, String id_calon_donatur, String kdcus, String nama, String alamat, String rt, String rw, String kontak, String wa, String kota, String kecamatan, String kelurahan, String latitude, String longitude, int status_kontak){
+        this.id = id;
+        this.id_donatur = id_calon_donatur;
+        this.kdcus = kdcus;
+        this.nama =nama;
+        this.alamat = alamat;
+        this.rt = rt;
+        this.rw = rw;
+        this.kontak = kontak;
+        this.wa = wa;
+        this.kota = kota;
+        this.kecamatan = kecamatan;
+        this.kelurahan= kelurahan;
+        this.latitude = latitude;
+        this.lognitude = longitude;
+        this.status_kontak = status_kontak;
+    }
+
     public void setId(String id){
         this.id = id;
     }
@@ -404,5 +423,21 @@ public class DonaturModel {
 
     public void setWa(String wa) {
         this.wa = wa;
+    }
+
+    public String getKdcus() {
+        return kdcus;
+    }
+
+    public void setKdcus(String kdcus) {
+        this.kdcus = kdcus;
+    }
+
+    public int getStatus_kontak() {
+        return status_kontak;
+    }
+
+    public void setStatus_kontak(int status_kontak) {
+        this.status_kontak = status_kontak;
     }
 }

@@ -44,5 +44,6 @@ public class ServerURL {
     public static final String getNotification = baseURL + "Collector/Rencana_kerja/notif_sales/";
     public static final String getBackgroundDashboard = baseURL + "/Authentication/bg_sampul/";
     public static final String getApplicationVersion = baseURL + "Master/application_version/";
-    public static final String getDonaturTetap = baseURL+"Collector/Rencana_kerja/donatur_tetap";
+    public static final String getDonaturTetap = baseURL+"Donatur/donatur_tetap";
+    public static final String saveKontakDonatur = baseURL+"Donatur/save_kontak_donatur";
 }

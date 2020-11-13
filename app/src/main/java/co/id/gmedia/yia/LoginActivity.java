@@ -32,7 +32,7 @@ import co.id.gmedia.yia.ActCollector.CollectorActivity;
 import co.id.gmedia.yia.ActSalesChecking.SalesCheckingActivity;
 import co.id.gmedia.yia.NotificationUtils.InitFirebaseSetting;
 import co.id.gmedia.yia.Utils.ServerURL;
-import co.id.gmedia.yia.admin.AdminActivity;
+import co.id.gmedia.yia.ActAdmin.AdminActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -138,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(String result) {
                 dialogBox.dismissDialog();
                 try {
+                    Log.d(">>login","res "+result);
                     JSONObject response = new JSONObject(result);
                     String status = response.getJSONObject("metadata").getString("status");
                     String message = response.getJSONObject("metadata").getString("message");
@@ -351,11 +352,9 @@ public class LoginActivity extends AppCompatActivity {
     private void redirectToLogin(){
 
         Intent intent;
+        Log.d(">>level",session.getLevel());
         switch (session.getLevel()){
 
-            case "1" :
-                intent = new Intent(context, HomeActivity.class);
-                break;
             case "2" :
                 intent = new Intent(context, HomeSocialSalesActivity.class);
                 break;
@@ -367,6 +366,7 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case "6":
                 intent = new Intent(context, AdminActivity.class);
+                break;
             default:
                 intent = new Intent(context, HomeActivity.class);
                 break;

@@ -35,6 +35,8 @@ public class SessionManager {
     public static final String TAG_PROFIL = "image_profil";
     public static final String TAG_PRINTER ="status_printer";
 
+    public static final String TAG_DONATUR ="id_donatur";
+
     // Constructor
     public SessionManager(Context context){
         this.context = context;
@@ -81,9 +83,9 @@ public class SessionManager {
         editor.commit();
     }
 
-    public void savePassword(String password){
+    public void saveIdDonatur(String id_donatur){
 
-        editor.putString(TAG_PASSWORD, password);
+        editor.putString(TAG_DONATUR, id_donatur);
 
         editor.commit();
     }
@@ -139,6 +141,10 @@ public class SessionManager {
 
     public boolean getStatusPrinter(){
         return pref.getBoolean(TAG_PRINTER, false);
+    }
+
+    public String getIdDonatur(){
+        return pref.getString(TAG_DONATUR, "");
     }
 
     /**
