@@ -2,19 +2,27 @@ package co.id.gmedia.yia.ActSalesChecking;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,12 +59,15 @@ public class CheckingJadwalFragment extends Fragment {
     private DialogBox dialogBox;
 
     private TextView txt_tanggal;
+    private EditText edtSearch;
     private RecyclerView rv_jadwal;
     private View root;
     private ImageView ivSort;
     private GoogleLocationManager locationManager;
     private boolean isLocationReloaded;
     private double lat = 0, lng = 0;
+    private boolean withLocation = false;
+    private String keyword = "";
 
     public CheckingJadwalFragment() {
         // Required empty public constructor
@@ -76,9 +87,11 @@ public class CheckingJadwalFragment extends Fragment {
 
     private void initUI() {
 
+        edtSearch = (EditText) root.findViewById(R.id.edt_search);
         txt_tanggal = (TextView) root.findViewById(R.id.txt_tanggal);
         ivSort = (ImageView) root.findViewById(R.id.iv_sort);
         isLocationReloaded = false;
+        keyword = "";
 
         rv_jadwal = (RecyclerView) root.findViewById(R.id.rv_jadwal);
         rv_jadwal.setItemAnimator(new DefaultItemAnimator());
@@ -98,7 +111,8 @@ public class CheckingJadwalFragment extends Fragment {
                     isLocationReloaded = false;
                     lat = location.getLatitude();
                     lng = location.getLongitude();
-                    loadJadwal(true);
+                    withLocation = true;
+                    loadJadwal();
                 }
 
             }
@@ -114,25 +128,61 @@ public class CheckingJadwalFragment extends Fragment {
                 retryLocation();
             }
         });
+
+        edtSearch.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    keyword = edtSearch.getText().toString();
+                    loadJadwal();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (edtSearch.getText().toString().isEmpty()) {
+                    dialogBox.showDialog(false);
+                    keyword = "";
+                    loadJadwal();
+                }
+            }
+        });
     }
 
     @Override
     public void onResume() {
         loadData();
-        loadJadwal(false);
+        loadJadwal();
 
         super.onResume();
+
     }
 
     private void loadData(){
         txt_tanggal.setText(Converter.getDateString(new Date()));
     }
 
-    private void loadJadwal(final boolean withLocation){
+    private void loadJadwal(){
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
-        body.add("keyword", "");
+        body.add("keyword", keyword);
         body.add("status", "1");
         if(withLocation){
 
@@ -190,7 +240,7 @@ public class CheckingJadwalFragment extends Fragment {
                                 @Override
                                 public void onClick(View view) {
                                     dialogBox.dismissDialog();
-                                    loadJadwal(withLocation);
+                                    loadJadwal();
                                 }
                             };
 
@@ -223,7 +273,7 @@ public class CheckingJadwalFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 dialogBox.dismissDialog();
-                                loadJadwal(withLocation);
+                                loadJadwal();
                             }
                         };
 

@@ -18,18 +18,54 @@
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:id="@+id/iv_sort"
+            android:layout_centerVertical="true"
             android:layout_margin="@dimen/padding_default"
+            android:foregroundGravity="center_vertical"
             android:layout_alignParentRight="true"
             android:src="@mipmap/ic_sort_loc"/>
 
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/text_20"
-            android:textStyle="bold"
+            android:orientation="vertical"
+            android:id="@+id/ll_header"
             android:layout_toLeftOf="@id/iv_sort"
-            android:text="Jadwal Kunjungan"/>
+            android:layout_margin="@dimen/padding_default">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_input">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@mipmap/ic_search1"
+                    android:id="@+id/iv_search"
+                    android:layout_margin="@dimen/padding_default"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"/>
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iv_search"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/padding_default"
+                    android:text=""
+                    android:id="@+id/edt_search"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_centerVertical="true"
+                    android:hint="Cari by nama"
+                    android:maxLines="1"
+                    android:inputType="textPersonName"
+                    android:imeOptions="actionSearch"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </RelativeLayout>
 
