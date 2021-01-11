@@ -68,6 +68,7 @@ public class CheckingJadwalFragment extends Fragment {
     private double lat = 0, lng = 0;
     private boolean withLocation = false;
     private String keyword = "";
+    private int start = 0,count=15;
 
     public CheckingJadwalFragment() {
         // Required empty public constructor
@@ -98,6 +99,19 @@ public class CheckingJadwalFragment extends Fragment {
         rv_jadwal.setLayoutManager(new LinearLayoutManager(activity));
         adapter = new JadwalKunjunganAdapter(activity, listDonatur);
         rv_jadwal.setAdapter(adapter);
+//        rv_jadwal.setNestedScrollingEnabled(false);
+//        rv_jadwal.setHasFixedSize(false);
+
+//        rv_jadwal.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                if (!recyclerView.canScrollVertically(1)){
+//                    start += count;
+//                    loadJadwal(1);
+//                }
+//            }
+//        });
 
         session = new SessionManager(activity);
         dialogBox = new DialogBox(activity);
@@ -112,7 +126,7 @@ public class CheckingJadwalFragment extends Fragment {
                     lat = location.getLatitude();
                     lng = location.getLongitude();
                     withLocation = true;
-                    loadJadwal();
+                    loadJadwal(0);
                 }
 
             }
@@ -136,7 +150,7 @@ public class CheckingJadwalFragment extends Fragment {
                     InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     keyword = edtSearch.getText().toString();
-                    loadJadwal();
+                    loadJadwal(0);
                     return true;
                 }
                 return false;
@@ -159,7 +173,7 @@ public class CheckingJadwalFragment extends Fragment {
                 if (edtSearch.getText().toString().isEmpty()) {
                     dialogBox.showDialog(false);
                     keyword = "";
-                    loadJadwal();
+                    loadJadwal(0);
                 }
             }
         });
@@ -168,7 +182,7 @@ public class CheckingJadwalFragment extends Fragment {
     @Override
     public void onResume() {
         loadData();
-        loadJadwal();
+        loadJadwal(0);
 
         super.onResume();
 
@@ -178,12 +192,19 @@ public class CheckingJadwalFragment extends Fragment {
         txt_tanggal.setText(Converter.getDateString(new Date()));
     }
 
-    private void loadJadwal(){
+    private void loadJadwal(int flag){
+        // 0 = default
+        // 1 = scroll
+//        if(start== 0){
+//            listDonatur.clear();
+//        }
         dialogBox.showDialog(false);
         JSONBuilder body = new JSONBuilder();
         body.add("id_sales", session.getId());
         body.add("keyword", keyword);
         body.add("status", "1");
+//        body.add("start", start);
+//        body.add("count", count);
         if(withLocation){
 
             body.add("lat", lat);
@@ -197,7 +218,7 @@ public class CheckingJadwalFragment extends Fragment {
                         dialogBox.dismissDialog();
                         Log.d(">>res",response);
                         try{
-                            listDonatur.clear();
+//                            listDonatur.clear();
                             JSONArray object = new JSONArray(response);
                             for(int i = 0; i < object.length(); i++){
                                 JSONObject donatur = object.getJSONObject(i);
@@ -240,7 +261,7 @@ public class CheckingJadwalFragment extends Fragment {
                                 @Override
                                 public void onClick(View view) {
                                     dialogBox.dismissDialog();
-                                    loadJadwal();
+                                    loadJadwal(0);
                                 }
                             };
 
@@ -252,7 +273,9 @@ public class CheckingJadwalFragment extends Fragment {
                     @Override
                     public void onEmpty(String message) {
                         listDonatur.clear();
-                        adapter.notifyDataSetChanged();
+//                        if(flag == 0){
+//                            adapter.notifyDataSetChanged();
+//                        }
 
                         //Update teks jumlah di Activity
                         if(activity instanceof SalesCheckingActivity){
@@ -273,7 +296,7 @@ public class CheckingJadwalFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 dialogBox.dismissDialog();
-                                loadJadwal();
+                                loadJadwal(0);
                             }
                         };
 
