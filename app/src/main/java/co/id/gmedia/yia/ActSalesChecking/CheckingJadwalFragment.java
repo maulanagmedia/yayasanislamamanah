@@ -218,7 +218,7 @@ public class CheckingJadwalFragment extends Fragment {
                         dialogBox.dismissDialog();
                         Log.d(">>res",response);
                         try{
-//                            listDonatur.clear();
+                            listDonatur.clear();
                             JSONArray object = new JSONArray(response);
                             for(int i = 0; i < object.length(); i++){
                                 JSONObject donatur = object.getJSONObject(i);
