@@ -138,13 +138,17 @@ public class DetailCurrentPosActivity extends AppCompatActivity implements OnMap
         createLocationRequest();
         buildLocationSettingsRequest();
 
+        initUI();
+        initEvent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (checkPermission()){
 
             initLocation();
         }
-
-        initUI();
-        initEvent();
     }
 
     private void initUI() {
@@ -392,6 +396,8 @@ public class DetailCurrentPosActivity extends AppCompatActivity implements OnMap
         location = new Location("set");
         location.setLatitude(latitude);
         location.setLongitude(longitude);
+        Log.d(">>>>",String.valueOf(latitude));
+        Log.d(">>>>",String.valueOf(longitude));
 
         refreshMode = true;
         //location = getLocation();
