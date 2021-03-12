@@ -122,7 +122,7 @@ public class CheckingRiwayatAdapter extends RecyclerView.Adapter<CheckingRiwayat
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(context, RequestActivity.class);
-                            intent.putExtra(RequestActivity.DONATUR_ITEM, new Gson().toJson(b));
+                            intent.putExtra(RequestActivity.DONATUR_ITEM, new Gson().toJson(b.getDonatur()));
                             context.startActivity(intent);
                         }
                     });
